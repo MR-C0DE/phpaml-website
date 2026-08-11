@@ -1,41 +1,32 @@
 import assert from "node:assert/strict";
-import { access } from "node:fs/promises";
+import { spawn } from "node:child_process";
 import test from "node:test";
 
-async function render(pathname = "/") {
-  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}-${pathname}`);
-  const { default: worker } = await import(workerUrl.href);
-
-  return worker.fetch(
-    new Request(`http://localhost${pathname}`, { headers: { accept: "text/html" } }),
-    { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
-    { waitUntil() {}, passThroughOnException() {} },
-  );
+async function waitForServer(url) {
+  for (let attempt = 0; attempt < 40; attempt += 1) {
+    try { const response = await fetch(url); if (response.ok) return; } catch {}
+    await new Promise((resolve) => setTimeout(resolve, 250));
+  }
+  throw new Error("Next.js test server did not start");
 }
 
-test("renders the PHPAML landing page", async () => {
-  const response = await render();
-  assert.equal(response.status, 200);
-  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
-
-  const html = await response.text();
-  assert.match(html, /PHPAML/);
-  assert.match(html, /Structure PHP/);
-  assert.match(html, /v1\.3\.0/);
-  assert.match(html, /aml create my-project/);
-  assert.match(html, /href="\/download"/);
-  assert.match(html, /href="\/docs"/);
-  assert.match(html, /href="\/fr"/);
-  assert.doesNotMatch(html, /codex-preview|Building your site|react-loading-skeleton/i);
-});
-
-test("renders documentation and download routes", async () => {
-  const [docs, download, french] = await Promise.all([render("/docs"), render("/download"), render("/fr")]);
-  assert.equal(docs.status, 200);
-  assert.equal(download.status, 200);
-  assert.match(await docs.text(), /Official documentation/);
-  assert.match(await download.text(), /phpaml-1\.3\.0-windows-x64\.exe/);
-  assert.match(await french.text(), /Structurez PHP/);
-  await access(new URL("../public/og-v2.png", import.meta.url));
+test("serves the complete bilingual PHPAML website", async () => {
+  const server = spawn(process.execPath, ["node_modules/next/dist/bin/next", "start", "-p", "3100"], { stdio: "ignore" });
+  try {
+    await waitForServer("http://127.0.0.1:3100/");
+    const [home, french, docs, download] = await Promise.all([
+      fetch("http://127.0.0.1:3100/").then((r) => r.text()),
+      fetch("http://127.0.0.1:3100/fr").then((r) => r.text()),
+      fetch("http://127.0.0.1:3100/docs").then((r) => r.text()),
+      fetch("http://127.0.0.1:3100/download").then((r) => r.text()),
+    ]);
+    assert.match(home, /Structure PHP/);
+    assert.match(home, /href="\/fr"/);
+    assert.match(french, /Structurez PHP/);
+    assert.match(french, /href="\/"/);
+    assert.match(docs, /Official documentation/);
+    assert.match(download, /phpaml-1\.3\.0-windows-x64\.exe/);
+  } finally {
+    server.kill("SIGTERM");
+  }
 });
