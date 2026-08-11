@@ -18,7 +18,7 @@ export default function DocsPage() {
         <section className="page-hero shell">
           <p className="eyebrow"><span /> Documentation officielle</p>
           <h1>Comprendre PHPAML.<br /><em>Construire sans deviner.</em></h1>
-          <p>Guides pratiques et référence de l’environnement autonome AML 1.2.x.</p>
+          <p>Guides pratiques et référence de l’environnement autonome AML 1.3.x.</p>
         </section>
 
         <section className="docs-layout shell">

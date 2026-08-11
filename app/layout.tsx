@@ -21,9 +21,9 @@ export async function generateMetadata(): Promise<Metadata> {
       description: "Framework MVC, CLI autonome, PHP et Composer inclus.",
       type: "website",
       locale: "fr_CA",
-      images: [{ url: new URL("/og.png", base).toString(), width: 1200, height: 630, alt: "PHPAML — Un framework PHP petit par choix" }],
+      images: [{ url: new URL("/og-v2.png", base).toString(), width: 1200, height: 630, alt: "PHPAML — Structure PHP. Keep control." }],
     },
-    twitter: { card: "summary_large_image", images: [new URL("/og.png", base).toString()] },
+    twitter: { card: "summary_large_image", images: [new URL("/og-v2.png", base).toString()] },
   };
 }
 

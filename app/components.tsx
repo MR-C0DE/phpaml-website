@@ -18,6 +18,7 @@ export function Header() {
           <Link href="/docs">Documentation</Link>
           <Link href="/download">Télécharger</Link>
           <a href="https://github.com/MR-C0DE/phpaml-cli">GitHub ↗</a>
+          <Link className="nav-cta" href="/download">Installer AML <span>↓</span></Link>
         </nav>
       </div>
     </header>
@@ -41,7 +42,7 @@ export function Footer() {
       </div>
       <div className="shell footer-bottom">
         <span>PHPAML est un projet expérimental.</span>
-        <span>Version actuelle · 1.2.0</span>
+        <span>Version actuelle · 1.3.0</span>
       </div>
     </footer>
   );
@@ -52,7 +53,7 @@ export function CodeBlock({ children }: { children: React.ReactNode }) {
     <div className="terminal">
       <div className="terminal-bar">
         <span /><span /><span />
-        <small>terminal</small>
+        <small>phpaml — zsh</small>
       </div>
       <pre><code>{children}</code></pre>
     </div>

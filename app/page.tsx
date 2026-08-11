@@ -17,8 +17,8 @@ export default function Home() {
       <main>
         <section className="hero shell">
           <div className="hero-copy">
-            <div className="eyebrow"><span /> PHP réorganisé, pas réinventé</div>
-            <h1>Un framework PHP<br />petit par <em>choix.</em></h1>
+            <div className="eyebrow"><span /> PHP réorganisé, pas réinventé <b>v1.3</b></div>
+            <h1>Structurez PHP.<br /><em>Gardez le contrôle.</em></h1>
             <p className="hero-lead">
               PHPAML reprend la structure familière de Java EE et ASP.NET dans
               un mini-framework MVC lisible, autonome et rapide à prendre en main.
@@ -27,22 +27,28 @@ export default function Home() {
               <Link className="button primary" href="/download">Télécharger AML <span>↓</span></Link>
               <Link className="button ghost" href="/docs">Lire la documentation <span>→</span></Link>
             </div>
-            <p className="compatibility">Windows x64 · macOS ARM64 · Linux x64</p>
+            <div className="hero-proof">
+              <span><strong>0</strong> dépendance globale</span>
+              <span><strong>3</strong> plateformes</span>
+              <span><strong>1</strong> commande</span>
+            </div>
           </div>
           <div className="hero-code">
-            <div className="version-pill">v1.2.0 · stable</div>
+            <div className="version-pill"><span /> v1.3.0 · stable</div>
+            <div className="terminal-label">01 / QUICK START</div>
             <CodeBlock>{`$ aml create mon-projet
-✓ Modèle officiel vérifié
+✓ Official template verified
 
 $ cd mon-projet && aml install
-✓ PHPAML installé dans aml_env
+✓ PHPAML installed in aml_env
 
 $ aml doctor
-✓ 13 contrôles réussis
+✓ 13 checks passed
 
 $ aml serve
 → http://localhost:8000`}</CodeBlock>
             <div className="code-shadow" />
+            <div className="floating-note">PHP + Composer<br /><strong>included</strong></div>
           </div>
         </section>
 
@@ -51,7 +57,7 @@ $ aml serve
             <span>PHP 8.2+</span><i />
             <span>MVC</span><i />
             <span>DI container</span><i />
-            <span>Zero PHP requis</span>
+            <span>PHP inclus</span>
           </div>
         </section>
 
