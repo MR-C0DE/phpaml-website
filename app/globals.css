@@ -13,6 +13,8 @@ a { color:inherit; text-decoration:none; }
 .brand-mark { display:grid; place-items:center; width:32px; height:32px; background:var(--ink); color:var(--lime); font-family:var(--font-geist-mono); font-size:16px; clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%); box-shadow:0 0 0 4px rgba(128,104,255,.12); }
 nav { display:flex; gap:34px; align-items:center; font-size:14px; font-weight:600; }
 nav a { transition:color .2s; } nav a:hover { color:#6651e8; }
+.lang-switch { display:grid; place-items:center; width:34px; height:34px; border:1px solid var(--line); font:750 10px var(--font-geist-mono); }
+.lang-switch:hover { background:var(--lime); color:var(--ink); border-color:var(--ink); }
 .nav-cta { min-height:38px; padding:0 15px; display:inline-flex; align-items:center; gap:14px; color:white!important; background:var(--ink); border:1px solid var(--ink); }
 .nav-cta span { color:var(--lime); }
 .nav-cta:hover { background:var(--violet-deep); border-color:var(--violet-deep); }

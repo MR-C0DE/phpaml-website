@@ -1,48 +1,52 @@
 import Link from "next/link";
 
-export function Brand() {
+export function Brand({ locale = "en" }: { locale?: "en" | "fr" }) {
   return (
-    <Link className="brand" href="/" aria-label="PHPAML — Accueil">
+    <Link className="brand" href={locale === "fr" ? "/fr" : "/"} aria-label="PHPAML — Home">
       <span className="brand-mark" aria-hidden="true">A</span>
       <span>PHP<span>AML</span></span>
     </Link>
   );
 }
 
-export function Header() {
+export function Header({ locale = "en", path = "" }: { locale?: "en" | "fr"; path?: string }) {
+  const prefix = locale === "fr" ? "/fr" : "";
+  const languageHref = locale === "fr" ? (path || "/") : `/fr${path}`;
   return (
     <header className="site-header">
       <div className="shell nav-wrap">
-        <Brand />
-        <nav aria-label="Navigation principale">
-          <Link href="/docs">Documentation</Link>
-          <Link href="/download">Télécharger</Link>
+        <Brand locale={locale} />
+        <nav aria-label={locale === "fr" ? "Navigation principale" : "Main navigation"}>
+          <Link href={`${prefix}/docs`}>{locale === "fr" ? "Documentation" : "Docs"}</Link>
+          <Link href={`${prefix}/download`}>{locale === "fr" ? "Télécharger" : "Download"}</Link>
+          <Link className="lang-switch" href={languageHref}>{locale === "fr" ? "EN" : "FR"}</Link>
           <a href="https://github.com/MR-C0DE/phpaml-cli">GitHub ↗</a>
-          <Link className="nav-cta" href="/download">Installer AML <span>↓</span></Link>
+          <Link className="nav-cta" href={`${prefix}/download`}>{locale === "fr" ? "Installer AML" : "Install AML"} <span>↓</span></Link>
         </nav>
       </div>
     </header>
   );
 }
 
-export function Footer() {
+export function Footer({ locale = "en" }: { locale?: "en" | "fr" }) {
+  const prefix = locale === "fr" ? "/fr" : "";
   return (
     <footer className="site-footer">
       <div className="shell footer-grid">
         <div>
-          <Brand />
-          <p>Le mini-framework PHP autonome, pensé pour rester lisible.</p>
+          <Brand locale={locale} />
+          <p>{locale === "fr" ? "Le mini-framework PHP autonome, pensé pour rester lisible." : "The autonomous PHP mini-framework, designed to stay readable."}</p>
         </div>
         <div className="footer-links">
-          <Link href="/docs">Documentation</Link>
-          <Link href="/download">Installateurs</Link>
+          <Link href={`${prefix}/docs`}>{locale === "fr" ? "Documentation" : "Documentation"}</Link>
+          <Link href={`${prefix}/download`}>{locale === "fr" ? "Installateurs" : "Installers"}</Link>
           <a href="https://github.com/MR-C0DE/phpaml-framework">Framework</a>
           <a href="https://github.com/MR-C0DE/phpaml-template">Modèle</a>
         </div>
       </div>
       <div className="shell footer-bottom">
-        <span>PHPAML est un projet expérimental.</span>
-        <span>Version actuelle · 1.3.0</span>
+        <span>{locale === "fr" ? "PHPAML est un projet expérimental." : "PHPAML is an experimental project."}</span>
+        <span>{locale === "fr" ? "Version actuelle" : "Current version"} · 1.3.0</span>
       </div>
     </footer>
   );

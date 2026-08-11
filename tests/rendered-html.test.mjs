@@ -21,19 +21,21 @@ test("renders the PHPAML landing page", async () => {
 
   const html = await response.text();
   assert.match(html, /PHPAML/);
-  assert.match(html, /Structurez PHP/);
+  assert.match(html, /Structure PHP/);
   assert.match(html, /v1\.3\.0/);
-  assert.match(html, /aml create mon-projet/);
+  assert.match(html, /aml create my-project/);
   assert.match(html, /href="\/download"/);
   assert.match(html, /href="\/docs"/);
+  assert.match(html, /href="\/fr"/);
   assert.doesNotMatch(html, /codex-preview|Building your site|react-loading-skeleton/i);
 });
 
 test("renders documentation and download routes", async () => {
-  const [docs, download] = await Promise.all([render("/docs"), render("/download")]);
+  const [docs, download, french] = await Promise.all([render("/docs"), render("/download"), render("/fr")]);
   assert.equal(docs.status, 200);
   assert.equal(download.status, 200);
-  assert.match(await docs.text(), /Documentation officielle/);
+  assert.match(await docs.text(), /Official documentation/);
   assert.match(await download.text(), /phpaml-1\.3\.0-windows-x64\.exe/);
+  assert.match(await french.text(), /Structurez PHP/);
   await access(new URL("../public/og-v2.png", import.meta.url));
 });
