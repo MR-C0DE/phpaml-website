@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { release } from "./release";
 
 export function Brand({ locale = "en" }: { locale?: "en" | "fr" }) {
   return (
@@ -47,7 +48,7 @@ export function Footer({ locale = "en" }: { locale?: "en" | "fr" }) {
       </div>
       <div className="shell footer-bottom">
         <span>{locale === "fr" ? "PHPAML est un projet expérimental." : "PHPAML is an experimental project."}</span>
-        <span>{locale === "fr" ? "Version actuelle" : "Current version"} · 1.3.0</span>
+        <span>{locale === "fr" ? "Version actuelle" : "Current version"} · {release.cliVersion}</span>
       </div>
     </footer>
   );

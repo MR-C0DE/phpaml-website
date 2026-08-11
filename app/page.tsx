@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CodeBlock, Footer, Header } from "./components";
+import { release } from "./release";
 
 const copy = {
   en: {
@@ -47,10 +48,10 @@ export function HomePage({ locale }: { locale: "en" | "fr" }) {
   const project = locale === "fr" ? "mon-projet" : "my-project";
   return <><Header locale={locale} /><main>
     <section className="hero shell"><div className="hero-copy">
-      <div className="eyebrow"><span /> {c.eyebrow} <b>v1.3</b></div><h1>{c.title}</h1><p className="hero-lead">{c.lead}</p>
+      <div className="eyebrow"><span /> {c.eyebrow} <b>v{release.cliVersion}</b></div><h1>{c.title}</h1><p className="hero-lead">{c.lead}</p>
       <div className="hero-actions"><Link className="button primary" href={`${prefix}/download`}>{c.download} <span>↓</span></Link><Link className="button ghost" href={`${prefix}/docs`}>{c.docs} <span>→</span></Link></div>
       <div className="hero-proof"><span><strong>0</strong> {c.zero}</span><span><strong>3</strong> {c.platforms}</span><span><strong>1</strong> {c.command}</span></div>
-    </div><div className="hero-code"><div className="version-pill"><span /> v1.3.0 · {c.status}</div><div className="terminal-label">01 / QUICK START</div>
+    </div><div className="hero-code"><div className="version-pill"><span /> v{release.cliVersion} · {c.status}</div><div className="terminal-label">01 / QUICK START</div>
       <CodeBlock>{`$ aml create ${project}\n✓ Official template verified\n\n$ cd ${project} && aml install\n✓ PHPAML installed in aml_env\n\n$ aml doctor\n✓ 13 checks passed\n\n$ aml serve\n→ http://localhost:8000`}</CodeBlock><div className="code-shadow" /><div className="floating-note">PHP + Composer<br /><strong>included</strong></div>
     </div></section>
     <section className="principle-strip"><div className="shell strip-grid"><span>PHP 8.2+</span><i /><span>MVC</span><i /><span>DI container</span><i /><span>PHP included</span></div></section>
