@@ -1,9 +1,10 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function Brand({ locale = "en" }: { locale?: "en" | "fr" }) {
   return (
     <Link className="brand" href={locale === "fr" ? "/fr" : "/"} aria-label="PHPAML — Home">
-      <span className="brand-mark" aria-hidden="true">A</span>
+      <Image className="brand-mark" src="/phpaml-logo-violet-lime.png" alt="" width={32} height={32} priority />
       <span>PHP<span>AML</span></span>
     </Link>
   );
