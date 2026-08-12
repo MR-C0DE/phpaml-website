@@ -12,7 +12,7 @@ const copy = {
     essential: "Essential and complete", everything: <>Everything you need.<br /><span>Nothing hidden.</span></>,
     first: "First project", route: <>From zero to your<br />first route.</>,
     install: "AML installs its own environment. No PHP setup, no global Composer, and no system folders to manage.", guide: "Quick-start guide",
-    ready: "Ready to build?", next: <>Your next project<br />starts with <code>aml create</code>.</>, installAml: "Install PHPAML", status: "pre-stable",
+    ready: "Ready to build?", next: <>Your next project<br />starts with <code>aml create</code>.</>, installAml: "Install PHPAML", status: "stable",
     features: [
       ["01", "Clear MVC", "Controllers, models, PHP views, and partials with no hidden magic."],
       ["02", "HTTP routing", "Dynamic parameters, named routes, and per-route middleware."],
@@ -31,7 +31,7 @@ const copy = {
     essential: "Essentiel, complet", everything: <>Tout ce qu’il faut.<br /><span>Rien à cacher.</span></>,
     first: "Premier projet", route: <>De zéro à votre<br />première route.</>,
     install: "AML installe son propre environnement. Pas de configuration PHP, pas de Composer global, pas de dossier système à bricoler.", guide: "Guide de démarrage",
-    ready: "Prêt à construire ?", next: <>Votre prochain projet<br />commence par <code>aml create</code>.</>, installAml: "Installer PHPAML", status: "pré-stable",
+    ready: "Prêt à construire ?", next: <>Votre prochain projet<br />commence par <code>aml create</code>.</>, installAml: "Installer PHPAML", status: "stable",
     features: [
       ["01", "MVC clair", "Contrôleurs, modèles, vues PHP et partials sans magie cachée."],
       ["02", "Routage HTTP", "Paramètres dynamiques, routes nommées et middlewares par route."],

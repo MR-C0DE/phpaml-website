@@ -47,7 +47,7 @@ export function Footer({ locale = "en" }: { locale?: "en" | "fr" }) {
         </div>
       </div>
       <div className="shell footer-bottom">
-        <span>{locale === "fr" ? "PHPAML est un projet expérimental." : "PHPAML is an experimental project."}</span>
+        <span>{locale === "fr" ? "PHPAML est un jeune projet stable." : "PHPAML is a young stable project."}</span>
         <span>{locale === "fr" ? "Version actuelle" : "Current version"} · {release.cliVersion}</span>
       </div>
     </footer>
