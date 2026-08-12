@@ -15,7 +15,11 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: base,
     title: { default: "PHPAML — Autonomous PHP mini-framework", template: "%s · PHPAML" },
     description: "A compact PHP MVC framework inspired by Java EE and ASP.NET, with its own PHP and Composer runtimes.",
-    icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
+    icons: {
+      icon: [{ url: "/favicon.png", type: "image/png", sizes: "64x64" }],
+      shortcut: "/favicon.png",
+      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    },
     openGraph: {
       title: "PHPAML — Petit par choix",
       description: "Framework MVC, CLI autonome, PHP et Composer inclus.",
