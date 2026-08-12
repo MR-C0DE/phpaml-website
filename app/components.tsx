@@ -18,13 +18,24 @@ export function Header({ locale = "en", path = "" }: { locale?: "en" | "fr"; pat
     <header className="site-header">
       <div className="shell nav-wrap">
         <Brand locale={locale} />
-        <nav aria-label={locale === "fr" ? "Navigation principale" : "Main navigation"}>
+        <nav className="desktop-nav" aria-label={locale === "fr" ? "Navigation principale" : "Main navigation"}>
           <Link href={`${prefix}/docs`}>{locale === "fr" ? "Documentation" : "Docs"}</Link>
           <Link href={`${prefix}/download`}>{locale === "fr" ? "Télécharger" : "Download"}</Link>
           <Link className="lang-switch" href={languageHref}>{locale === "fr" ? "EN" : "FR"}</Link>
           <a href="https://github.com/MR-C0DE/phpaml-cli">GitHub ↗</a>
           <Link className="nav-cta" href={`${prefix}/download`}>{locale === "fr" ? "Installer AML" : "Install AML"} <span>↓</span></Link>
         </nav>
+        <details className="mobile-menu">
+          <summary aria-label={locale === "fr" ? "Ouvrir le menu" : "Open menu"}>
+            <span /><span /><span />
+          </summary>
+          <nav aria-label={locale === "fr" ? "Navigation mobile" : "Mobile navigation"}>
+            <Link href={`${prefix}/docs`}>{locale === "fr" ? "Documentation" : "Docs"} <span>→</span></Link>
+            <Link href={`${prefix}/download`}>{locale === "fr" ? "Télécharger" : "Download"} <span>↓</span></Link>
+            <a href="https://github.com/MR-C0DE/phpaml-cli">GitHub <span>↗</span></a>
+            <Link href={languageHref}>{locale === "fr" ? "English" : "Français"} <span>{locale === "fr" ? "EN" : "FR"}</span></Link>
+          </nav>
+        </details>
       </div>
     </header>
   );
