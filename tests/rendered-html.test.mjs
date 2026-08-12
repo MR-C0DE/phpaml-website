@@ -34,9 +34,9 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(docs, /Official documentation/);
     assert.match(docs, /aml doctor --production --json/);
     assert.match(docs, /\/css\/index\.css/);
-    assert.match(download, /phpaml-1\.3\.0-windows-x64\.exe/);
-    assert.match(download, /phpaml-1\.3\.0-macos-arm64\.pkg/);
-    assert.match(download, /phpaml-1\.3\.0-linux-x64\.deb/);
+    assert.match(download, /phpaml-1\.5\.0-windows-x64\.exe/);
+    assert.match(download, /phpaml-1\.5\.0-macos-arm64\.pkg/);
+    assert.match(download, /phpaml-1\.5\.0-linux-x64\.deb/);
     assert.match(download, /SHA-256/);
   } finally {
     server.kill("SIGTERM");
