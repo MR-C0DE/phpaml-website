@@ -134,4 +134,15 @@ h1 em { color:var(--violet-deep); font-style:normal; }
   .after-install{gap:28px;padding:52px 0}.after-install pre{padding:24px 20px;font-size:12px;overflow-x:auto}
   .portable{padding:24px;margin-bottom:25px}.back-docs{padding-bottom:65px}
 }
+.docs-content{min-width:0;width:100%}
+.docs-content section,.command-reference>div{min-width:0}
+.docs-content .terminal,.file-tree{max-width:100%}
+.command-reference code{max-width:100%;overflow-wrap:anywhere}
+@media(max-width:620px){
+  .docs-layout{width:calc(100% - 28px);min-width:0}
+  .docs-content h2,.docs-content h3,.docs-content p,.docs-content li,.command-list code{overflow-wrap:anywhere}
+  .doc-steps{padding-left:20px}
+  .notice{padding:18px 20px}
+  .doc-stats{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
