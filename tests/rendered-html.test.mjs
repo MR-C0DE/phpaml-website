@@ -25,7 +25,7 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(home, /Structure PHP/);
     assert.match(home, /href="\/fr"/);
     assert.match(home, /<title>PHPAML/);
-    assert.match(home, /rel="icon"[^>]+favicon\.svg/);
+    assert.match(home, /rel="icon"[^>]+favicon\.png/);
     assert.match(home, /aria-label="Main navigation"/);
     assert.match(home, /github\.com\/MR-C0DE\/phpaml-cli/);
     assert.match(french, /Structurez PHP/);
