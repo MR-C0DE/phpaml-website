@@ -184,3 +184,15 @@ h1 em { color:var(--violet-deep); font-style:normal; }
   .download-card .platform-mark{width:46px;height:46px}.download-card .platform-mark svg{width:24px;height:24px}
   .download-card .platform-copy h2{font-size:29px}.download-card .download-meta{margin-bottom:24px}
 }
+@media(max-width:620px){
+  .hero,.hero-copy,.hero-code,.quickstart,.quick-copy,.quickstart>.terminal{min-width:0;max-width:100%}
+  .quick-copy h2,.quick-copy p{max-width:100%;overflow-wrap:anywhere}
+  .quickstart>.terminal{width:100%;overflow:hidden}
+  .quickstart>.terminal pre{max-width:100%;overflow-x:auto}
+  .hero{overflow:clip}
+  .hero-code{overflow:visible}
+  .hero-code .code-shadow{right:0}
+  .docs-content p code,.docs-content li code,.command-list code{white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+}
+@media(min-width:621px) and (max-width:820px){.floating-note{left:8px}}
+@media(max-width:1024px){.hero{overflow:clip}.version-pill{right:0}}
