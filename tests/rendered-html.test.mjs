@@ -19,9 +19,11 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch("http://127.0.0.1:3100/fr"),
       fetch("http://127.0.0.1:3100/docs"),
       fetch("http://127.0.0.1:3100/download"),
+      fetch("http://127.0.0.1:3100/tutorial"),
+      fetch("http://127.0.0.1:3100/fr/tutorial"),
     ]);
     responses.forEach((response) => assert.equal(response.status, 200));
-    const [home, french, docs, download] = await Promise.all(responses.map((response) => response.text()));
+    const [home, french, docs, download, tutorial, frenchTutorial] = await Promise.all(responses.map((response) => response.text()));
     assert.match(home, /Structure PHP/);
     assert.match(home, /href="\/fr"/);
     assert.match(home, /<title>PHPAML/);
@@ -42,6 +44,12 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(download, /phpaml-1\.6\.0-macos-arm64\.pkg/);
     assert.match(download, /phpaml-1\.6\.0-linux-x64\.deb/);
     assert.match(download, /SHA-256/);
+    assert.match(tutorial, /Official PHPAML tutorial/);
+    assert.match(tutorial, /Master MVC/);
+    assert.match(tutorial, /CHAPTER 12/);
+    assert.match(frenchTutorial, /Tutoriel officiel PHPAML/);
+    assert.match(frenchTutorial, /Maîtrisez MVC/);
+    assert.match(frenchTutorial, /CHAPITRE 12/);
   } finally {
     server.kill("SIGTERM");
   }
