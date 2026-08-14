@@ -21,9 +21,15 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch("http://127.0.0.1:3100/download"),
       fetch("http://127.0.0.1:3100/tutorial"),
       fetch("http://127.0.0.1:3100/fr/tutorial"),
+      fetch("http://127.0.0.1:3100/tutorial/01"),
+      fetch("http://127.0.0.1:3100/fr/tutorial/01"),
+      fetch("http://127.0.0.1:3100/tutorial/02"),
+      fetch("http://127.0.0.1:3100/fr/tutorial/02"),
+      fetch("http://127.0.0.1:3100/tutorial/2"),
+      fetch("http://127.0.0.1:3100/fr/tutorial/2"),
     ]);
     responses.forEach((response) => assert.equal(response.status, 200));
-    const [home, french, docs, download, tutorial, frenchTutorial] = await Promise.all(responses.map((response) => response.text()));
+    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo] = await Promise.all(responses.map((response) => response.text()));
     assert.match(home, /Structure PHP/);
     assert.match(home, /href="\/fr"/);
     assert.match(home, /<title>PHPAML/);
@@ -40,9 +46,9 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(docs, /sftp-only/);
     assert.match(docs, /deliverables/);
     assert.match(docs, /\/css\/index\.css/);
-    assert.match(download, /phpaml-1\.6\.0-windows-x64\.exe/);
-    assert.match(download, /phpaml-1\.6\.0-macos-arm64\.pkg/);
-    assert.match(download, /phpaml-1\.6\.0-linux-x64\.deb/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.2-windows-x64\.exe/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.2-macos-arm64\.pkg/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.2-linux-x64\.deb/);
     assert.match(download, /SHA-256/);
     assert.match(tutorial, /Official PHPAML tutorial/);
     assert.match(tutorial, /Master MVC/);
@@ -50,6 +56,24 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(frenchTutorial, /Tutoriel officiel PHPAML/);
     assert.match(frenchTutorial, /Maîtrisez MVC/);
     assert.match(frenchTutorial, /CHAPITRE 12/);
+    assert.match(tutorial, /href="\/tutorial\/01"/);
+    assert.match(tutorial, /Coming soon/);
+    assert.match(chapterOne, /Install AML and/);
+    assert.match(chapterOne, /aml create my-first-app/);
+    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.2-windows-x64\.exe/);
+    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.2-macos-arm64\.pkg/);
+    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.2-linux-x64\.deb/);
+    assert.match(chapterOne, /Live reload enabled/);
+    assert.match(chapterOne, /Final exercise/);
+    assert.match(frenchChapterOne, /Installer AML et/);
+    assert.match(frenchChapterOne, /aml create mon-projet/);
+    assert.match(frenchChapterOne, /Exercice final/);
+    assert.match(tutorial, /href="\/tutorial\/02"/);
+    assert.match(chapterTwo, /Understand the/);
+    assert.match(chapterTwo, /runtime\/storage\/database\.sqlite/);
+    assert.match(chapterTwo, /public\/css\/index\.css/);
+    assert.match(frenchChapterTwo, /Comprendre la/);
+    assert.match(frenchChapterTwo, /Le runtime géré par AML/);
   } finally {
     server.kill("SIGTERM");
   }
