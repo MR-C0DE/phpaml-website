@@ -21,6 +21,7 @@ export function Header({ locale = "en", path = "" }: { locale?: "en" | "fr"; pat
         <nav className="desktop-nav" aria-label={locale === "fr" ? "Navigation principale" : "Main navigation"}>
           <Link href={`${prefix}/docs`}>{locale === "fr" ? "Documentation" : "Docs"}</Link>
           <Link href={`${prefix}/tutorial`}>{locale === "fr" ? "Tutoriel" : "Tutorial"}</Link>
+          <a href="https://phpaml-book-reader-demo.onrender.com" target="_blank" rel="noreferrer">Demo ↗</a>
           <Link href={`${prefix}/download`}>{locale === "fr" ? "Télécharger" : "Download"}</Link>
           <Link className="lang-switch" href={languageHref}>{locale === "fr" ? "EN" : "FR"}</Link>
           <a href="https://github.com/MR-C0DE/phpaml-cli">GitHub ↗</a>
@@ -33,6 +34,7 @@ export function Header({ locale = "en", path = "" }: { locale?: "en" | "fr"; pat
           <nav aria-label={locale === "fr" ? "Navigation mobile" : "Mobile navigation"}>
             <Link href={`${prefix}/docs`}>{locale === "fr" ? "Documentation" : "Docs"} <span>→</span></Link>
             <Link href={`${prefix}/tutorial`}>{locale === "fr" ? "Tutoriel MVC" : "MVC tutorial"} <span>→</span></Link>
+            <a href="https://phpaml-book-reader-demo.onrender.com" target="_blank" rel="noreferrer">Demo <span>↗</span></a>
             <Link href={`${prefix}/download`}>{locale === "fr" ? "Télécharger" : "Download"} <span>↓</span></Link>
             <a href="https://github.com/MR-C0DE/phpaml-cli">GitHub <span>↗</span></a>
             <Link href={languageHref}>{locale === "fr" ? "English" : "Français"} <span>{locale === "fr" ? "EN" : "FR"}</span></Link>
@@ -56,6 +58,7 @@ export function Footer({ locale = "en" }: { locale?: "en" | "fr" }) {
           <Link href={`${prefix}/docs`}>{locale === "fr" ? "Documentation" : "Documentation"}</Link>
           <Link href={`${prefix}/tutorial`}>{locale === "fr" ? "Tutoriel MVC" : "MVC tutorial"}</Link>
           <Link href={`${prefix}/download`}>{locale === "fr" ? "Installateurs" : "Installers"}</Link>
+          <a href="https://phpaml-book-reader-demo.onrender.com">Demo</a>
           <a href="https://github.com/MR-C0DE/phpaml-framework">Framework</a>
           <a href="https://github.com/MR-C0DE/phpaml-template">Modèle</a>
         </div>

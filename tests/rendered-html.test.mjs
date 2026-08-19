@@ -36,9 +36,14 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(home, /rel="icon"[^>]+favicon\.png/);
     assert.match(home, /aria-label="Main navigation"/);
     assert.match(home, /github\.com\/MR-C0DE\/phpaml-cli/);
+    assert.match(home, /phpaml-book-reader-demo\.onrender\.com/);
+    assert.match(home, /github\.com\/MR-C0DE\/phpaml-book-reader-demo/);
+    assert.match(home, /The Last Lighthouse/);
     assert.match(french, /Structurez PHP/);
     assert.match(french, /href="\/"/);
     assert.match(french, /aria-label="Navigation principale"/);
+    assert.match(french, /Voyez le framework/);
+    assert.match(french, /Explorer le code source/);
     assert.match(docs, /Official documentation/);
     assert.match(docs, /aml doctor --production --json/);
     assert.match(docs, /aml deploy:configure production/);

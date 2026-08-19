@@ -12,6 +12,10 @@ const copy = {
     essential: "Essential and complete", everything: <>Everything you need.<br /><span>Nothing hidden.</span></>,
     first: "First project", route: <>From zero to your<br />first route.</>,
     install: "AML installs its own environment. No PHP setup, no global Composer, and no system folders to manage.", guide: "Quick-start guide",
+    demoLabel: "Built with classic PHPAML", demoTitle: <>See the framework.<br /><span>Read the result.</span></>,
+    demoText: "The Last Lighthouse is a complete public demo built with PHPAML’s classic MVC architecture: routes, controller, model, PHP views, sessions, CSRF protection, redirects, and automated tests.",
+    demoLive: "Open the live demo", demoCode: "Explore the source code", demoBook: "The Last Lighthouse", demoChapter: "Chapter 1 · The island at dusk",
+    demoFeatures: ["Classic MVC", "Protected reader", "Session progress", "Responsive UI"],
     ready: "Ready to build?", next: <>Your next interface<br />starts with <code>aml create-view-app</code>.</>, installAml: "Install PHPAML", status: "beta",
     features: [
       ["01", "Clear MVC", "Controllers, models, PHP views, and partials with no hidden magic."],
@@ -31,6 +35,10 @@ const copy = {
     essential: "Essentiel, complet", everything: <>Tout ce qu’il faut.<br /><span>Rien à cacher.</span></>,
     first: "Premier projet", route: <>De zéro à votre<br />première route.</>,
     install: "AML installe son propre environnement. Pas de configuration PHP, pas de Composer global, pas de dossier système à bricoler.", guide: "Guide de démarrage",
+    demoLabel: "Construit avec PHPAML classique", demoTitle: <>Voyez le framework.<br /><span>Lisez le résultat.</span></>,
+    demoText: "The Last Lighthouse est une démo publique complète construite avec l’architecture MVC classique de PHPAML : routes, contrôleur, modèle, vues PHP, sessions, protection CSRF, redirections et tests automatisés.",
+    demoLive: "Ouvrir la démo", demoCode: "Explorer le code source", demoBook: "The Last Lighthouse", demoChapter: "Chapitre 1 · L’île au crépuscule",
+    demoFeatures: ["MVC classique", "Lecture protégée", "Progression en session", "Interface responsive"],
     ready: "Prêt à construire ?", next: <>Votre prochaine interface<br />commence par <code>aml create-view-app</code>.</>, installAml: "Installer PHPAML", status: "bêta",
     features: [
       ["01", "MVC clair", "Contrôleurs, modèles, vues PHP et partials sans magie cachée."],
@@ -60,6 +68,16 @@ export function HomePage({ locale }: { locale: "en" | "fr" }) {
     </section>
     <section className="section features-section"><div className="shell"><div className="section-intro compact"><div className="section-number">/ 02</div><div><p className="kicker">{c.essential}</p><h2>{c.everything}</h2></div></div><div className="feature-grid">{c.features.map(([n,t,d])=><article key={n}><small>{n}</small><h3>{t}</h3><p>{d}</p></article>)}</div></div></section>
     <section className="section shell quickstart"><div className="quick-copy"><div className="section-number">/ 03</div><p className="kicker">{c.first}</p><h2>{c.route}</h2><p>{c.install}</p><Link className="text-link" href={`${prefix}/docs#demarrage`}>{c.guide} <span>→</span></Link></div><CodeBlock>{`// configs/app.php\n'routes' => [\n    'GET /users/{id}' => [\n        'handler' => [UserController::class, 'show'],\n        'name' => 'users.show',\n    ],\n],`}</CodeBlock></section>
+    <section id="demo" className="demo-section"><div className="shell demo-grid">
+      <div className="demo-copy"><div className="section-number">/ 04</div><p className="kicker">{c.demoLabel}</p><h2>{c.demoTitle}</h2><p>{c.demoText}</p>
+        <div className="demo-features">{c.demoFeatures.map((feature, index)=><span key={feature}><b>0{index + 1}</b>{feature}</span>)}</div>
+        <div className="hero-actions"><a className="button primary" href="https://phpaml-book-reader-demo.onrender.com" target="_blank" rel="noreferrer">{c.demoLive} <span>↗</span></a><a className="button ghost" href="https://github.com/MR-C0DE/phpaml-book-reader-demo" target="_blank" rel="noreferrer">{c.demoCode} <span>↗</span></a></div>
+      </div>
+      <a className="demo-window" href="https://phpaml-book-reader-demo.onrender.com" target="_blank" rel="noreferrer" aria-label={c.demoLive}>
+        <div className="demo-browser"><i /><i /><i /><small>phpaml-book-reader-demo.onrender.com</small></div>
+        <div className="demo-reader"><aside><span>THE LAST<br />LIGHTHOUSE</span><div className="demo-lighthouse" /></aside><article><small>PHPAML MVC DEMO</small><h3>{c.demoBook}</h3><p>{c.demoChapter}</p><div className="demo-lines"><i /><i /><i /><i /></div><b>{c.demoLive} →</b></article></div>
+      </a>
+    </div></section>
     <section className="cta-section"><div className="shell cta-content"><div><p className="kicker">{c.ready}</p><h2>{c.next}</h2></div><Link className="button light" href={`${prefix}/download`}>{c.installAml} <span>→</span></Link></div></section>
   </main><Footer locale={locale} /></>;
 }
