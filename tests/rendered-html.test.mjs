@@ -11,7 +11,7 @@ async function waitForServer(url) {
 }
 
 test("serves the complete bilingual PHPAML website", async () => {
-  const server = spawn(process.execPath, ["node_modules/next/dist/bin/next", "start", "-p", "3100"], { stdio: "ignore" });
+  const server = spawn(process.execPath, ["node_modules/vinext/dist/cli.js", "start", "-p", "3100"], { stdio: "ignore" });
   try {
     await waitForServer("http://127.0.0.1:3100/");
     const responses = await Promise.all([
@@ -45,12 +45,12 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(docs, /public-html/);
     assert.match(docs, /sftp-only/);
     assert.match(docs, /deliverables/);
-    assert.match(docs, /\/css\/index\.css/);
+    assert.match(docs, /src\/views\/stylesheets/);
     assert.match(docs, /aml create-view-app/);
-    assert.match(docs, /app\/UI/);
-    assert.match(download, /phpaml-1\.7\.0-beta\.4-windows-x64\.exe/);
-    assert.match(download, /phpaml-1\.7\.0-beta\.4-macos-arm64\.pkg/);
-    assert.match(download, /phpaml-1\.7\.0-beta\.4-linux-x64\.deb/);
+    assert.match(docs, /src\/views/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.11-windows-x64\.exe/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.11-macos-arm64\.pkg/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.11-linux-x64\.deb/);
     assert.match(download, /SHA-256/);
     assert.match(tutorial, /Official PHPAML tutorial/);
     assert.match(tutorial, /Master MVC/);
@@ -62,9 +62,9 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(tutorial, /Coming soon/);
     assert.match(chapterOne, /Install AML and/);
     assert.match(chapterOne, /aml create my-first-app/);
-    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.4-windows-x64\.exe/);
-    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.4-macos-arm64\.pkg/);
-    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.4-linux-x64\.deb/);
+    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.11-windows-x64\.exe/);
+    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.11-macos-arm64\.pkg/);
+    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.11-linux-x64\.deb/);
     assert.match(chapterOne, /Live reload enabled/);
     assert.match(chapterOne, /Final exercise/);
     assert.match(frenchChapterOne, /Installer AML et/);
@@ -72,7 +72,7 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(frenchChapterOne, /Exercice final/);
     assert.match(tutorial, /href="\/tutorial\/02"/);
     assert.match(chapterTwo, /Understand the/);
-    assert.match(chapterTwo, /runtime\/storage\/database\.sqlite/);
+    assert.match(chapterTwo, /runtime\/database\.sqlite/);
     assert.match(chapterTwo, /public\/css\/index\.css/);
     assert.match(frenchChapterTwo, /Comprendre la/);
     assert.match(frenchChapterTwo, /Le runtime géré par AML/);
