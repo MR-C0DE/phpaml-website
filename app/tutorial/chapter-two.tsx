@@ -12,7 +12,7 @@ const tree = `my-project/
 │   ├── views/partials/footer.php
 │   └── public/{css,js,img}/
 ├── configs/app.php
-├── database/migrations/
+├── runtime/database/migrations/
 ├── runtime/          # private engine
 ├── phpaml.json       # project manifest
 ├── public/index.php  # web entry point
@@ -25,7 +25,7 @@ export function ChapterTwo({ locale }: { locale:"en"|"fr" }) {
     ["02.2","Contrôleurs et modèles","Les contrôleurs vivent dans app/Controllers. Les modèles vivent dans app/Models et concentrent l’accès aux données ainsi que la logique métier."],
     ["02.3","Vues et partials","Les vues PHP vivent dans app/views. Une page complète peut réutiliser app/views/partials/header.php et footer.php. La vue reçoit uniquement les données préparées par le contrôleur et échappe les sorties HTML."],
     ["02.4","Configuration de l’application","configs/app.php définit le nom, le mode debug, le chemin des vues, la base de données, les routes et les middlewares. Les secrets restent dans .env et sont lus avec Env."],
-    ["02.5","Base de données et migrations","SQLite pointe par défaut vers runtime/storage/database.sqlite. Les migrations que vous écrivez restent dans database/migrations afin que la structure soit reproductible et versionnée."],
+    ["02.5","Base de données et migrations","SQLite pointe par défaut vers runtime/database.sqlite. Les migrations générées restent dans runtime/database/migrations afin que la structure soit reproductible et versionnée."],
     ["02.6","Fichiers publics","CSS, JavaScript, images et favicon se trouvent dans public. public/index.php reçoit les requêtes web. Sur un hébergeur, seule la surface publique doit être exposée au navigateur."],
     ["02.7","Le runtime géré par AML","runtime contient le framework, l’autoloader, Composer, le stockage et les caches. phpaml.json identifie le projet et les versions attendues. AML génère et met à jour le runtime avec aml install."],
   ]:[
@@ -33,7 +33,7 @@ export function ChapterTwo({ locale }: { locale:"en"|"fr" }) {
     ["02.2","Controllers and models","Controllers live in app/Controllers. Models live in app/Models and concentrate data access and business logic."],
     ["02.3","Views and partials","PHP views live in app/views. A complete page can reuse app/views/partials/header.php and footer.php. The view receives only data prepared by the controller and escapes HTML output."],
     ["02.4","Application configuration","configs/app.php defines the name, debug mode, view path, database, routes, and middleware. Secrets stay in .env and are read through Env."],
-    ["02.5","Database and migrations","SQLite points to runtime/storage/database.sqlite by default. Migrations you write remain in database/migrations so the structure is reproducible and versioned."],
+    ["02.5","Database and migrations","SQLite points to runtime/database.sqlite by default. Generated migrations remain in runtime/database/migrations so the structure is reproducible and versioned."],
     ["02.6","Public files","CSS, JavaScript, images, and the favicon live in public. public/index.php receives web requests. On a host, only the public surface should be exposed to the browser."],
     ["02.7","The AML-managed runtime","runtime contains the framework, autoloader, Composer, storage, and caches. phpaml.json identifies the project and expected versions. AML generates and updates the runtime through aml install."],
   ];
@@ -61,7 +61,7 @@ final class HomeController
     'routes' => [
         'GET /' => ['handler' => [HomeController::class, 'index']],
     ],
-];`}</CodeBlock>}{index===4&&<div className="architecture-note"><code>database/migrations/</code><span>{fr?"Vos migrations versionnées":"Your versioned migrations"}</span><code>runtime/storage/database.sqlite</code><span>{fr?"Base locale générée":"Generated local database"}</span></div>}{index===5&&<div className="public-map"><span>public/index.php</span><b>→</b><span>public/css/index.css</span><span>public/js/main.js</span><span>public/img/favicon.svg</span></div>}{index===6&&<div className="engine-boundary"><div><strong>{fr?"Vous modifiez":"You edit"}</strong><code>app/ · configs/ · database/ · .env</code></div><div><strong>{fr?"AML gère":"AML manages"}</strong><code>runtime/</code></div></div>}</section>)}
+];`}</CodeBlock>}{index===4&&<div className="architecture-note"><code>runtime/database/migrations/</code><span>{fr?"Migrations générées":"Generated migrations"}</span><code>runtime/database.sqlite</code><span>{fr?"Base locale générée":"Generated local database"}</span></div>}{index===5&&<div className="public-map"><span>public/index.php</span><b>→</b><span>public/css/index.css</span><span>public/js/main.js</span><span>public/img/favicon.svg</span></div>}{index===6&&<div className="engine-boundary"><div><strong>{fr?"Vous modifiez":"You edit"}</strong><code>app/ · configs/ · public/ · .env</code></div><div><strong>{fr?"AML gère":"AML manages"}</strong><code>runtime/</code></div></div>}</section>)}
       <section className="lesson-exercise" id="exercise"><p className="kicker">{fr?"Exercice final":"Final exercise"}</p><h2>{fr?"Classez les responsabilités.":"Place each responsibility."}</h2><p>{fr?"Retrouvez le contrôleur, le modèle, la vue, les partials, le CSS, la configuration et SQLite. Expliquez le rôle de chacun.":"Locate the controller, model, view, partials, CSS, configuration, and SQLite. Explain the role of each."}</p><div className="lesson-check"><strong>{fr?"Chapitre réussi si…":"Chapter complete when…"}</strong><span>✓ MVC</span><span>✓ public</span><span>✓ runtime</span></div></section>
     </article></div>
     <section className="lesson-navigation shell"><Link href={`${prefix}/tutorial/01`}>← {fr?"Chapitre 01":"Chapter 01"}</Link><span>{fr?"Chapitre 03 · À venir":"Chapter 03 · Coming soon"} 🔒</span></section>
