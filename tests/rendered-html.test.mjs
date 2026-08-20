@@ -39,11 +39,15 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(home, /phpaml-book-reader-demo\.onrender\.com/);
     assert.match(home, /github\.com\/MR-C0DE\/phpaml-book-reader-demo/);
     assert.match(home, /The Last Lighthouse/);
+    assert.match(home, /Tutor Chess/);
+    assert.match(home, /github\.com\/MR-C0DE\/phpaml-chess-tutor-demo/);
+    assert.match(home, /Stockfish 18/);
     assert.match(french, /Structurez PHP/);
     assert.match(french, /href="\/"/);
     assert.match(french, /aria-label="Navigation principale"/);
     assert.match(french, /Voyez le framework/);
     assert.match(french, /Explorer le code source/);
+    assert.match(french, /Explorer le code de Tutor Chess/);
     assert.match(docs, /Official documentation/);
     assert.match(docs, /aml doctor --production --json/);
     assert.match(docs, /aml deploy:configure production/);
