@@ -30,6 +30,7 @@ test("serves the complete bilingual PHPAML website", async () => {
     ]);
     responses.forEach((response) => assert.equal(response.status, 200));
     const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo] = await Promise.all(responses.map((response) => response.text()));
+    const docsText = docs.replace(/<[^>]+>/g, "");
     assert.match(home, /Structure PHP/);
     assert.match(home, /href="\/fr"/);
     assert.match(home, /<title>PHPAML/);
@@ -49,6 +50,8 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(home, /syntax-variable/);
     assert.match(home, /syntax-string/);
     assert.match(home, /syntax-operator/);
+    assert.match(home, /syntax-attribute/);
+    assert.match(home, /syntax-parameter/);
     assert.match(home, /Effect/);
     assert.match(french, /Structurez PHP/);
     assert.match(french, /href="\/"/);
@@ -59,7 +62,7 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(french, /Trois couches ciblées/);
     assert.match(docs, /Official documentation/);
     assert.match(docs, /aml doctor --production --json/);
-    assert.match(docs, /aml deploy:configure production/);
+    assert.match(docsText, /aml deploy:configure production/);
     assert.match(docs, /public-html/);
     assert.match(docs, /sftp-only/);
     assert.match(docs, /deliverables/);

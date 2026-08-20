@@ -75,16 +75,18 @@ export function Footer({ locale = "en" }: { locale?: "en" | "fr" }) {
 }
 
 function highlightCode(source: string) {
-  const tokenPattern = /((?<!:)\/\/[^\n]*|#\[[^\]]+\]|'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"|\$[A-Za-z_]\w*|\b(?:final|class|extends|public|protected|private|function|return|new|use|true|false|null|int|string|bool|array|void|static|readonly|fn)\b|\b\d+(?:\.\d+)?\b|::|->)/g;
-  return source.split(tokenPattern).filter(Boolean).map((token, index) => {
+  const tokenPattern = /((?<!:)\/\/[^\n]*|#\[|(?<=#\[)[A-Za-z_]\w*|\b[A-Za-z_]\w*(?=\s*:)|'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"|\$[A-Za-z_]\w*|\b(?:final|class|extends|public|protected|private|function|return|new|use|true|false|null|int|string|bool|array|void|static|readonly|fn)\b|\b\d+(?:\.\d+)?\b|::|->)/g;
+  const tokens = source.split(tokenPattern).filter(Boolean);
+  return tokens.map((token, index) => {
     let kind = "plain";
     if (token.startsWith("//")) kind = "comment";
-    else if (token.startsWith("#[")) kind = "attribute";
+    else if (tokens[index - 1] === "#[") kind = "attribute";
     else if (token.startsWith("'") || token.startsWith('"')) kind = "string";
     else if (/^\$[A-Za-z_]/.test(token)) kind = "variable";
     else if (/^\d/.test(token)) kind = "number";
     else if (token === "::" || token === "->") kind = "operator";
     else if (/^(final|class|extends|public|protected|private|function|return|new|use|true|false|null|int|string|bool|array|void|static|readonly|fn)$/.test(token)) kind = "keyword";
+    else if (/^[A-Za-z_]\w*$/.test(token)) kind = "parameter";
     return <span className={`syntax-${kind}`} key={`${index}-${token}`}>{token}</span>;
   });
 }
