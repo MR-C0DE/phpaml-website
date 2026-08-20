@@ -19,6 +19,13 @@ const copy = {
     chessLabel: "Built with AML View + PHPAML Data", chessTitle: <>A reactive interface.<br /><span>A real application.</span></>,
     chessText: "Tutor Chess is the public reference project for AML View: client-side navigation, reactive state, themes, Stockfish analysis, DeepSeek coaching, MongoDB accounts, and persistent lesson history.",
     chessLive: "Open the live demo", chessCode: "Explore the source code", chessStart: "Run locally with AML", chessFeatures: ["AML View", "Stockfish 18", "DeepSeek tutor", "MongoDB history"],
+    stackLabel: "The complete application platform", stackTitle: <>Three focused layers.<br /><span>One PHP workflow.</span></>,
+    stackText: "Use each package independently or combine all three. View describes the interface, Data persists your domain, and Engine turns declarative PHP instructions into fast browser interactions.",
+    stackItems: [
+      ["01", "AML View", "Declarative pages, reusable components, layouts, reactive state, computed properties and effects."],
+      ["02", "PHPAML Data", "Typed entities, expressive queries, relations, migrations and transactions for SQL and MongoDB."],
+      ["03", "AML Engine", "Client-side state, events, collections and navigation without a full page reload or handwritten JavaScript."],
+    ],
     ready: "Ready to build?", next: <>Your next interface<br />starts with <code>aml create-view-app</code>.</>, installAml: "Install PHPAML", status: "beta",
     features: [
       ["01", "Clear MVC", "Controllers, models, PHP views, and partials with no hidden magic."],
@@ -45,6 +52,13 @@ const copy = {
     chessLabel: "Construit avec AML View + PHPAML Data", chessTitle: <>Une interface réactive.<br /><span>Une vraie application.</span></>,
     chessText: "Tutor Chess est le projet public de référence d’AML View : navigation côté client, état réactif, thèmes, analyse Stockfish, tutorat DeepSeek, comptes MongoDB et historique persistant des leçons.",
     chessLive: "Ouvrir la démo en ligne", chessCode: "Explorer le code source", chessStart: "Lancer localement avec AML", chessFeatures: ["AML View", "Stockfish 18", "Tuteur DeepSeek", "Historique MongoDB"],
+    stackLabel: "La plateforme applicative complète", stackTitle: <>Trois couches ciblées.<br /><span>Un seul flux PHP.</span></>,
+    stackText: "Utilisez chaque paquet séparément ou combinez les trois. View décrit l’interface, Data conserve votre domaine et Engine transforme les instructions PHP déclaratives en interactions rapides dans le navigateur.",
+    stackItems: [
+      ["01", "AML View", "Pages déclaratives, composants réutilisables, layouts, état réactif, propriétés calculées et effets."],
+      ["02", "PHPAML Data", "Entités typées, requêtes expressives, relations, migrations et transactions pour SQL et MongoDB."],
+      ["03", "AML Engine", "État, événements, collections et navigation côté client sans rechargement complet ni JavaScript manuel."],
+    ],
     ready: "Prêt à construire ?", next: <>Votre prochaine interface<br />commence par <code>aml create-view-app</code>.</>, installAml: "Installer PHPAML", status: "bêta",
     features: [
       ["01", "MVC clair", "Contrôleurs, modèles, vues PHP et partials sans magie cachée."],
@@ -74,6 +88,15 @@ export function HomePage({ locale }: { locale: "en" | "fr" }) {
     </section>
     <section className="section features-section"><div className="shell"><div className="section-intro compact"><div className="section-number">/ 02</div><div><p className="kicker">{c.essential}</p><h2>{c.everything}</h2></div></div><div className="feature-grid">{c.features.map(([n,t,d])=><article key={n}><small>{n}</small><h3>{t}</h3><p>{d}</p></article>)}</div></div></section>
     <section className="section shell quickstart"><div className="quick-copy"><div className="section-number">/ 03</div><p className="kicker">{c.first}</p><h2>{c.route}</h2><p>{c.install}</p><Link className="text-link" href={`${prefix}/docs#demarrage`}>{c.guide} <span>→</span></Link></div><CodeBlock>{`// configs/app.php\n'routes' => [\n    'GET /users/{id}' => [\n        'handler' => [UserController::class, 'show'],\n        'name' => 'users.show',\n    ],\n],`}</CodeBlock></section>
+    <section id="platform" className="platform-section"><div className="shell">
+      <div className="platform-intro"><div className="section-number">/ 04</div><div><p className="kicker">{c.stackLabel}</p><h2>{c.stackTitle}</h2></div><p>{c.stackText}</p></div>
+      <div className="platform-cards">{c.stackItems.map(([n,title,description])=><article key={title}><small>{n}</small><h3>{title}</h3><p>{description}</p></article>)}</div>
+      <div className="platform-examples">
+        <article><header><span>VIEW</span><strong>ReactiveCounter.php</strong></header><CodeBlock>{`final class Counter extends Page\n{\n    #[State] public int $count = 0;\n\n    public function body(): View\n    {\n        return VStack(\n            Heading('AML View')->size(42),\n            Text(StateRef::to('count', $this->count)),\n            Button('Add one')->onClick(\n                ClientAction::increment('count')\n            )\n        )->gap(16);\n    }\n}`}</CodeBlock></article>
+        <article><header><span>DATA</span><strong>UserRepository.php</strong></header><CodeBlock>{`$users = $db->users()\n    ->where('active', '=', true)\n    ->orderBy('name')\n    ->limit(20)\n    ->all();\n\n$db->transaction(function ($db) use ($lesson) {\n    $db->lessons()->add($lesson);\n    $db->saveChanges();\n});`}</CodeBlock></article>
+        <article><header><span>ENGINE</span><strong>SearchPage.php</strong></header><CodeBlock>{`#[Effect(\n    dependencies: ['query'],\n    debounce: 300,\n    concurrency: 'latest'\n)]\nprotected function search(): EffectPlan\n{\n    return Effects::run(\n        ClientAction::set('loading', true)\n    );\n}\n\nButton('Account')->onClick(\n    Navigate('/account')\n);`}</CodeBlock></article>
+      </div>
+    </div></section>
     <section id="demo" className="demo-section"><div className="shell demo-grid">
       <div className="demo-copy"><div className="section-number">/ 04</div><p className="kicker">{c.demoLabel}</p><h2>{c.demoTitle}</h2><p>{c.demoText}</p>
         <div className="demo-features">{c.demoFeatures.map((feature, index)=><span key={feature}><b>0{index + 1}</b>{feature}</span>)}</div>
