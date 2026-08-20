@@ -44,8 +44,11 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(home, /github\.com\/MR-C0DE\/phpaml-chess-tutor-demo/);
     assert.match(home, /Stockfish 18/);
     assert.match(home, /ReactiveCounter\.php/);
-    assert.match(home, /ClientAction::increment/);
-    assert.match(home, /where\(&#x27;active&#x27;/);
+    assert.match(home, /ClientAction/);
+    assert.match(home, /syntax-keyword/);
+    assert.match(home, /syntax-variable/);
+    assert.match(home, /syntax-string/);
+    assert.match(home, /syntax-operator/);
     assert.match(home, /Effect/);
     assert.match(french, /Structurez PHP/);
     assert.match(french, /href="\/"/);

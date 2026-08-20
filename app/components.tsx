@@ -74,14 +74,30 @@ export function Footer({ locale = "en" }: { locale?: "en" | "fr" }) {
   );
 }
 
+function highlightCode(source: string) {
+  const tokenPattern = /((?<!:)\/\/[^\n]*|#\[[^\]]+\]|'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"|\$[A-Za-z_]\w*|\b(?:final|class|extends|public|protected|private|function|return|new|use|true|false|null|int|string|bool|array|void|static|readonly|fn)\b|\b\d+(?:\.\d+)?\b|::|->)/g;
+  return source.split(tokenPattern).filter(Boolean).map((token, index) => {
+    let kind = "plain";
+    if (token.startsWith("//")) kind = "comment";
+    else if (token.startsWith("#[")) kind = "attribute";
+    else if (token.startsWith("'") || token.startsWith('"')) kind = "string";
+    else if (/^\$[A-Za-z_]/.test(token)) kind = "variable";
+    else if (/^\d/.test(token)) kind = "number";
+    else if (token === "::" || token === "->") kind = "operator";
+    else if (/^(final|class|extends|public|protected|private|function|return|new|use|true|false|null|int|string|bool|array|void|static|readonly|fn)$/.test(token)) kind = "keyword";
+    return <span className={`syntax-${kind}`} key={`${index}-${token}`}>{token}</span>;
+  });
+}
+
 export function CodeBlock({ children }: { children: React.ReactNode }) {
+  const source = typeof children === "string" ? children : String(children ?? "");
   return (
     <div className="terminal">
       <div className="terminal-bar">
         <span /><span /><span />
         <small>phpaml — zsh</small>
       </div>
-      <pre><code>{children}</code></pre>
+      <pre><code>{highlightCode(source)}</code></pre>
     </div>
   );
 }
