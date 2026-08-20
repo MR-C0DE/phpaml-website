@@ -27,9 +27,15 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch("http://127.0.0.1:3100/fr/tutorial/02"),
       fetch("http://127.0.0.1:3100/tutorial/2"),
       fetch("http://127.0.0.1:3100/fr/tutorial/2"),
+      fetch("http://127.0.0.1:3100/platform"),
+      fetch("http://127.0.0.1:3100/fr/platform"),
+      fetch("http://127.0.0.1:3100/demos"),
+      fetch("http://127.0.0.1:3100/fr/demos"),
+      fetch("http://127.0.0.1:3100/demos/book-reader"),
+      fetch("http://127.0.0.1:3100/demos/tutor-chess"),
     ]);
     responses.forEach((response) => assert.equal(response.status, 200));
-    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo] = await Promise.all(responses.map((response) => response.text()));
+    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, , , platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo] = await Promise.all(responses.map((response) => response.text()));
     const docsText = docs.replace(/<[^>]+>/g, "");
     assert.match(home, /Structure PHP/);
     assert.match(home, /href="\/fr"/);
@@ -53,6 +59,16 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(home, /syntax-attribute/);
     assert.match(home, /syntax-parameter/);
     assert.match(home, /Effect/);
+    assert.match(home, /href="\/platform"/);
+    assert.match(home, /href="\/demos"/);
+    assert.match(platform, /Three layers\. One PHP workflow/);
+    assert.match(platform, /ReactiveCounter\.php/);
+    assert.match(frenchPlatform, /Trois couches\. Un seul flux PHP/);
+    assert.match(demos, /Real code\. Public applications/);
+    assert.match(demos, /href="\/demos\/book-reader"/);
+    assert.match(frenchDemos, /Du code réel\. Des applications publiques/);
+    assert.match(bookDemo, /The Last Lighthouse/);
+    assert.match(chessDemo, /Tutor Chess/);
     assert.match(french, /Structurez PHP/);
     assert.match(french, /href="\/"/);
     assert.match(french, /aria-label="Navigation principale"/);

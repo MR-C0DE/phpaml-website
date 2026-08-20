@@ -88,7 +88,7 @@ export function HomePage({ locale }: { locale: "en" | "fr" }) {
     </section>
     <section className="section features-section"><div className="shell"><div className="section-intro compact"><div className="section-number">/ 02</div><div><p className="kicker">{c.essential}</p><h2>{c.everything}</h2></div></div><div className="feature-grid">{c.features.map(([n,t,d])=><article key={n}><small>{n}</small><h3>{t}</h3><p>{d}</p></article>)}</div></div></section>
     <section className="section shell quickstart"><div className="quick-copy"><div className="section-number">/ 03</div><p className="kicker">{c.first}</p><h2>{c.route}</h2><p>{c.install}</p><Link className="text-link" href={`${prefix}/docs#demarrage`}>{c.guide} <span>→</span></Link></div><CodeBlock>{`// configs/app.php\n'routes' => [\n    'GET /users/{id}' => [\n        'handler' => [UserController::class, 'show'],\n        'name' => 'users.show',\n    ],\n],`}</CodeBlock></section>
-    <section id="platform" className="platform-section"><div className="shell">
+    <section id="platform" className="platform-section home-legacy-showcase"><div className="shell">
       <div className="platform-intro"><div className="section-number">/ 04</div><div><p className="kicker">{c.stackLabel}</p><h2>{c.stackTitle}</h2></div><p>{c.stackText}</p></div>
       <div className="platform-cards">{c.stackItems.map(([n,title,description])=><article key={title}><small>{n}</small><h3>{title}</h3><p>{description}</p></article>)}</div>
       <div className="platform-examples">
@@ -97,7 +97,7 @@ export function HomePage({ locale }: { locale: "en" | "fr" }) {
         <article><header><span>ENGINE</span><strong>SearchPage.php</strong></header><CodeBlock>{`#[Effect(\n    dependencies: ['query'],\n    debounce: 300,\n    concurrency: 'latest'\n)]\nprotected function search(): EffectPlan\n{\n    return Effects::run(\n        ClientAction::set('loading', true)\n    );\n}\n\nButton('Account')->onClick(\n    Navigate('/account')\n);`}</CodeBlock></article>
       </div>
     </div></section>
-    <section id="demo" className="demo-section"><div className="shell demo-grid">
+    <section id="demo" className="demo-section home-legacy-showcase"><div className="shell demo-grid">
       <div className="demo-copy"><div className="section-number">/ 04</div><p className="kicker">{c.demoLabel}</p><h2>{c.demoTitle}</h2><p>{c.demoText}</p>
         <div className="demo-features">{c.demoFeatures.map((feature, index)=><span key={feature}><b>0{index + 1}</b>{feature}</span>)}</div>
         <div className="hero-actions"><a className="button primary" href="https://phpaml-book-reader-demo.onrender.com" target="_blank" rel="noreferrer">{c.demoLive} <span>↗</span></a><a className="button ghost" href="https://github.com/MR-C0DE/phpaml-book-reader-demo" target="_blank" rel="noreferrer">{c.demoCode} <span>↗</span></a></div>
@@ -107,7 +107,7 @@ export function HomePage({ locale }: { locale: "en" | "fr" }) {
         <div className="demo-reader"><aside><span>THE LAST<br />LIGHTHOUSE</span><div className="demo-lighthouse" /></aside><article><small>PHPAML MVC DEMO</small><h3>{c.demoBook}</h3><p>{c.demoChapter}</p><div className="demo-lines"><i /><i /><i /><i /></div><b>{c.demoLive} →</b></article></div>
       </a>
     </div></section>
-    <section id="tutor-chess" className="chess-demo-section"><div className="shell chess-demo-grid">
+    <section id="tutor-chess" className="chess-demo-section home-legacy-showcase"><div className="shell chess-demo-grid">
       <a className="chess-window" href="https://phpaml-chess-tutor.onrender.com" target="_blank" rel="noreferrer" aria-label={c.chessLive}>
         <div className="chess-window-bar"><span>PHPAML / TUTOR CHESS</span><b>AML VIEW</b></div>
         <div className="chess-board">{["♜","♞","♝","♛","♚","♝","♞","♜","♟","♟","♟","♟","♟","♟","♟","♟","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","♙","♙","♙","♙","♙","♙","♙","♙","♖","♘","♗","♕","♔","♗","♘","♖"].map((piece,index)=><i className={index < 16 ? "black-piece" : index >= 48 ? "white-piece" : undefined} key={index}>{piece}</i>)}</div>
@@ -119,6 +119,7 @@ export function HomePage({ locale }: { locale: "en" | "fr" }) {
         <a className="text-link" href="https://github.com/MR-C0DE/phpaml-chess-tutor-demo#run-locally" target="_blank" rel="noreferrer">{c.chessStart} <span>→</span></a>
       </div>
     </div></section>
+    <section className="section home-explore"><div className="shell"><div className="section-intro compact"><div className="section-number">/ 04</div><div><p className="kicker">{locale === "fr" ? "Explorez plus loin" : "Explore further"}</p><h2>{locale === "fr" ? "Une plateforme claire. Des démos séparées." : "A clear platform. Separate demos."}</h2></div></div><div className="explore-grid"><Link href={`${prefix}/platform`}><small>PLATFORM</small><h3>AML View · Data · Engine</h3><p>{c.stackText}</p><span>{locale === "fr" ? "Voir les exemples de code" : "See the code examples"} →</span></Link><Link href={`${prefix}/demos`}><small>DEMOS</small><h3>Book Reader · Tutor Chess</h3><p>{locale === "fr" ? "Découvrez les applications publiques, leur architecture et leur code source." : "Explore the public applications, their architecture, and their source code."}</p><span>{locale === "fr" ? "Parcourir les démonstrations" : "Browse the demonstrations"} →</span></Link></div></div></section>
     <section className="cta-section"><div className="shell cta-content"><div><p className="kicker">{c.ready}</p><h2>{c.next}</h2></div><Link className="button light" href={`${prefix}/download`}>{c.installAml} <span>→</span></Link></div></section>
   </main><Footer locale={locale} /></>;
 }
