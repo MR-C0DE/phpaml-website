@@ -18,7 +18,7 @@ const copy = {
     demoFeatures: ["Classic MVC", "Protected reader", "Session progress", "Responsive UI"],
     chessLabel: "Built with AML View + PHPAML Data", chessTitle: <>A reactive interface.<br /><span>A real application.</span></>,
     chessText: "Tutor Chess is the public reference project for AML View: client-side navigation, reactive state, themes, Stockfish analysis, DeepSeek coaching, MongoDB accounts, and persistent lesson history.",
-    chessCode: "Explore Tutor Chess source", chessStart: "Clone and run with AML", chessFeatures: ["AML View", "Stockfish 18", "DeepSeek tutor", "MongoDB history"],
+    chessLive: "Open the live demo", chessCode: "Explore the source code", chessStart: "Run locally with AML", chessFeatures: ["AML View", "Stockfish 18", "DeepSeek tutor", "MongoDB history"],
     ready: "Ready to build?", next: <>Your next interface<br />starts with <code>aml create-view-app</code>.</>, installAml: "Install PHPAML", status: "beta",
     features: [
       ["01", "Clear MVC", "Controllers, models, PHP views, and partials with no hidden magic."],
@@ -44,7 +44,7 @@ const copy = {
     demoFeatures: ["MVC classique", "Lecture protégée", "Progression en session", "Interface responsive"],
     chessLabel: "Construit avec AML View + PHPAML Data", chessTitle: <>Une interface réactive.<br /><span>Une vraie application.</span></>,
     chessText: "Tutor Chess est le projet public de référence d’AML View : navigation côté client, état réactif, thèmes, analyse Stockfish, tutorat DeepSeek, comptes MongoDB et historique persistant des leçons.",
-    chessCode: "Explorer le code de Tutor Chess", chessStart: "Cloner et lancer avec AML", chessFeatures: ["AML View", "Stockfish 18", "Tuteur DeepSeek", "Historique MongoDB"],
+    chessLive: "Ouvrir la démo en ligne", chessCode: "Explorer le code source", chessStart: "Lancer localement avec AML", chessFeatures: ["AML View", "Stockfish 18", "Tuteur DeepSeek", "Historique MongoDB"],
     ready: "Prêt à construire ?", next: <>Votre prochaine interface<br />commence par <code>aml create-view-app</code>.</>, installAml: "Installer PHPAML", status: "bêta",
     features: [
       ["01", "MVC clair", "Contrôleurs, modèles, vues PHP et partials sans magie cachée."],
@@ -85,14 +85,15 @@ export function HomePage({ locale }: { locale: "en" | "fr" }) {
       </a>
     </div></section>
     <section id="tutor-chess" className="chess-demo-section"><div className="shell chess-demo-grid">
-      <div className="chess-window" aria-hidden="true">
+      <a className="chess-window" href="https://phpaml-chess-tutor.onrender.com" target="_blank" rel="noreferrer" aria-label={c.chessLive}>
         <div className="chess-window-bar"><span>PHPAML / TUTOR CHESS</span><b>AML VIEW</b></div>
         <div className="chess-board">{["♜","♞","♝","♛","♚","♝","♞","♜","♟","♟","♟","♟","♟","♟","♟","♟","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","♙","♙","♙","♙","♙","♙","♙","♙","♖","♘","♗","♕","♔","♗","♘","♖"].map((piece,index)=><i className={index < 16 ? "black-piece" : index >= 48 ? "white-piece" : undefined} key={index}>{piece}</i>)}</div>
         <div className="chess-coach"><small>DEEPSEEK · TUTOR</small><strong>{locale === "fr" ? "Un bon coup. Maintenant, demandez-vous ce que votre adversaire menace." : "A good move. Now ask what your opponent is threatening."}</strong></div>
-      </div>
+      </a>
       <div className="demo-copy chess-copy"><div className="section-number">/ 05</div><p className="kicker">{c.chessLabel}</p><h2>{c.chessTitle}</h2><p>{c.chessText}</p>
         <div className="demo-features">{c.chessFeatures.map((feature,index)=><span key={feature}><b>0{index + 1}</b>{feature}</span>)}</div>
-        <div className="hero-actions"><a className="button primary" href="https://github.com/MR-C0DE/phpaml-chess-tutor-demo" target="_blank" rel="noreferrer">{c.chessCode} <span>↗</span></a><a className="button ghost" href="https://github.com/MR-C0DE/phpaml-chess-tutor-demo#run-locally" target="_blank" rel="noreferrer">{c.chessStart} <span>→</span></a></div>
+        <div className="hero-actions"><a className="button primary" href="https://phpaml-chess-tutor.onrender.com" target="_blank" rel="noreferrer">{c.chessLive} <span>↗</span></a><a className="button ghost" href="https://github.com/MR-C0DE/phpaml-chess-tutor-demo" target="_blank" rel="noreferrer">{c.chessCode} <span>↗</span></a></div>
+        <a className="text-link" href="https://github.com/MR-C0DE/phpaml-chess-tutor-demo#run-locally" target="_blank" rel="noreferrer">{c.chessStart} <span>→</span></a>
       </div>
     </div></section>
     <section className="cta-section"><div className="shell cta-content"><div><p className="kicker">{c.ready}</p><h2>{c.next}</h2></div><Link className="button light" href={`${prefix}/download`}>{c.installAml} <span>→</span></Link></div></section>
