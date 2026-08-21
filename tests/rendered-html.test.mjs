@@ -27,6 +27,8 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch("http://127.0.0.1:3100/fr/tutorial/02"),
       fetch("http://127.0.0.1:3100/tutorial/03"),
       fetch("http://127.0.0.1:3100/fr/tutorial/03"),
+      fetch("http://127.0.0.1:3100/tutorial/04"),
+      fetch("http://127.0.0.1:3100/fr/tutorial/04"),
       fetch("http://127.0.0.1:3100/platform"),
       fetch("http://127.0.0.1:3100/fr/platform"),
       fetch("http://127.0.0.1:3100/demos"),
@@ -37,7 +39,7 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch("http://127.0.0.1:3100/fr/demos/movies-api"),
     ]);
     responses.forEach((response) => assert.equal(response.status, 200));
-    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo] = await Promise.all(responses.map((response) => response.text()));
+    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, chapterFour, frenchChapterFour, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo] = await Promise.all(responses.map((response) => response.text()));
     const docsText = docs.replace(/<[^>]+>/g, "");
     assert.match(home, /Structure PHP/);
     assert.match(home, /href="\/fr"/);
@@ -151,6 +153,14 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(frenchChapterThree, /Les en-têtes transportent le contexte/);
     assert.match(frenchChapterThree, /Une réponse doit être cohérente/);
     assert.match(frenchChapterThree, /Atelier guidé/);
+    assert.match(tutorial, /href="\/tutorial\/04"/);
+    assert.match(chapterFour, /Define and organize/);
+    assert.match(chapterFour, /A route is a contract/);
+    assert.match(chapterFour, /Seven routes, one coherent resource/);
+    assert.match(chapterFour, /Build and test BookRoute/);
+    assert.match(frenchChapterFour, /Définir et organiser/);
+    assert.match(frenchChapterFour, /Une route est un contrat/);
+    assert.match(frenchChapterFour, /Construisez et testez BookRoute/);
   } finally {
     server.kill("SIGTERM");
   }
