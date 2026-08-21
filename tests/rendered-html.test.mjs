@@ -125,7 +125,7 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(frenchChapterOne, /Objectifs pédagogiques/);
     assert.match(tutorial, /href="\/tutorial\/02"/);
     assert.match(chapterTwo, /Understand the/);
-    assert.match(chapterTwo, /runtime\/database\.sqlite/);
+    assert.match(chapterTwo, /runtime\/storage\/database\.sqlite/);
     assert.match(chapterTwo, /routes\/webapp\.php/);
     assert.match(chapterTwo, /src\/controllers/);
     assert.match(chapterTwo, /Follow a request/);
