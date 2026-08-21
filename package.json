@@ -7,9 +7,11 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "vinext build",
-    "start": "vinext start",
-    "test": "npm run build && node --test tests/rendered-html.test.mjs",
+    "build": "next build --webpack",
+    "start": "next start",
+    "build:sites": "vinext build",
+    "start:sites": "vinext start",
+    "test": "npm run build:sites && node --test tests/rendered-html.test.mjs",
     "typecheck": "next typegen && tsc --noEmit",
     "release:check": "node tests/release-links.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next"
