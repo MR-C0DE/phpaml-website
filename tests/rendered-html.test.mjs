@@ -141,9 +141,15 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(chapterThree, /Follow an/);
     assert.match(chapterThree, /GET \/books\/42/);
     assert.match(chapterThree, /A request crosses a pipeline/);
+    assert.match(chapterThree, /HTTP is a conversation/);
+    assert.match(chapterThree, /HTTP is stateless/);
+    assert.match(chapterThree, /A response must be coherent/);
     assert.match(chapterThree, /Why should POST \/books\/42 return 405/);
     assert.match(frenchChapterThree, /Suivre une/);
     assert.match(frenchChapterThree, /Une requête traverse une chaîne/);
+    assert.match(frenchChapterThree, /HTTP est un dialogue/);
+    assert.match(frenchChapterThree, /Les en-têtes transportent le contexte/);
+    assert.match(frenchChapterThree, /Une réponse doit être cohérente/);
     assert.match(frenchChapterThree, /Atelier guidé/);
   } finally {
     server.kill("SIGTERM");
