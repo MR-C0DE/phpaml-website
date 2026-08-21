@@ -6,7 +6,7 @@ import "./chapter-one.css";
 const command = {
   doctor: "aml doctor",
   current: "mkdir my-first-app\ncd my-first-app\naml create .\naml install\naml serve",
-  doctorResult: `[OK]        AML                     version 1.6.0
+  doctorResult: `[OK]        AML                     version 1.7.0-beta.14
 [OK]        PHP                     compatible
 [OK]        Private Composer        available
 [OK]        Temporary directory     writable
@@ -24,7 +24,7 @@ export function ChapterOne({ locale }: { locale: "en" | "fr" }) {
     ["01.4", "Vérifier la machine", "La commande doctor contrôle AML, PHP, les extensions, Composer, les dossiers temporaires, le cache et le port de développement. Corrigez les lignes ERROR avant de créer votre premier projet."],
     ["01.5", "Créer le premier projet", "Créez un nouveau dossier avec aml create mon-projet, ou utilisez aml create . dans un dossier vide existant. AML télécharge le modèle officiel et prépare la structure MVC."],
     ["01.6", "Installer et démarrer", "aml install installe le moteur privé dans runtime. aml serve lance ensuite le site local avec l’actualisation automatique. Gardez ce terminal ouvert pendant le développement."],
-    ["01.7", "Résoudre les problèmes", "Si AML ne reconnaît pas le projet, vérifiez que vous êtes dans le dossier contenant configs, app et runtime. Si un port est occupé, choisissez-en un autre. Relancez toujours aml doctor après une correction."],
+    ["01.7", "Résoudre les problèmes", "Si AML ne reconnaît pas le projet, vérifiez que vous êtes dans le dossier contenant phpaml.json, src, routes et runtime. Si le port 8910 est occupé, AML essaie automatiquement le suivant. Relancez toujours aml doctor après une correction."],
   ] : [
     ["01.1", "AML and PHPAML", "PHPAML is the MVC mini-framework. AML is its command-line tool: it installs the environment, creates projects, starts the server, and diagnoses the machine. Once AML is installed, PHP and Composer do not need to be installed separately."],
     ["01.2", "Install AML", "Download the installer for your system from the official page. Windows uses the .exe file, macOS the .pkg package, and Linux the .deb package. The installer adds AML, PHP, and Composer to the machine."],
@@ -32,7 +32,7 @@ export function ChapterOne({ locale }: { locale: "en" | "fr" }) {
     ["01.4", "Check the machine", "The doctor command checks AML, PHP, extensions, Composer, temporary folders, cache, and the development port. Resolve every ERROR line before creating your first project."],
     ["01.5", "Create the first project", "Create a new folder with aml create my-project, or use aml create . inside an existing empty folder. AML downloads the official template and prepares the MVC structure."],
     ["01.6", "Install and start", "aml install installs the private engine in runtime. aml serve then starts the local website with automatic refresh. Keep this terminal open while developing."],
-    ["01.7", "Troubleshoot", "If AML does not recognize the project, make sure you are inside the folder containing configs, app, and runtime. If a port is busy, choose another one. Always run aml doctor again after a fix."],
+    ["01.7", "Troubleshoot", "If AML does not recognize the project, make sure you are inside the folder containing phpaml.json, src, routes, and runtime. If port 8910 is busy, AML automatically tries the next one. Always run aml doctor again after a fix."],
   ];
 
   return <><Header locale={locale} path="/tutorial/01" /><main className="lesson-page">

@@ -25,8 +25,6 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch("http://127.0.0.1:3100/fr/tutorial/01"),
       fetch("http://127.0.0.1:3100/tutorial/02"),
       fetch("http://127.0.0.1:3100/fr/tutorial/02"),
-      fetch("http://127.0.0.1:3100/tutorial/2"),
-      fetch("http://127.0.0.1:3100/fr/tutorial/2"),
       fetch("http://127.0.0.1:3100/platform"),
       fetch("http://127.0.0.1:3100/fr/platform"),
       fetch("http://127.0.0.1:3100/demos"),
@@ -37,7 +35,7 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch("http://127.0.0.1:3100/fr/demos/movies-api"),
     ]);
     responses.forEach((response) => assert.equal(response.status, 200));
-    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, , , platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo] = await Promise.all(responses.map((response) => response.text()));
+    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo] = await Promise.all(responses.map((response) => response.text()));
     const docsText = docs.replace(/<[^>]+>/g, "");
     assert.match(home, /Structure PHP/);
     assert.match(home, /href="\/fr"/);
@@ -115,8 +113,9 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(frenchChapterOne, /Exercice final/);
     assert.match(tutorial, /href="\/tutorial\/02"/);
     assert.match(chapterTwo, /Understand the/);
-    assert.match(chapterTwo, /runtime\/database\.sqlite/);
-    assert.match(chapterTwo, /public\/css\/index\.css/);
+    assert.match(chapterTwo, /routes\/webapp\.php/);
+    assert.match(chapterTwo, /runtime\/storage\/database\.sqlite/);
+    assert.match(chapterTwo, /public\/assets\/css\/app\.css/);
     assert.match(frenchChapterTwo, /Comprendre la/);
     assert.match(frenchChapterTwo, /Le runtime géré par AML/);
   } finally {
