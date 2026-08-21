@@ -29,6 +29,8 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch("http://127.0.0.1:3100/fr/tutorial/03"),
       fetch("http://127.0.0.1:3100/tutorial/04"),
       fetch("http://127.0.0.1:3100/fr/tutorial/04"),
+      fetch("http://127.0.0.1:3100/tutorial/05"),
+      fetch("http://127.0.0.1:3100/fr/tutorial/05"),
       fetch("http://127.0.0.1:3100/platform"),
       fetch("http://127.0.0.1:3100/fr/platform"),
       fetch("http://127.0.0.1:3100/demos"),
@@ -39,7 +41,7 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch("http://127.0.0.1:3100/fr/demos/movies-api"),
     ]);
     responses.forEach((response) => assert.equal(response.status, 200));
-    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, chapterFour, frenchChapterFour, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo] = await Promise.all(responses.map((response) => response.text()));
+    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, chapterFour, frenchChapterFour, chapterFive, frenchChapterFive, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo] = await Promise.all(responses.map((response) => response.text()));
     const docsText = docs.replace(/<[^>]+>/g, "");
     assert.match(home, /Structure PHP/);
     assert.match(home, /href="\/fr"/);
@@ -161,6 +163,11 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(frenchChapterFour, /Définir et organiser/);
     assert.match(frenchChapterFour, /Une route est un contrat/);
     assert.match(frenchChapterFour, /Construisez et testez BookRoute/);
+    assert.match(tutorial, /href="\/tutorial\/05"/);
+    assert.match(chapterFive, /Build clear, testable/);
+    assert.match(chapterFive, /Controllers orchestrate/);
+    assert.match(frenchChapterFive, /Construire des contrôleurs/);
+    assert.match(frenchChapterFive, /Le contrôleur orchestre/);
   } finally {
     server.kill("SIGTERM");
   }
