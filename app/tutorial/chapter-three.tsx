@@ -1,0 +1,67 @@
+import Link from "next/link";
+import { CodeBlock, Footer, Header } from "../components";
+import "./chapter-one.css";
+import "./chapter-three.css";
+
+const routeCode = `use App\\Controllers\\BookController;
+
+Route::get('/books/{id}', [BookController::class, 'show']);`;
+const controllerCode = `final class BookController
+{
+    public function show(Request $request): Response
+    {
+        $id = (int) $request->route('id');
+        $book = Book::find($id);
+
+        if ($book === null) {
+            return Response::notFound();
+        }
+
+        return View::render('books/show', ['book' => $book]);
+    }
+}`;
+
+export function ChapterThree({ locale }: { locale:"en"|"fr" }) {
+  const fr=locale==="fr"; const prefix=fr?"/fr":"";
+  const stages=fr?[
+    ["03.1","Le navigateur crée la requête","Lorsque vous saisissez /books/42, le navigateur envoie une requête HTTP GET. Elle contient la méthode, le chemin, des en-têtes et éventuellement des cookies. À ce stade, aucun contrôleur n’a encore été choisi."],
+    ["03.2","public/index.php démarre PHPAML","Le serveur web dirige la requête vers l’unique point d’entrée PHP. Ce fichier charge le runtime et remet la requête au framework. Il ne doit contenir ni règle métier ni liste manuelle de pages."],
+    ["03.3","Les middlewares protègent le trajet","Avant le contrôleur, les middlewares peuvent ouvrir la session, appliquer les en-têtes de sécurité, limiter le trafic ou vérifier l’authentification. Chacun reçoit la requête, puis décide de poursuivre ou de répondre immédiatement."],
+    ["03.4","Le routeur sélectionne l’action","Le routeur compare GET et /books/42 aux déclarations de routes/webapp.php. Le motif /books/{id} correspond et fournit id=42 au contrôleur. Une route doit décrire l’entrée sans contenir le traitement complet."],
+    ["03.5","Le contrôleur coordonne","BookController valide l’identifiant, demande le livre au modèle et choisit une réponse. Il traduit donc une intention HTTP en opération applicative, sans devenir lui-même la base de données ou la vue."],
+    ["03.6","Le modèle fournit le résultat","Le modèle recherche le livre et applique les règles du domaine. S’il n’existe pas, le contrôleur produit une réponse 404. S’il existe, ses données sont transmises à la présentation."],
+    ["03.7","La réponse repart vers le navigateur","La vue génère le contenu, Response fixe le statut et les en-têtes, puis les middlewares de sortie peuvent encore compléter la sécurité. Le serveur envoie enfin les octets au navigateur."],
+  ]:[
+    ["03.1","The browser creates the request","When you enter /books/42, the browser sends an HTTP GET request. It contains a method, path, headers, and possibly cookies. No controller has been selected yet."],
+    ["03.2","public/index.php boots PHPAML","The web server directs the request to the single PHP entry point. It loads the runtime and hands the request to the framework. It contains neither business rules nor a manual page list."],
+    ["03.3","Middleware protects the journey","Before the controller, middleware may open the session, apply security headers, limit traffic, or verify authentication. Each receives the request and either continues or responds immediately."],
+    ["03.4","The router selects the action","The router compares GET and /books/42 with routes/webapp.php. /books/{id} matches and provides id=42 to the controller. A route describes the entrance rather than the complete processing."],
+    ["03.5","The controller coordinates","BookController validates the identifier, asks the model for the book, and selects a response. It translates an HTTP intention into an application operation without becoming the database or view."],
+    ["03.6","The model provides the result","The model retrieves the book and applies domain rules. When absent, the controller produces 404. When present, its prepared data moves to presentation."],
+    ["03.7","The response returns to the browser","The view generates content, Response sets status and headers, and outgoing middleware may complete security. The server finally sends bytes to the browser."],
+  ];
+  const errors=fr?[
+    ["404","Aucune route ou aucune ressource","Utilisez 404 lorsque l’URL est inconnue ou que books/42 n’existe pas."],
+    ["405","Méthode incorrecte","La route existe, mais pas pour la méthode reçue : POST envoyé vers une route uniquement GET."],
+    ["422","Entrée comprise mais invalide","Le formulaire est lisible, mais une valeur ne respecte pas les règles de validation."],
+    ["500","Erreur interne","Une exception inattendue empêche la réponse normale. Journalisez le détail sans l’exposer en production."],
+  ]:[
+    ["404","Missing route or resource","Use 404 when the URL is unknown or books/42 does not exist."],
+    ["405","Wrong method","The path exists but not for the received method: POST sent to a GET-only route."],
+    ["422","Understood but invalid input","The form is readable, but one value violates validation rules."],
+    ["500","Internal error","An unexpected exception prevents the normal response. Log details without exposing them in production."],
+  ];
+  return <><Header locale={locale} path="/tutorial/03"/><main className="lesson-page request-lesson">
+    <section className="lesson-hero shell"><div><p className="eyebrow"><span/> {fr?"Tutoriel MVC · Chapitre 03":"MVC tutorial · Chapter 03"}</p><h1>{fr?<>Suivre une<br/><em>requête HTTP.</em></>:<>Follow an<br/><em>HTTP request.</em></>}</h1><p>{fr?"Suivez GET /books/42 depuis le clic de l’utilisateur jusqu’au HTML final, sans sauter une seule étape du framework.":"Follow GET /books/42 from the user's click to the final HTML without skipping any framework stage."}</p></div><aside><small>{fr?"OBJECTIF":"OUTCOME"}</small><strong>{fr?"Savoir diagnostiquer tout le trajet":"Diagnose the complete journey"}</strong><span>≈ 45 min</span></aside></section>
+    <section className="request-strip shell"><code>GET /books/42</code><span>→</span><strong>200 OK</strong><small>Content-Type: text/html</small></section>
+    <div className="lesson-layout shell"><nav className="lesson-toc"><strong>{fr?"Dans ce chapitre":"In this chapter"}</strong>{stages.map(([id,title])=><a href={`#section-${id}`} key={id}><span>{id}</span>{title}</a>)}<a href="#exercise"><span>✓</span>{fr?"Atelier et quiz":"Workshop and quiz"}</a></nav><article className="lesson-content">
+      <div className="lesson-callout"><strong>{fr?"Question directrice":"Guiding question"}</strong><p>{fr?"Quand une page ne fonctionne pas, à quelle étape la requête s’est-elle arrêtée ? Ce chapitre vous donne une méthode de diagnostic fondée sur le trajet réel.":"When a page fails, at which stage did the request stop? This chapter gives you a diagnostic method based on the real journey."}</p></div>
+      <section className="request-overview"><p className="kicker">{fr?"Le trajet complet":"The complete journey"}</p><h2>{fr?"Une requête traverse une chaîne, pas un fichier magique.":"A request crosses a pipeline, not a magic file."}</h2><div>{["Browser","public/index.php","Middleware","Router","Controller","Model","View","Response"].map((item,i)=><span key={item}><b>{String(i+1).padStart(2,"0")}</b>{item}</span>)}</div><p>{fr?"Chaque étape reçoit un objet compréhensible, accomplit une responsabilité limitée et transmet le résultat. Cette chaîne rend l’application observable : un statut, un journal ou un test peut confirmer chaque transition.":"Every stage receives a meaningful object, performs a limited responsibility, and passes the result onward. This makes the application observable: a status, log, or test can confirm every transition."}</p></section>
+      {stages.map(([id,title,body],index)=><section className="lesson-section request-stage" id={`section-${id}`} key={id}><span className="lesson-number">{id}</span><h2>{title}</h2><p>{body}</p>{index===0&&<div className="http-anatomy"><div><small>METHOD</small><strong>GET</strong></div><div><small>PATH</small><strong>/books/42</strong></div><div><small>ACCEPT</small><strong>text/html</strong></div><div><small>COOKIE</small><strong>session=…</strong></div></div>}{index===2&&<div className="middleware-stack"><span>{fr?"Requête entrante":"Incoming request"}</span><b>Security → Session → Rate limit → Auth</b><span>{fr?"Réponse sortante":"Outgoing response"}</span></div>}{index===3&&<CodeBlock>{routeCode}</CodeBlock>}{index===4&&<CodeBlock>{controllerCode}</CodeBlock>}{index===6&&<div className="response-card"><strong>HTTP/1.1 200 OK</strong><code>Content-Type: text/html; charset=UTF-8</code><code>Content-Security-Policy: default-src &apos;self&apos;</code><p>&lt;h1&gt;The Last Lighthouse&lt;/h1&gt;</p></div>}<div className="stage-check"><strong>{fr?"Pour diagnostiquer":"To diagnose"}</strong><p>{fr?(["Inspectez la méthode, l’URL, les paramètres et les cookies dans les outils réseau.","Si toutes les pages échouent, vérifiez le serveur, public/index.php et le runtime.","Une réponse 401, 403, 419 ou 429 peut provenir d’un middleware avant le contrôleur.","Une 404 indique souvent un chemin, une méthode ou un paramètre qui ne correspond pas.","Journalisez l’entrée validée et le résultat métier, jamais les secrets.","Testez le cas trouvé et le cas absent : ils doivent produire 200 et 404.","Vérifiez statut, en-têtes et contenu; une belle page avec un mauvais statut reste incorrecte."][index]):(["Inspect method, URL, parameters, and cookies in network tools.","When every page fails, check the server, public/index.php, and runtime.","A 401, 403, 419, or 429 may come from middleware before the controller.","A 404 often means the path, method, or parameter did not match.","Log validated input and the business result, never secrets.","Test found and missing cases: they should produce 200 and 404.","Verify status, headers, and content; a beautiful page with a wrong status remains incorrect."][index])}</p></div></section>)}
+      <section className="status-course"><p className="kicker">{fr?"Lire les erreurs":"Read errors"}</p><h2>{fr?"Le statut HTTP raconte ce qui s’est passé.":"HTTP status tells the story."}</h2>{errors.map(([code,title,body])=><div key={code}><strong>{code}</strong><h3>{title}</h3><p>{body}</p></div>)}</section>
+      <section className="lesson-exercise" id="exercise"><p className="kicker">{fr?"Atelier guidé":"Guided workshop"}</p><h2>{fr?"Ajoutez GET /books/{id}.":"Add GET /books/{id}."}</h2><ol><li>{fr?"Déclarez la route et son paramètre dynamique.":"Declare the route and its dynamic parameter."}</li><li>{fr?"Créez BookController::show et validez id.":"Create BookController::show and validate id."}</li><li>{fr?"Retournez 404 lorsque le modèle ne trouve rien.":"Return 404 when the model finds nothing."}</li><li>{fr?"Rendez la page avec un statut 200 lorsque le livre existe.":"Render the page with status 200 when the book exists."}</li><li>{fr?"Testez /books/42, /books/999 et POST /books/42.":"Test /books/42, /books/999, and POST /books/42."}</li></ol></section>
+      <section className="lesson-rich-block lesson-correction"><p className="kicker">{fr?"Correction et quiz":"Solution and quiz"}</p><h2>{fr?"Expliquez le trajet avec vos propres mots.":"Explain the journey in your own words."}</h2><p>{fr?"La route correspond à GET /books/{id}. Le routeur extrait 42. Le contrôleur valide cette valeur, interroge Book et choisit 404 ou une vue. Response porte ensuite le statut, les en-têtes et le contenu à travers les middlewares de sortie jusqu’au serveur.":"The route matches GET /books/{id}. The router extracts 42. The controller validates it, queries Book, and selects either 404 or a view. Response then carries status, headers, and content through outgoing middleware to the server."}</p><details><summary>{fr?"Pourquoi POST /books/42 doit-il retourner 405 ?":"Why should POST /books/42 return 405?"}</summary><p>{fr?"Parce que le chemin est connu, mais aucune route POST ne l’accepte. Une 404 prétendrait à tort que la ressource ou le chemin est inconnu.":"Because the path is known, but no POST route accepts it. A 404 would incorrectly claim that the resource or path is unknown."}</p></details><details><summary>{fr?"Un middleware peut-il empêcher le contrôleur de s’exécuter ?":"Can middleware prevent controller execution?"}</summary><p>{fr?"Oui. Il peut renvoyer immédiatement une réponse d’authentification, de protection CSRF ou de limitation de trafic. C’est pourquoi le diagnostic commence avant le contrôleur.":"Yes. It may immediately return an authentication, CSRF, or rate-limit response. That is why diagnosis begins before the controller."}</p></details></section>
+    </article></div>
+    <section className="lesson-navigation shell"><Link href={`${prefix}/tutorial/02`}>← {fr?"Chapitre 02":"Chapter 02"}</Link><span>{fr?"Chapitre 04 · À venir":"Chapter 04 · Coming soon"} 🔒</span></section>
+  </main><Footer locale={locale}/></>;
+}

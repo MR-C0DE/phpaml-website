@@ -25,6 +25,8 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch("http://127.0.0.1:3100/fr/tutorial/01"),
       fetch("http://127.0.0.1:3100/tutorial/02"),
       fetch("http://127.0.0.1:3100/fr/tutorial/02"),
+      fetch("http://127.0.0.1:3100/tutorial/03"),
+      fetch("http://127.0.0.1:3100/fr/tutorial/03"),
       fetch("http://127.0.0.1:3100/platform"),
       fetch("http://127.0.0.1:3100/fr/platform"),
       fetch("http://127.0.0.1:3100/demos"),
@@ -35,7 +37,7 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch("http://127.0.0.1:3100/fr/demos/movies-api"),
     ]);
     responses.forEach((response) => assert.equal(response.status, 200));
-    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo] = await Promise.all(responses.map((response) => response.text()));
+    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo] = await Promise.all(responses.map((response) => response.text()));
     const docsText = docs.replace(/<[^>]+>/g, "");
     assert.match(home, /Structure PHP/);
     assert.match(home, /href="\/fr"/);
@@ -135,6 +137,14 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(frenchChapterTwo, /Correction et pièges/);
     assert.match(frenchChapterTwo, /Comprendre avant de commencer à coder/);
     assert.match(frenchChapterTwo, /Le contrôleur est un chef d’orchestre/);
+    assert.match(tutorial, /href="\/tutorial\/03"/);
+    assert.match(chapterThree, /Follow an/);
+    assert.match(chapterThree, /GET \/books\/42/);
+    assert.match(chapterThree, /A request crosses a pipeline/);
+    assert.match(chapterThree, /Why should POST \/books\/42 return 405/);
+    assert.match(frenchChapterThree, /Suivre une/);
+    assert.match(frenchChapterThree, /Une requête traverse une chaîne/);
+    assert.match(frenchChapterThree, /Atelier guidé/);
   } finally {
     server.kill("SIGTERM");
   }
