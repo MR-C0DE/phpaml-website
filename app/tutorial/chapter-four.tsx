@@ -17,9 +17,17 @@ Route::get('/books/{id}/edit', [BookController::class, 'edit'])->name('books.edi
 Route::patch('/books/{id}', [BookController::class, 'update'])->name('books.update');
 Route::delete('/books/{id}', [BookController::class, 'destroy'])->name('books.destroy');`;
 
+type Lesson = [
+ string,
+ string,
+ string,
+ string[],
+ string,
+];
+
 export function ChapterFour({locale}:{locale:"en"|"fr"}){
  const fr=locale==="fr", prefix=fr?"/fr":"";
- const lessons=fr?[
+ const lessons: Lesson[]=fr?[
  ["04.1","Une route est un contrat","Une route ne signifie pas seulement « cette URL ouvre cette page ». Elle définit un contrat entre le client et l’application : une méthode, un chemin, des paramètres, des protections et une action.",["GET /books promet de consulter la collection. POST /books promet de traiter une création. Ils partagent le même chemin, mais leurs intentions et leurs réponses sont différentes.","Une route doit permettre de comprendre l’interface HTTP sans lire le contrôleur. Une requête SQL, du HTML ou de longues conditions y mélangeraient des responsabilités."],"Prononcez toujours la méthode et le chemin : GET /books, pas seulement /books."],
  ["04.2","Choisir la méthode HTTP","La méthode annonce l’effet attendu. GET consulte, POST crée ou déclenche, PATCH modifie une partie et DELETE supprime.",["GET doit rester sans effet métier volontaire : actualiser la page ne doit jamais créer un second livre. Navigateurs, caches et robots dépendent de cette propriété.","POST n’est pas un GET plus puissant. PATCH /books/42 cible une ressource existante; DELETE /books/42 exprime clairement sa suppression."],"Une action déclenchée par un lien normal doit généralement être GET et ne jamais supprimer."],
  ["04.3","Concevoir les URL","Une URL décrit une ressource, pas l’implémentation PHP. Préférez /books/42 à /showBook.php?id=42.",["Utilisez des noms pluriels cohérents pour les collections. L’identifiant sélectionne un membre. Un sous-chemin représente une page ou une relation lorsque la méthode seule ne suffit pas.","Une bonne URL reste stable si BookController change, si SQLite devient MongoDB ou si la vue classique devient AML View."],"Évitez les verbes techniques lorsque la méthode HTTP exprime déjà l’action."],
