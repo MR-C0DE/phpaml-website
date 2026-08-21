@@ -33,9 +33,11 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch("http://127.0.0.1:3100/fr/demos"),
       fetch("http://127.0.0.1:3100/demos/book-reader"),
       fetch("http://127.0.0.1:3100/demos/tutor-chess"),
+      fetch("http://127.0.0.1:3100/demos/movies-api"),
+      fetch("http://127.0.0.1:3100/fr/demos/movies-api"),
     ]);
     responses.forEach((response) => assert.equal(response.status, 200));
-    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, , , platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo] = await Promise.all(responses.map((response) => response.text()));
+    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, , , platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo] = await Promise.all(responses.map((response) => response.text()));
     const docsText = docs.replace(/<[^>]+>/g, "");
     assert.match(home, /Structure PHP/);
     assert.match(home, /href="\/fr"/);
@@ -66,9 +68,13 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(frenchPlatform, /Trois couches\. Un seul flux PHP/);
     assert.match(demos, /Real code\. Public applications/);
     assert.match(demos, /href="\/demos\/book-reader"/);
+    assert.match(demos, /href="\/demos\/movies-api"/);
     assert.match(frenchDemos, /Du code réel\. Des applications publiques/);
     assert.match(bookDemo, /The Last Lighthouse/);
     assert.match(chessDemo, /Tutor Chess/);
+    assert.match(moviesDemo, /MovieRoute\.php/);
+    assert.match(moviesDemo, /github\.com\/MR-C0DE\/phpaml-movies-api-demo/);
+    assert.match(frenchMoviesDemo, /Ce que cette démo valide/);
     assert.match(french, /Structurez PHP/);
     assert.match(french, /href="\/"/);
     assert.match(french, /aria-label="Navigation principale"/);
