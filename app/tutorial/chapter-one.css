@@ -14,6 +14,19 @@
 .lesson-toc a:hover{background:#fff;color:var(--ink)}
 .lesson-toc span{color:#8b8f9a;font:9px var(--font-geist-mono)}
 .lesson-content{min-width:0}
+.lesson-rich-block{margin:64px 0;padding:38px;border:1px solid var(--line);background:#f4f3ed}
+.lesson-rich-block h2{margin:8px 0 20px;font-size:clamp(30px,3.4vw,44px);line-height:1.05;letter-spacing:-.04em}
+.lesson-rich-block h3{margin:32px 0 12px;font-size:21px}
+.lesson-rich-block>p,.lesson-rich-block li,.lesson-workflow p{color:#555a68;font-size:15px;line-height:1.8}
+.lesson-rich-block ul{display:grid;gap:9px;margin:24px 0 0;padding-left:20px}
+.lesson-workflow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:30px}
+.lesson-workflow>div{padding:22px;border:1px solid var(--line);background:white}
+.lesson-workflow>div>span{display:grid;place-items:center;width:28px;height:28px;margin-bottom:20px;background:var(--ink);color:var(--lime);font:700 10px var(--font-geist-mono)}
+.lesson-workflow strong{font-size:16px}.lesson-workflow p{margin:10px 0 0;font-size:13px}
+.lesson-warning{margin-top:28px;padding:22px 24px;border-top:3px solid var(--violet);background:#ebe8ff}.lesson-warning p{margin:8px 0 0;color:#49465e;line-height:1.7}
+.lesson-correction details{margin-top:26px;border:1px solid var(--line);background:white}.lesson-correction summary{cursor:pointer;padding:18px 20px;color:var(--violet-deep);font-weight:750}.lesson-correction details p{margin:0;padding:0 20px 20px;line-height:1.75}
+.lesson-steps{display:grid;gap:0;margin:28px 0;padding:0;list-style:none;border:1px solid var(--line);background:white}.lesson-steps li{display:grid;grid-template-columns:180px 1fr;gap:22px;padding:17px 20px;border-top:1px solid var(--line)}.lesson-steps li:first-child{border-top:0}.lesson-steps strong{color:var(--violet-deep);font-family:var(--font-geist-mono);font-size:12px}
+.lesson-decision-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:25px 0}.lesson-decision-grid>div{display:grid;gap:8px;padding:18px;border:1px solid var(--line);background:white}.lesson-decision-grid span{color:var(--violet-deep);font:700 11px var(--font-geist-mono)}
 .lesson-callout{position:relative;padding:28px 30px 28px 34px;border-left:5px solid var(--lime);background:var(--ink);color:white}
 .lesson-callout:after{content:"START";position:absolute;right:20px;top:18px;color:#444a5c;font:800 9px var(--font-geist-mono);letter-spacing:.12em}
 .lesson-callout strong{color:var(--lime);font-size:14px}
@@ -56,4 +69,5 @@
 .lesson-navigation a{color:var(--violet-deep);font-weight:750;text-decoration:none}
 .lesson-navigation span{color:var(--muted);font:11px var(--font-geist-mono)}
 @media(max-width:900px){.lesson-hero{grid-template-columns:1fr;gap:38px;padding-block:82px 68px}.lesson-hero aside{max-width:470px}.lesson-layout{grid-template-columns:1fr;gap:48px;padding-block:65px}.lesson-toc{position:static;grid-template-columns:repeat(2,1fr)}.lesson-toc>strong{grid-column:1/-1}.lesson-section{padding-right:10px}.chapter-status-open{grid-column:2;justify-content:flex-start}}
+@media(max-width:620px){.lesson-rich-block{margin:42px 0;padding:26px 20px}.lesson-workflow,.lesson-decision-grid{grid-template-columns:1fr}.lesson-steps li{grid-template-columns:1fr;gap:5px}}
 @media(max-width:620px){.lesson-hero{padding-block:62px 54px}.lesson-hero h1{font-size:clamp(42px,13vw,56px)}.lesson-hero>div>p:last-child{font-size:16px}.lesson-hero aside{padding:22px;box-shadow:5px 5px 0 rgba(128,104,255,.17)}.lesson-layout{gap:38px;padding-block:45px}.lesson-toc{grid-template-columns:1fr}.lesson-section{padding:58px 0}.lesson-number{position:static;width:max-content;height:auto;margin-bottom:13px;padding:6px 8px}.lesson-section h2,.lesson-exercise h2{font-size:clamp(30px,10vw,40px)}.platform-grid,.command-pair{grid-template-columns:1fr}.platform-grid div{min-height:0}.lesson-note{align-items:flex-start;flex-wrap:wrap}.lesson-note code{width:100%;overflow-wrap:anywhere}.trouble-table>div{grid-template-columns:1fr;gap:8px}.lesson-exercise{margin:62px calc(var(--pad) * -1) 0;padding:38px var(--pad);box-shadow:none}.lesson-navigation{align-items:flex-start;flex-direction:column}.lesson-check strong{width:100%}}
