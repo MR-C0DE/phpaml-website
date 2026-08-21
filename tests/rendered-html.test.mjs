@@ -127,9 +127,14 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(chapterTwo, /routes\/webapp\.php/);
     assert.match(chapterTwo, /src\/controllers/);
     assert.match(chapterTwo, /Follow a request/);
+    assert.match(chapterTwo, /Understand before you start coding/);
+    assert.match(chapterTwo, /A controller is a conductor/);
+    assert.match(chapterTwo, /Understand, don&#x27;t memorize/);
     assert.match(frenchChapterTwo, /Comprendre la/);
     assert.match(frenchChapterTwo, /Le runtime géré par AML/);
     assert.match(frenchChapterTwo, /Correction et pièges/);
+    assert.match(frenchChapterTwo, /Comprendre avant de commencer à coder/);
+    assert.match(frenchChapterTwo, /Le contrôleur est un chef d’orchestre/);
   } finally {
     server.kill("SIGTERM");
   }
