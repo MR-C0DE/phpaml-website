@@ -33,6 +33,8 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch("http://127.0.0.1:3100/fr/tutorial/05"),
       fetch("http://127.0.0.1:3100/tutorial/06"),
       fetch("http://127.0.0.1:3100/fr/tutorial/06"),
+      fetch("http://127.0.0.1:3100/tutorial/07"),
+      fetch("http://127.0.0.1:3100/fr/tutorial/07"),
       fetch("http://127.0.0.1:3100/platform"),
       fetch("http://127.0.0.1:3100/fr/platform"),
       fetch("http://127.0.0.1:3100/demos"),
@@ -43,7 +45,7 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch("http://127.0.0.1:3100/fr/demos/movies-api"),
     ]);
     responses.forEach((response) => assert.equal(response.status, 200));
-    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, chapterFour, frenchChapterFour, chapterFive, frenchChapterFive, chapterSix, frenchChapterSix, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo] = await Promise.all(responses.map((response) => response.text()));
+    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, chapterFour, frenchChapterFour, chapterFive, frenchChapterFive, chapterSix, frenchChapterSix, chapterSeven, frenchChapterSeven, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo] = await Promise.all(responses.map((response) => response.text()));
     const docsText = docs.replace(/<[^>]+>/g, "");
     assert.match(home, /Structure PHP/);
     assert.match(home, /href="\/fr"/);
@@ -176,6 +178,12 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(frenchChapterSix, /Créer les vues/);
     assert.match(frenchChapterSix, /Les données existent/);
     assert.match(frenchChapterSix, /En résumé/);
+    assert.match(tutorial, /href="\/tutorial\/07"/);
+    assert.match(chapterSeven, /Add CSS, JavaScript/);
+    assert.match(chapterSeven, /Understand browser assets/);
+    assert.match(frenchChapterSeven, /Ajouter CSS, JavaScript/);
+    assert.match(frenchChapterSeven, /Une interface utile/);
+    assert.match(frenchChapterSeven, /En résumé/);
   } finally {
     server.kill("SIGTERM");
   }
