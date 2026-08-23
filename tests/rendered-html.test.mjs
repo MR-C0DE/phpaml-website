@@ -39,6 +39,8 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch("http://127.0.0.1:3100/fr/tutorial/08"),
       fetch("http://127.0.0.1:3100/tutorial/09"),
       fetch("http://127.0.0.1:3100/fr/tutorial/09"),
+      fetch("http://127.0.0.1:3100/tutorial/10"),
+      fetch("http://127.0.0.1:3100/fr/tutorial/10"),
       fetch("http://127.0.0.1:3100/platform"),
       fetch("http://127.0.0.1:3100/fr/platform"),
       fetch("http://127.0.0.1:3100/demos"),
@@ -49,7 +51,7 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch("http://127.0.0.1:3100/fr/demos/movies-api"),
     ]);
     responses.forEach((response) => assert.equal(response.status, 200));
-    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, chapterFour, frenchChapterFour, chapterFive, frenchChapterFive, chapterSix, frenchChapterSix, chapterSeven, frenchChapterSeven, chapterEight, frenchChapterEight, chapterNine, frenchChapterNine, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo] = await Promise.all(responses.map((response) => response.text()));
+    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, chapterFour, frenchChapterFour, chapterFive, frenchChapterFive, chapterSix, frenchChapterSix, chapterSeven, frenchChapterSeven, chapterEight, frenchChapterEight, chapterNine, frenchChapterNine, chapterTen, frenchChapterTen, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo] = await Promise.all(responses.map((response) => response.text()));
     const docsText = docs.replace(/<[^>]+>/g, "");
     assert.match(home, /Structure PHP/);
     assert.match(home, /href="\/fr"/);
@@ -200,6 +202,13 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(frenchChapterNine, /Créer le modèle/);
     assert.match(frenchChapterNine, /La table existe/);
     assert.match(frenchChapterNine, /En résumé/);
+    assert.match(tutorial, /href="\/tutorial\/10"/);
+    assert.match(chapterTen, /Assemble the/);
+    assert.match(chapterTen, /Connect without mixing/);
+    assert.match(chapterTen, /Post\/Redirect\/Get/);
+    assert.match(frenchChapterTen, /Assembler/);
+    assert.match(frenchChapterTen, /Toutes les pièces existent/);
+    assert.match(frenchChapterTen, /En résumé/);
   } finally {
     server.kill("SIGTERM");
   }
