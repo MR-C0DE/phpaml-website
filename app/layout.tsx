@@ -22,9 +22,9 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       locale: "en_CA",
       alternateLocale: ["fr_CA"],
-      images: [{ url: new URL("/og-v2.png", base).toString(), width: 1200, height: 630, alt: "PHPAML — Structure PHP. Keep control." }],
+      images: [{ url: new URL("/og-v3.png", base).toString(), width: 1200, height: 630, alt: "PHPAML — Build PHP. Keep control." }],
     },
-    twitter: { card: "summary_large_image", images: [new URL("/og-v2.png", base).toString()] },
+    twitter: { card: "summary_large_image", images: [new URL("/og-v3.png", base).toString()] },
   };
 }
 

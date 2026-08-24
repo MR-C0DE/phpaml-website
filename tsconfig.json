@@ -43,6 +43,7 @@
     "drizzle",
     "examples",
     "worker",
+    ".next/dev",
     "vite.config.ts",
     "drizzle.config.ts"
   ]
