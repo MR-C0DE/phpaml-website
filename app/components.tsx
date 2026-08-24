@@ -66,10 +66,13 @@ export function Footer({ locale = "en" }: { locale?: "en" | "fr" }) {
           <a href="https://github.com/MR-C0DE/phpaml-chess-tutor-demo">Tutor Chess</a>
           <a href="https://github.com/MR-C0DE/phpaml-framework">Framework</a>
           <a href="https://github.com/MR-C0DE/phpaml-template">Modèle</a>
+          <a href="https://github.com/MR-C0DE/phpaml-website/blob/main/LICENSE">MIT</a>
+          <a href="https://github.com/MR-C0DE/phpaml-website/blob/main/CONTRIBUTING.md">{locale === "fr" ? "Contribuer" : "Contribute"}</a>
+          <a href="https://github.com/MR-C0DE/phpaml-website/blob/main/CODE_OF_CONDUCT.md">{locale === "fr" ? "Code de conduite" : "Code of Conduct"}</a>
         </div>
       </div>
       <div className="shell footer-bottom">
-        <span>{locale === "fr" ? "PHPAML est un jeune projet stable." : "PHPAML is a young stable project."}</span>
+        <span>{locale === "fr" ? "Logiciel open source sous licence MIT." : "MIT-licensed open-source software."}</span>
         <span>{locale === "fr" ? "Version actuelle" : "Current version"} · {release.cliVersion}</span>
       </div>
     </footer>

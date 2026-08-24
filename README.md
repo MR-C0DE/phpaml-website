@@ -15,3 +15,7 @@ npm run release:check
 Release metadata is centralized in `app/release.ts`. Update it only after the matching GitHub release and all installer/checksum assets exist.
 
 The project is currently pre-stable. The generated output and hosting caches are ignored and must not be committed.
+
+## Governance and license
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md), the [Code of Conduct](CODE_OF_CONDUCT.md), and the [security policy](SECURITY.md) before participating. The website source is open-source software licensed under the [MIT License](LICENSE).
