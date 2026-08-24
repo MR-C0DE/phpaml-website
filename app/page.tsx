@@ -7,6 +7,8 @@ const copy = {
     eyebrow: "PHP reorganized, not reinvented", title: <>Structure PHP.<br /><em>Keep control.</em></>,
     lead: "PHPAML combines a readable autonomous MVC core with AML View, its optional declarative and reactive frontend for PHP.",
     download: "Download AML", docs: "Read the documentation", zero: "global dependencies", platforms: "platforms", command: "command",
+    videoLabel: "See the real first-run experience", videoTitle: <>From a fresh folder<br /><span>to a running app.</span></>,
+    videoText: "In 36 seconds: the autonomous CLI installs Framework, View and Engine, creates a declarative interface, and launches it locally. No voice, no hidden steps.", videoCta: "Download PHPAML",
     architecture: "An architecture you already understand", discipline: <>Enterprise discipline.<br /><span>Without the weight.</span></>,
     lifecycle: "An explicit request lifecycle, separated responsibilities, and stable folder conventions. You always know where to look.",
     essential: "Essential and complete", everything: <>Everything you need.<br /><span>Nothing hidden.</span></>,
@@ -40,6 +42,8 @@ const copy = {
     eyebrow: "PHP réorganisé, pas réinventé", title: <>Structurez PHP.<br /><em>Gardez le contrôle.</em></>,
     lead: "PHPAML combine un cœur MVC autonome et lisible avec AML View, son frontend déclaratif et réactif optionnel pour PHP.",
     download: "Télécharger AML", docs: "Lire la documentation", zero: "dépendance globale", platforms: "plateformes", command: "commande",
+    videoLabel: "Découvrez le véritable premier lancement", videoTitle: <>D’un dossier vide<br /><span>à l’application lancée.</span></>,
+    videoText: "En 36 secondes : la CLI autonome installe Framework, View et Engine, crée une interface déclarative et la lance localement. Sans voix et sans étape cachée.", videoCta: "Télécharger PHPAML",
     architecture: "Une architecture qui vous parle déjà", discipline: <>La rigueur des grands.<br /><span>Sans leur poids.</span></>,
     lifecycle: "Un cycle de requête explicite, des responsabilités séparées et une convention de dossiers stable. Vous savez toujours où chercher.",
     essential: "Essentiel, complet", everything: <>Tout ce qu’il faut.<br /><span>Rien à cacher.</span></>,
@@ -81,6 +85,10 @@ export function HomePage({ locale }: { locale: "en" | "fr" }) {
       <div className="hero-proof"><span><strong>0</strong> {c.zero}</span><span><strong>3</strong> {c.platforms}</span><span><strong>1</strong> {c.command}</span></div>
     </div><div className="hero-code"><div className="version-pill"><span /> v{release.cliVersion} · {c.status}</div><div className="terminal-label">01 / QUICK START</div>
       <CodeBlock>{`$ aml create-view-app ${project}\n✓ AML View + Engine installed\n\n$ cd ${project}\n$ aml doctor\n✓ Diagnostics passed\n\n$ aml serve\n→ http://127.0.0.1:8910`}</CodeBlock><div className="code-shadow" /><div className="floating-note">PHP + Composer<br /><strong>included</strong></div>
+    </div></section>
+    <section className="quick-demo-section"><div className="shell quick-demo-grid">
+      <div className="quick-demo-copy"><p className="kicker">{c.videoLabel}</p><h2>{c.videoTitle}</h2><p>{c.videoText}</p><Link className="button primary" href={`${prefix}/download`}>{c.videoCta} <span>↓</span></Link></div>
+      <div className="quick-demo-player"><div className="quick-demo-bar"><i /><i /><i /><small>PHPAML · 36 SEC · NO VOICE</small></div><video controls playsInline preload="metadata" poster="/phpaml-view-result.png" aria-label={c.videoLabel}><source src="/phpaml-demo-no-voice.mp4" type="video/mp4" /></video></div>
     </div></section>
     <section className="principle-strip"><div className="shell strip-grid"><span>PHP 8.2+</span><i /><span>MVC</span><i /><span>DI container</span><i /><span>PHP included</span></div></section>
     <section className="section shell"><div className="section-intro"><div className="section-number">/ 01</div><div><p className="kicker">{c.architecture}</p><h2>{c.discipline}</h2></div><p>{c.lifecycle}</p></div>
