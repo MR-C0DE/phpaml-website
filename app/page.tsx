@@ -88,7 +88,7 @@ export function HomePage({ locale }: { locale: "en" | "fr" }) {
     </div></section>
     <section className="quick-demo-section"><div className="shell quick-demo-grid">
       <div className="quick-demo-copy"><p className="kicker">{c.videoLabel}</p><h2>{c.videoTitle}</h2><p>{c.videoText}</p><Link className="button primary" href={`${prefix}/download`}>{c.videoCta} <span>↓</span></Link></div>
-      <div className="quick-demo-player"><div className="quick-demo-bar"><i /><i /><i /><small>PHPAML · 36 SEC · NO VOICE</small></div><video controls playsInline preload="metadata" poster="/phpaml-view-result.png" aria-label={c.videoLabel}><source src="/phpaml-demo-no-voice.mp4" type="video/mp4" /></video></div>
+      <div className="quick-demo-player"><div className="quick-demo-bar"><i /><i /><i /><small>PHPAML · 36 SEC · NO VOICE</small></div><video controls playsInline preload="metadata" poster="/phpaml-view-result.png" aria-label={c.videoLabel}><source src="/phpaml-demo-no-voice.mp4" type="video/mp4" /><track kind="captions" src="/phpaml-demo-en.vtt" srcLang="en" label="English" default /><track kind="captions" src="/phpaml-demo-fr.vtt" srcLang="fr" label="Français" /></video></div>
     </div></section>
     <section className="principle-strip"><div className="shell strip-grid"><span>PHP 8.2+</span><i /><span>MVC</span><i /><span>DI container</span><i /><span>PHP included</span></div></section>
     <section className="section shell"><div className="section-intro"><div className="section-number">/ 01</div><div><p className="kicker">{c.architecture}</p><h2>{c.discipline}</h2></div><p>{c.lifecycle}</p></div>

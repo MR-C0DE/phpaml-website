@@ -1,0 +1,16 @@
+WEBVTT
+
+00:00.000 --> 00:05.000
+PHPAML: one platform, zero environment setup.
+
+00:05.000 --> 00:13.000
+The published PHPAML CLI package is downloaded and verified.
+
+00:13.000 --> 00:22.000
+AML creates a declarative View application and installs its components.
+
+00:22.000 --> 00:29.000
+Project diagnostics pass, then the local development server starts.
+
+00:29.000 --> 00:36.000
+The generated AML View application opens and runs successfully.

@@ -1,0 +1,16 @@
+WEBVTT
+
+00:00.000 --> 00:05.000
+PHPAML : une plateforme, aucune configuration d'environnement.
+
+00:05.000 --> 00:13.000
+La version publique de PHPAML CLI est téléchargée et vérifiée.
+
+00:13.000 --> 00:22.000
+AML crée une application View déclarative et installe ses composants.
+
+00:22.000 --> 00:29.000
+Le diagnostic réussit, puis le serveur de développement local démarre.
+
+00:29.000 --> 00:36.000
+L'application AML View générée s'ouvre et fonctionne correctement.

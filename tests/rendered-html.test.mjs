@@ -3,7 +3,7 @@ import { spawn } from "node:child_process";
 import test from "node:test";
 
 async function waitForServer(url) {
-  for (let attempt = 0; attempt < 40; attempt += 1) {
+  for (let attempt = 0; attempt < 120; attempt += 1) {
     try { const response = await fetch(url); if (response.ok) return; } catch { /* server is still starting */ }
     await new Promise((resolve) => setTimeout(resolve, 250));
   }
@@ -11,44 +11,52 @@ async function waitForServer(url) {
 }
 
 test("serves the complete bilingual PHPAML website", async () => {
-  const server = spawn(process.execPath, ["node_modules/vinext/dist/cli.js", "start", "-p", "3100"], { stdio: "ignore" });
+  const port = 3100 + (process.pid % 1000);
+  const origin = `http://127.0.0.1:${port}`;
+  const server = spawn(process.execPath, ["node_modules/vinext/dist/cli.js", "start", "-H", "127.0.0.1", "-p", String(port)], { stdio: ["ignore", "pipe", "pipe"] });
+  let serverOutput = "";
+  server.stdout.on("data", (chunk) => { serverOutput += chunk; });
+  server.stderr.on("data", (chunk) => { serverOutput += chunk; });
   try {
-    await waitForServer("http://127.0.0.1:3100/");
+    await Promise.race([
+      waitForServer(`${origin}/`),
+      new Promise((_, reject) => server.once("exit", (code) => reject(new Error(`Test server exited with code ${code}: ${serverOutput}`)))),
+    ]);
     const responses = await Promise.all([
-      fetch("http://127.0.0.1:3100/"),
-      fetch("http://127.0.0.1:3100/fr"),
-      fetch("http://127.0.0.1:3100/docs"),
-      fetch("http://127.0.0.1:3100/download"),
-      fetch("http://127.0.0.1:3100/tutorial"),
-      fetch("http://127.0.0.1:3100/fr/tutorial"),
-      fetch("http://127.0.0.1:3100/tutorial/01"),
-      fetch("http://127.0.0.1:3100/fr/tutorial/01"),
-      fetch("http://127.0.0.1:3100/tutorial/02"),
-      fetch("http://127.0.0.1:3100/fr/tutorial/02"),
-      fetch("http://127.0.0.1:3100/tutorial/03"),
-      fetch("http://127.0.0.1:3100/fr/tutorial/03"),
-      fetch("http://127.0.0.1:3100/tutorial/04"),
-      fetch("http://127.0.0.1:3100/fr/tutorial/04"),
-      fetch("http://127.0.0.1:3100/tutorial/05"),
-      fetch("http://127.0.0.1:3100/fr/tutorial/05"),
-      fetch("http://127.0.0.1:3100/tutorial/06"),
-      fetch("http://127.0.0.1:3100/fr/tutorial/06"),
-      fetch("http://127.0.0.1:3100/tutorial/07"),
-      fetch("http://127.0.0.1:3100/fr/tutorial/07"),
-      fetch("http://127.0.0.1:3100/tutorial/08"),
-      fetch("http://127.0.0.1:3100/fr/tutorial/08"),
-      fetch("http://127.0.0.1:3100/tutorial/09"),
-      fetch("http://127.0.0.1:3100/fr/tutorial/09"),
-      fetch("http://127.0.0.1:3100/tutorial/10"),
-      fetch("http://127.0.0.1:3100/fr/tutorial/10"),
-      fetch("http://127.0.0.1:3100/platform"),
-      fetch("http://127.0.0.1:3100/fr/platform"),
-      fetch("http://127.0.0.1:3100/demos"),
-      fetch("http://127.0.0.1:3100/fr/demos"),
-      fetch("http://127.0.0.1:3100/demos/book-reader"),
-      fetch("http://127.0.0.1:3100/demos/tutor-chess"),
-      fetch("http://127.0.0.1:3100/demos/movies-api"),
-      fetch("http://127.0.0.1:3100/fr/demos/movies-api"),
+      fetch(`${origin}/`),
+      fetch(`${origin}/fr`),
+      fetch(`${origin}/docs`),
+      fetch(`${origin}/download`),
+      fetch(`${origin}/tutorial`),
+      fetch(`${origin}/fr/tutorial`),
+      fetch(`${origin}/tutorial/01`),
+      fetch(`${origin}/fr/tutorial/01`),
+      fetch(`${origin}/tutorial/02`),
+      fetch(`${origin}/fr/tutorial/02`),
+      fetch(`${origin}/tutorial/03`),
+      fetch(`${origin}/fr/tutorial/03`),
+      fetch(`${origin}/tutorial/04`),
+      fetch(`${origin}/fr/tutorial/04`),
+      fetch(`${origin}/tutorial/05`),
+      fetch(`${origin}/fr/tutorial/05`),
+      fetch(`${origin}/tutorial/06`),
+      fetch(`${origin}/fr/tutorial/06`),
+      fetch(`${origin}/tutorial/07`),
+      fetch(`${origin}/fr/tutorial/07`),
+      fetch(`${origin}/tutorial/08`),
+      fetch(`${origin}/fr/tutorial/08`),
+      fetch(`${origin}/tutorial/09`),
+      fetch(`${origin}/fr/tutorial/09`),
+      fetch(`${origin}/tutorial/10`),
+      fetch(`${origin}/fr/tutorial/10`),
+      fetch(`${origin}/platform`),
+      fetch(`${origin}/fr/platform`),
+      fetch(`${origin}/demos`),
+      fetch(`${origin}/fr/demos`),
+      fetch(`${origin}/demos/book-reader`),
+      fetch(`${origin}/demos/tutor-chess`),
+      fetch(`${origin}/demos/movies-api`),
+      fetch(`${origin}/fr/demos/movies-api`),
     ]);
     responses.forEach((response) => assert.equal(response.status, 200));
     const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, chapterFour, frenchChapterFour, chapterFive, frenchChapterFive, chapterSix, frenchChapterSix, chapterSeven, frenchChapterSeven, chapterEight, frenchChapterEight, chapterNine, frenchChapterNine, chapterTen, frenchChapterTen, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo] = await Promise.all(responses.map((response) => response.text()));
@@ -58,6 +66,8 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(home, /<title>PHPAML/);
     assert.match(home, /rel="icon"[^>]+favicon\.png/);
     assert.match(home, /aria-label="Main navigation"/);
+    assert.match(home, /phpaml-demo-en\.vtt/);
+    assert.match(home, /phpaml-demo-fr\.vtt/);
     assert.match(home, /github\.com\/MR-C0DE\/phpaml-cli/);
     assert.match(home, /phpaml-book-reader-demo\.onrender\.com/);
     assert.match(home, /github\.com\/MR-C0DE\/phpaml-book-reader-demo/);
@@ -105,9 +115,9 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(docs, /src\/views\/stylesheets/);
     assert.match(docs, /aml create-view-app/);
     assert.match(docs, /src\/views/);
-    assert.match(download, /phpaml-1\.7\.0-beta\.15-windows-x64\.exe/);
-    assert.match(download, /phpaml-1\.7\.0-beta\.15-macos-arm64\.pkg/);
-    assert.match(download, /phpaml-1\.7\.0-beta\.15-linux-x64\.deb/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.16-windows-x64\.exe/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.16-macos-arm64\.pkg/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.16-linux-x64\.deb/);
     assert.match(download, /SHA-256/);
     assert.match(tutorial, /Official PHPAML tutorial/);
     assert.match(tutorial, /Master MVC/);
@@ -125,9 +135,9 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(tutorial, /Coming soon/);
     assert.match(chapterOne, /Install AML and/);
     assert.match(chapterOne, /aml create my-first-app/);
-    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.15-windows-x64\.exe/);
-    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.15-macos-arm64\.pkg/);
-    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.15-linux-x64\.deb/);
+    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.16-windows-x64\.exe/);
+    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.16-macos-arm64\.pkg/);
+    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.16-linux-x64\.deb/);
     assert.match(chapterOne, /Live reload enabled/);
     assert.match(chapterOne, /Final exercise/);
     assert.match(chapterOne, /Learning objectives/);
