@@ -119,6 +119,12 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(docs, /aml create-api my-api/);
     assert.match(docs, /Three paths, a first result in under five minutes/);
     assert.match(docs, /src\/views/);
+    assert.match(docs, /Three readable structures, one configuration model/);
+    assert.match(docs, /routes\/WebApp\.php/);
+    assert.match(docs, /runtime\/config\/app\.php/);
+    assert.match(docs, /phpaml\/view:\^0\.1@beta/);
+    assert.match(docs, /phpaml\/data-mongodb:\^0\.1@alpha/);
+    assert.doesNotMatch(docs, /configs\/app\.php/);
     assert.match(download, /phpaml-1\.7\.0-beta\.18-windows-x64\.exe/);
     assert.match(download, /phpaml-1\.7\.0-beta\.18-macos-arm64\.pkg/);
     assert.match(download, /phpaml-1\.7\.0-beta\.18-linux-x64\.deb/);

@@ -31,3 +31,31 @@
     grid-template-columns: 1fr;
   }
 }
+
+.architecture-variants {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.architecture-variants > div {
+  min-width: 0;
+}
+
+.architecture-variants small {
+  color: var(--violet-deep);
+  font: 750 9px var(--font-geist-mono);
+  letter-spacing: .08em;
+}
+
+.architecture-variants .file-tree {
+  height: calc(100% - 22px);
+  margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+  .architecture-variants {
+    grid-template-columns: 1fr;
+  }
+}
