@@ -6,7 +6,7 @@ import "./chapter-one.css";
 const command = {
   doctor: "aml doctor",
   current: "mkdir my-first-app\ncd my-first-app\naml create .\naml install\naml serve",
-  doctorResult: `[OK]        AML                     version 1.7.0-beta.18
+  doctorResult: `[OK]        AML                     version 1.7.0-beta.19
 [OK]        PHP                     compatible
 [OK]        Private Composer        available
 [OK]        Temporary directory     writable
