@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "vinext build",
+    "build": "next build --webpack",
     "build:next": "next build --webpack",
     "start": "next start",
     "build:sites": "vinext build",
