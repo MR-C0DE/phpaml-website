@@ -1,0 +1,33 @@
+.onboarding-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.onboarding-grid > div {
+  min-width: 0;
+}
+
+.onboarding-grid small {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--violet-deep);
+  font: 750 9px var(--font-geist-mono);
+  letter-spacing: .08em;
+}
+
+.onboarding-grid .terminal {
+  height: calc(100% - 18px);
+  margin: 0;
+}
+
+.onboarding-grid .terminal pre {
+  font-size: 10px;
+}
+
+@media (max-width: 900px) {
+  .onboarding-grid {
+    grid-template-columns: 1fr;
+  }
+}

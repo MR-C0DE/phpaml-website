@@ -4,6 +4,16 @@ import { CodeBlock, Footer, Header } from "./components";
 type Locale = "en" | "fr";
 
 const examples = {
+  framework: `final class MovieRoute extends Route
+{
+    protected string $prefix = '/api/v1';
+
+    protected function routes(): void
+    {
+        $this->get('/movies', [MovieController::class, 'index']);
+        $this->get('/movies/{id}', [MovieController::class, 'show']);
+    }
+}`,
   view: `final class Counter extends Page
 {
     #[State] public int $count = 0;
@@ -44,13 +54,29 @@ protected function search(): EffectPlan
 Button('Account')->onClick(
     Navigate('/account')
 );`,
+  i18n: `aml install i18n
+aml i18n:add fr
+
+// src/locales/fr/navigation.json
+{
+  "account": "Mon compte",
+  "lessons": "Mes leçons"
+}
+
+Text(__('navigation.account'));`,
 };
 
 export function PlatformPage({ locale }: { locale: Locale }) {
   const fr = locale === "fr";
   return <><Header locale={locale} path="/platform" /><main className="platform-page">
-    <section className="route-hero shell"><small>PHPAML PLATFORM</small><h1>{fr ? "Trois couches. Un seul flux PHP." : "Three layers. One PHP workflow."}</h1><p>{fr ? "AML View décrit l’interface, PHPAML Data conserve le domaine et AML Engine transforme le PHP déclaratif en interactions rapides dans le navigateur." : "AML View describes the interface, PHPAML Data persists the domain, and AML Engine turns declarative PHP into fast browser interactions."}</p><div className="route-actions"><Link className="button primary" href={fr ? "/fr/docs" : "/docs"}>{fr ? "Lire la documentation" : "Read the documentation"} →</Link><Link className="button ghost" href={fr ? "/fr/demos" : "/demos"}>{fr ? "Voir les démos" : "See the demos"} →</Link></div></section>
-    <section className="platform-section"><div className="shell"><div className="platform-cards"><article><small>01</small><h3>AML View</h3><p>{fr ? "Pages déclaratives, composants, layouts, état réactif, propriétés calculées et effets." : "Declarative pages, components, layouts, reactive state, computed properties, and effects."}</p></article><article><small>02</small><h3>PHPAML Data</h3><p>{fr ? "Entités typées, requêtes, relations, migrations et transactions SQL ou MongoDB." : "Typed entities, queries, relations, migrations, and SQL or MongoDB transactions."}</p></article><article><small>03</small><h3>AML Engine</h3><p>{fr ? "Événements, collections et navigation client sans rechargement complet ni JavaScript manuel." : "Events, collections, and client navigation without full reloads or handwritten JavaScript."}</p></article></div><div className="platform-examples"><article><header><span>VIEW</span><strong>ReactiveCounter.php</strong></header><CodeBlock>{examples.view}</CodeBlock></article><article><header><span>DATA</span><strong>UserRepository.php</strong></header><CodeBlock>{examples.data}</CodeBlock></article><article><header><span>ENGINE</span><strong>SearchPage.php</strong></header><CodeBlock>{examples.engine}</CodeBlock></article></div></div></section>
+    <section className="route-hero shell"><small>PHPAML PLATFORM</small><h1>{fr ? "Cinq composants. Un seul flux PHP." : "Five components. One PHP workflow."}</h1><p>{fr ? "Framework, View, Engine, Data et i18n restent utilisables séparément. Assemblez uniquement les capacités nécessaires à votre application, sans imposer toute la plateforme." : "Framework, View, Engine, Data, and i18n remain independently usable. Combine only the capabilities your application needs instead of adopting the whole platform."}</p><div className="route-actions"><Link className="button primary" href={fr ? "/fr/docs" : "/docs"}>{fr ? "Lire la documentation" : "Read the documentation"} →</Link><Link className="button ghost" href={fr ? "/fr/demos" : "/demos"}>{fr ? "Voir les démos" : "See the demos"} →</Link></div></section>
+    <section className="platform-section"><div className="shell"><div className="platform-cards">
+      <article><small>01</small><h3>PHPAML Framework</h3><p>{fr ? "HTTP, routes, MVC, middlewares, injection, validation et sécurité avec un cycle de requête explicite." : "HTTP, routing, MVC, middleware, injection, validation, and security with an explicit request lifecycle."}</p></article>
+      <article><small>02</small><h3>AML View</h3><p>{fr ? "Pages déclaratives, composants, layouts, état réactif, propriétés calculées et effets." : "Declarative pages, components, layouts, reactive state, computed properties, and effects."}</p></article>
+      <article><small>03</small><h3>AML Engine</h3><p>{fr ? "Événements, collections et navigation client sans rechargement complet ni JavaScript manuel." : "Events, collections, and client navigation without full reloads or handwritten JavaScript."}</p></article>
+      <article><small>04</small><h3>PHPAML Data</h3><p>{fr ? "Entités typées, requêtes, relations, migrations et transactions SQL ou MongoDB." : "Typed entities, queries, relations, migrations, and SQL or MongoDB transactions."}</p></article>
+      <article><small>05</small><h3>PHPAML i18n</h3><p>{fr ? "Catalogues JSON, paramètres, pluriels, résolution de langue et langues de secours." : "JSON catalogs, parameters, plurals, locale resolution, and fallbacks."}</p></article>
+    </div><div className="platform-examples"><article><header><span>FRAMEWORK</span><strong>MovieRoute.php</strong></header><CodeBlock>{examples.framework}</CodeBlock></article><article><header><span>VIEW</span><strong>ReactiveCounter.php</strong></header><CodeBlock>{examples.view}</CodeBlock></article><article><header><span>ENGINE</span><strong>SearchPage.php</strong></header><CodeBlock>{examples.engine}</CodeBlock></article><article><header><span>DATA</span><strong>UserRepository.php</strong></header><CodeBlock>{examples.data}</CodeBlock></article><article><header><span>I18N</span><strong>navigation.json</strong></header><CodeBlock>{examples.i18n}</CodeBlock></article></div></div></section>
   </main><Footer locale={locale} /></>;
 }
 
