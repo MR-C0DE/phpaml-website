@@ -1,13 +1,13 @@
 export const release = {
-  cliVersion: "1.7.0-beta.19",
+  cliVersion: "1.7.0-beta.20",
   frameworkVersion: "0.3.0-beta.3",
   templateVersion: "0.5.0-beta.3",
   repository: "https://github.com/MR-C0DE/phpaml-cli",
-  tagUrl: "https://github.com/MR-C0DE/phpaml-cli/releases/tag/v1.7.0-beta.19",
+  tagUrl: "https://github.com/MR-C0DE/phpaml-cli/releases/tag/v1.7.0-beta.20",
   assets: [
-    { mark: "⊞", name: "Windows", detail: "Windows 10/11 · x64", file: "phpaml-1.7.0-beta.19-windows-x64.exe", size: 8736079, sha256: "a6bf14b5f6f4896b29a2c1f5b406007e1fc7c020add87af81c40b118e38c9e5a" },
-    { mark: "●", name: "macOS", detail: "Apple Silicon · ARM64", file: "phpaml-1.7.0-beta.19-macos-arm64.pkg", size: 8449336, sha256: "72941acf991df892d8f975ec4f6f430e83c5f205039f30e59a4f5d221a0e6ff6" },
-    { mark: "◆", name: "Linux", detail: "Debian / Ubuntu · x64", file: "phpaml-1.7.0-beta.19-linux-x64.deb", size: 6414670, sha256: "3d369c8d79411f53ef373a5c9202e65fe6c833f87febdd3f53c6091bb6ae0896" },
+    { mark: "⊞", name: "Windows", detail: "Windows 10/11 · x64", file: "phpaml-1.7.0-beta.20-windows-x64.exe", size: 8738306, sha256: "c34a2639f5ed4c2e9eedab39456bfd6c69bd6defde006c486ce7b52b340cf346" },
+    { mark: "●", name: "macOS", detail: "Apple Silicon · ARM64", file: "phpaml-1.7.0-beta.20-macos-arm64.pkg", size: 8450971, sha256: "5dd45e65ccac9dd78eed12e83ac7eb958a13e7b7aac900151f75350574bb8a58" },
+    { mark: "◆", name: "Linux", detail: "Debian / Ubuntu · x64", file: "phpaml-1.7.0-beta.20-linux-x64.deb", size: 6414518, sha256: "2c12908b8213b664f414b5b94c7230a6789f2c6eaf9f566ce789f3553a3f7e53" },
   ],
 } as const;
 
