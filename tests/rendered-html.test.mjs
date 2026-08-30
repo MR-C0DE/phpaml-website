@@ -57,9 +57,14 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch(`${origin}/demos/tutor-chess`),
       fetch(`${origin}/demos/movies-api`),
       fetch(`${origin}/fr/demos/movies-api`),
+      fetch(`${origin}/news`),
+      fetch(`${origin}/fr/news`),
+      fetch(`${origin}/news/phpaml-data-enters-alpha`),
+      fetch(`${origin}/fr/news/phpaml-data-enters-alpha`),
+      fetch(`${origin}/admin/news`),
     ]);
     responses.forEach((response) => assert.equal(response.status, 200));
-    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, chapterFour, frenchChapterFour, chapterFive, frenchChapterFive, chapterSix, frenchChapterSix, chapterSeven, frenchChapterSeven, chapterEight, frenchChapterEight, chapterNine, frenchChapterNine, chapterTen, frenchChapterTen, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo] = await Promise.all(responses.map((response) => response.text()));
+    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, chapterFour, frenchChapterFour, chapterFive, frenchChapterFive, chapterSix, frenchChapterSix, chapterSeven, frenchChapterSeven, chapterEight, frenchChapterEight, chapterNine, frenchChapterNine, chapterTen, frenchChapterTen, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo, news, frenchNews, dataNews, frenchDataNews, adminNews] = await Promise.all(responses.map((response) => response.text()));
     const docsText = docs.replace(/<[^>]+>/g, "");
     assert.match(home, /Structure PHP/);
     assert.match(home, /href="\/fr"/);
@@ -87,6 +92,7 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(home, /Effect/);
     assert.match(home, /href="\/platform"/);
     assert.match(home, /href="\/demos"/);
+    assert.match(home, /href="\/news"/);
     assert.match(platform, /Five components\. One PHP workflow/);
     assert.match(platform, /PHPAML Framework/);
     assert.match(platform, /PHPAML i18n/);
@@ -101,6 +107,17 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(moviesDemo, /MovieRoute\.php/);
     assert.match(moviesDemo, /github\.com\/MR-C0DE\/phpaml-movies-api-demo/);
     assert.match(frenchMoviesDemo, /Ce que cette démo valide/);
+    assert.match(news, /What changed\. Why it matters/);
+    assert.match(news, /href="\/news\/phpaml-data-enters-alpha"/);
+    assert.match(frenchNews, /Ce qui évolue\. Pourquoi ça compte/);
+    assert.match(dataNews, /PHPAML Data enters alpha/);
+    assert.match(dataNews, /aml install data --driver sqlite/);
+    assert.doesNotMatch(dataNews, /og-v3\.png/);
+    assert.match(frenchDataNews, /PHPAML Data entre en alpha/);
+    assert.match(frenchDataNews, /Un noyau, plusieurs bases de données/);
+    assert.doesNotMatch(frenchDataNews, /og-v3\.png/);
+    assert.match(adminNews, /Publications/);
+    assert.match(adminNews, /ÉDITEUR BILINGUE/);
     assert.match(french, /Structurez PHP/);
     assert.match(french, /href="\/"/);
     assert.match(french, /aria-label="Navigation principale"/);

@@ -23,6 +23,7 @@ export function Header({ locale = "en", path = "" }: { locale?: "en" | "fr"; pat
           <Link href={`${prefix}/tutorial`}>{locale === "fr" ? "Tutoriel" : "Tutorial"}</Link>
           <Link href={`${prefix}/platform`}>Platform</Link>
           <Link href={`${prefix}/demos`}>Demos</Link>
+          <Link href={`${prefix}/news`}>{locale === "fr" ? "Actualités" : "News"}</Link>
           <Link href={`${prefix}/download`}>{locale === "fr" ? "Télécharger" : "Download"}</Link>
           <Link className="lang-switch" href={languageHref}>{locale === "fr" ? "EN" : "FR"}</Link>
           <a href="https://github.com/MR-C0DE/phpaml-cli">GitHub ↗</a>
@@ -37,6 +38,7 @@ export function Header({ locale = "en", path = "" }: { locale?: "en" | "fr"; pat
             <Link href={`${prefix}/tutorial`}>{locale === "fr" ? "Tutoriel MVC" : "MVC tutorial"} <span>→</span></Link>
             <Link href={`${prefix}/platform`}>Platform <span>→</span></Link>
             <Link href={`${prefix}/demos`}>Demos <span>→</span></Link>
+            <Link href={`${prefix}/news`}>{locale === "fr" ? "Actualités" : "News"} <span>→</span></Link>
             <Link href={`${prefix}/download`}>{locale === "fr" ? "Télécharger" : "Download"} <span>↓</span></Link>
             <a href="https://github.com/MR-C0DE/phpaml-cli">GitHub <span>↗</span></a>
             <Link href={languageHref}>{locale === "fr" ? "English" : "Français"} <span>{locale === "fr" ? "EN" : "FR"}</span></Link>
@@ -61,6 +63,7 @@ export function Footer({ locale = "en" }: { locale?: "en" | "fr" }) {
           <Link href={`${prefix}/tutorial`}>{locale === "fr" ? "Tutoriel MVC" : "MVC tutorial"}</Link>
           <Link href={`${prefix}/platform`}>Platform</Link>
           <Link href={`${prefix}/demos`}>Demos</Link>
+          <Link href={`${prefix}/news`}>{locale === "fr" ? "Actualités" : "News"}</Link>
           <Link href={`${prefix}/download`}>{locale === "fr" ? "Installateurs" : "Installers"}</Link>
           <Link href={locale === "fr" ? "/fr/confidentialite" : "/privacy"}>{locale === "fr" ? "Confidentialité" : "Privacy"}</Link>
           <a href="https://phpaml-book-reader-demo.onrender.com">Demo</a>

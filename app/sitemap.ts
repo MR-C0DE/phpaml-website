@@ -11,6 +11,8 @@ const routes = [
   '/demos/book-reader',
   '/demos/tutor-chess',
   '/demos/movies-api',
+  '/news',
+  '/news/phpaml-data-enters-alpha',
   '/tutorial',
   ...Array.from({ length: 10 }, (_, index) => `/tutorial/${String(index + 1).padStart(2, '0')}`),
   '/fr',
@@ -21,6 +23,8 @@ const routes = [
   '/fr/demos/book-reader',
   '/fr/demos/tutor-chess',
   '/fr/demos/movies-api',
+  '/fr/news',
+  '/fr/news/phpaml-data-enters-alpha',
   '/fr/tutorial',
   ...Array.from({ length: 10 }, (_, index) => `/fr/tutorial/${String(index + 1).padStart(2, '0')}`),
 ]

@@ -1,0 +1,60 @@
+import Link from "next/link";
+import { CodeBlock } from "./components";
+
+export type RenderedNewsTranslation = {
+  category: string;
+  title: string;
+  summary: string;
+  content: string;
+};
+
+export type RenderedNewsPost = {
+  slug: string;
+  date: string;
+  version: string;
+  translation: RenderedNewsTranslation;
+};
+
+function richBlocks(content: string) {
+  const chunks = content.trim().split(/\n{2,}/).filter(Boolean);
+  return chunks.map((chunk, index) => {
+    const value = chunk.trim();
+    if (value.startsWith("```")) {
+      const code = value.replace(/^```[^\n]*\n?/, "").replace(/\n?```$/, "");
+      return <CodeBlock key={index}>{code}</CodeBlock>;
+    }
+    if (value.startsWith("## ")) return <h2 key={index}>{value.slice(3).trim()}</h2>;
+    if (value.startsWith("### ")) return <h3 key={index}>{value.slice(4).trim()}</h3>;
+    if (value.split("\n").every((line) => line.startsWith("- "))) {
+      return <ul key={index}>{value.split("\n").map((line) => <li key={line}>{line.slice(2)}</li>)}</ul>;
+    }
+    if (value.split("\n").every((line) => /^\d+\. /.test(line))) {
+      return <ol key={index}>{value.split("\n").map((line) => <li key={line}>{line.replace(/^\d+\. /, "")}</li>)}</ol>;
+    }
+    if (value.startsWith("> ")) return <blockquote key={index}>{value.split("\n").map((line) => line.replace(/^> ?/, "")).join(" ")}</blockquote>;
+    return <p key={index}>{value.replace(/\n/g, " ")}</p>;
+  });
+}
+
+const formatDate = (value: string, locale: "en" | "fr") => new Intl.DateTimeFormat(locale === "fr" ? "fr-CA" : "en-CA", {
+  day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
+}).format(new Date(`${value || new Date().toISOString().slice(0, 10)}T00:00:00Z`));
+
+export function NewsArticleRenderer({ locale, post, preview = false }: { locale: "en" | "fr"; post: RenderedNewsPost; preview?: boolean }) {
+  const fr = locale === "fr";
+  const item = post.translation;
+  const prefix = fr ? "/fr" : "";
+  return <article className={preview ? "news-preview-article" : undefined}>
+    <header className="news-article-hero shell">
+      {!preview && <Link className="news-back" href={`${prefix}/news`}>← {fr ? "Toutes les actualités" : "All news"}</Link>}
+      {preview && <span className="news-back">← {fr ? "Aperçu fidèle de la publication" : "True publication preview"}</span>}
+      <div className="news-article-meta"><span>{item.category}</span><time dateTime={post.date}>{formatDate(post.date, locale)}</time>{post.version && <b>v{post.version}</b>}</div>
+      <h1>{item.title || (fr ? "Titre de la publication" : "Publication title")}</h1>
+      <p>{item.summary || (fr ? "Le résumé apparaîtra ici." : "The summary will appear here.")}</p>
+    </header>
+    <div className="news-article-layout shell">
+      <aside><small>PHPAML NEWS</small><strong>{item.category || (fr ? "Actualité" : "News")}</strong><span>{fr ? "Publication bilingue" : "Bilingual publication"}</span></aside>
+      <div className="news-article-body">{richBlocks(item.content || (fr ? "Commencez à écrire pour afficher l’aperçu." : "Start writing to display the preview."))}</div>
+    </div>
+  </article>;
+}
