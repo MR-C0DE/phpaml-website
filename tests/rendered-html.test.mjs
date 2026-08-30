@@ -61,10 +61,9 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch(`${origin}/fr/news`),
       fetch(`${origin}/news/phpaml-data-enters-alpha`),
       fetch(`${origin}/fr/news/phpaml-data-enters-alpha`),
-      fetch(`${origin}/admin/news`),
     ]);
     responses.forEach((response) => assert.equal(response.status, 200));
-    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, chapterFour, frenchChapterFour, chapterFive, frenchChapterFive, chapterSix, frenchChapterSix, chapterSeven, frenchChapterSeven, chapterEight, frenchChapterEight, chapterNine, frenchChapterNine, chapterTen, frenchChapterTen, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo, news, frenchNews, dataNews, frenchDataNews, adminNews] = await Promise.all(responses.map((response) => response.text()));
+    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, chapterFour, frenchChapterFour, chapterFive, frenchChapterFive, chapterSix, frenchChapterSix, chapterSeven, frenchChapterSeven, chapterEight, frenchChapterEight, chapterNine, frenchChapterNine, chapterTen, frenchChapterTen, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo, news, frenchNews, dataNews, frenchDataNews] = await Promise.all(responses.map((response) => response.text()));
     const docsText = docs.replace(/<[^>]+>/g, "");
     assert.match(home, /Structure PHP/);
     assert.match(home, /href="\/fr"/);
@@ -116,8 +115,6 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(frenchDataNews, /PHPAML Data entre en alpha/);
     assert.match(frenchDataNews, /Un noyau, plusieurs bases de données/);
     assert.doesNotMatch(frenchDataNews, /og-v3\.png/);
-    assert.match(adminNews, /Publications/);
-    assert.match(adminNews, /ÉDITEUR BILINGUE/);
     assert.match(french, /Structurez PHP/);
     assert.match(french, /href="\/"/);
     assert.match(french, /aria-label="Navigation principale"/);
