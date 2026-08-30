@@ -123,9 +123,9 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(docs, /routes\/WebApp\.php/);
     assert.match(docs, /runtime\/config\/app\.php/);
     assert.doesNotMatch(docs, /configs\/app\.php/);
-    assert.match(download, /phpaml-1\.7\.0-beta\.21-windows-x64\.exe/);
-    assert.match(download, /phpaml-1\.7\.0-beta\.21-macos-arm64\.pkg/);
-    assert.match(download, /phpaml-1\.7\.0-beta\.21-linux-x64\.deb/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.22-windows-x64\.exe/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.22-macos-arm64\.pkg/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.22-linux-x64\.deb/);
     assert.match(download, /SHA-256/);
     assert.match(tutorial, /Official PHPAML tutorial/);
     assert.match(tutorial, /Master MVC/);
@@ -143,9 +143,9 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(tutorial, /Coming soon/);
     assert.match(chapterOne, /Install AML and/);
     assert.match(chapterOne, /aml create my-first-app/);
-    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.21-windows-x64\.exe/);
-    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.21-macos-arm64\.pkg/);
-    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.21-linux-x64\.deb/);
+    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.22-windows-x64\.exe/);
+    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.22-macos-arm64\.pkg/);
+    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.22-linux-x64\.deb/);
     assert.match(chapterOne, /Live reload enabled/);
     assert.match(chapterOne, /Final exercise/);
     assert.match(chapterOne, /Learning objectives/);
