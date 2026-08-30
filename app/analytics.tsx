@@ -6,13 +6,14 @@ import { usePathname } from "next/navigation";
 const measurementId = "G-YFP7HP50RP";
 const consentKey = "phpaml-analytics-consent";
 const consentEvent = "phpaml-analytics-consent-change";
+export type AnalyticsConsent = "accepted" | "declined" | null;
 
-function readConsent(): "accepted" | "declined" | null {
+export function readAnalyticsConsent(): AnalyticsConsent {
   const value = window.localStorage.getItem(consentKey);
   return value === "accepted" || value === "declined" ? value : null;
 }
 
-function subscribeToConsent(callback: () => void) {
+export function subscribeToAnalyticsConsent(callback: () => void) {
   window.addEventListener("storage", callback);
   window.addEventListener(consentEvent, callback);
   return () => {
@@ -21,10 +22,17 @@ function subscribeToConsent(callback: () => void) {
   };
 }
 
+export function setAnalyticsConsent(value: Exclude<AnalyticsConsent, null>) {
+  window.localStorage.setItem(consentKey, value);
+  window[`ga-disable-${measurementId}`] = value === "declined";
+  window.dispatchEvent(new Event(consentEvent));
+}
+
 declare global {
   interface Window {
     dataLayer: unknown[];
     gtag?: (...args: unknown[]) => void;
+    "ga-disable-G-YFP7HP50RP"?: boolean;
   }
 }
 
@@ -63,11 +71,12 @@ function platformFor(file: string) {
 }
 
 export function Analytics() {
-  const consent = useSyncExternalStore(subscribeToConsent, readConsent, () => null);
+  const consent = useSyncExternalStore(subscribeToAnalyticsConsent, readAnalyticsConsent, () => null);
   const pathname = usePathname();
   const isFrench = pathname === "/fr" || pathname.startsWith("/fr/");
 
   useEffect(() => {
+    window[`ga-disable-${measurementId}`] = consent === "declined";
     if (consent !== "accepted") return;
     startAnalytics();
 
@@ -105,8 +114,7 @@ export function Analytics() {
   }, [consent]);
 
   function choose(value: "accepted" | "declined") {
-    window.localStorage.setItem(consentKey, value);
-    window.dispatchEvent(new Event(consentEvent));
+    setAnalyticsConsent(value);
   }
 
   if (consent !== null) return null;

@@ -62,6 +62,7 @@ export function Footer({ locale = "en" }: { locale?: "en" | "fr" }) {
           <Link href={`${prefix}/platform`}>Platform</Link>
           <Link href={`${prefix}/demos`}>Demos</Link>
           <Link href={`${prefix}/download`}>{locale === "fr" ? "Installateurs" : "Installers"}</Link>
+          <Link href={locale === "fr" ? "/fr/confidentialite" : "/privacy"}>{locale === "fr" ? "Confidentialité" : "Privacy"}</Link>
           <a href="https://phpaml-book-reader-demo.onrender.com">Demo</a>
           <a href="https://github.com/MR-C0DE/phpaml-chess-tutor-demo">Tutor Chess</a>
           <a href="https://github.com/MR-C0DE/phpaml-framework">Framework</a>
