@@ -4,8 +4,11 @@ import { deleteNewsPost, listNewsPosts, saveNewsPost, type NewsPostInput } from 
 export const dynamic = "force-dynamic";
 
 function sameOrigin(request: Request) {
-  const origin = request.headers.get("origin");
-  return origin !== null && origin === new URL(request.url).origin;
+  try {
+    const origin = new URL(request.headers.get("origin") ?? "");
+    const host = (request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? new URL(request.url).host).split(",")[0].trim();
+    return origin.host === host;
+  } catch { return false; }
 }
 
 function clean(value: unknown, max: number) {
