@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import { Analytics } from "./analytics";
+import "./analytics.css";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -29,5 +31,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body>{children}</body></html>;
+  return <html lang="en"><body>{children}<Analytics /></body></html>;
 }

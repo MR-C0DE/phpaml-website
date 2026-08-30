@@ -1,0 +1,8 @@
+/* Privacy-first Analytics consent */
+.analytics-consent{position:fixed;z-index:1000;right:22px;bottom:22px;left:22px;display:flex;align-items:center;justify-content:space-between;gap:28px;max-width:980px;margin-inline:auto;padding:20px 22px;border:1px solid #363c52;background:var(--ink);color:#fff;box-shadow:10px 10px 0 var(--violet)}
+.analytics-consent strong{color:var(--lime);font:750 10px var(--font-geist-mono);letter-spacing:.11em;text-transform:uppercase}
+.analytics-consent p{max-width:650px;margin:7px 0 0;color:#bdc1ce;font-size:13px;line-height:1.55}
+.analytics-consent-actions{display:flex;flex:none;gap:9px}
+.analytics-consent button{min-height:42px;padding:0 15px;border:1px solid #555d76;background:transparent;color:#fff;font:750 10px var(--font-geist-mono);cursor:pointer}
+.analytics-consent button.accept{border-color:var(--lime);background:var(--lime);color:var(--ink)}
+@media(max-width:680px){.analytics-consent{align-items:stretch;flex-direction:column;gap:17px;right:12px;bottom:12px;left:12px;padding:18px}.analytics-consent-actions{display:grid;grid-template-columns:1fr 1fr}.analytics-consent button{padding-inline:10px}}
