@@ -1,5 +1,7 @@
 import { headers } from "next/headers";
-import { getChatGPTUser, requireChatGPTUser, type ChatGPTUser } from "./chatgpt-auth";
+import { redirect } from "next/navigation";
+import { getChatGPTUser, type ChatGPTUser } from "./chatgpt-auth";
+import { hasAdminSession } from "./admin-session";
 
 const returnTo = "/admin/news";
 
@@ -15,13 +17,15 @@ async function isLocalRequest() {
 
 export async function requireNewsAdmin(): Promise<ChatGPTUser> {
   if (await isLocalRequest()) return { userId: "local-admin", email: "admin@localhost", displayName: "Local admin", fullName: "Local admin" };
-  const user = await requireChatGPTUser(returnTo);
-  if (!allowedEmails().includes(user.email.toLowerCase())) throw new Error("NEWS_ADMIN_FORBIDDEN");
-  return user;
+  const user = await getChatGPTUser();
+  if (user && allowedEmails().includes(user.email.toLowerCase())) return user;
+  if (await hasAdminSession()) return { userId: "news-admin", email: "admin@phpaml.com", displayName: "PHPAML Admin", fullName: "PHPAML Admin" };
+  redirect(`/admin/login?return_to=${encodeURIComponent(returnTo)}`);
 }
 
 export async function getNewsAdmin(): Promise<ChatGPTUser | null> {
   if (await isLocalRequest()) return { userId: "local-admin", email: "admin@localhost", displayName: "Local admin", fullName: "Local admin" };
   const user = await getChatGPTUser();
-  return user && allowedEmails().includes(user.email.toLowerCase()) ? user : null;
+  if (user && allowedEmails().includes(user.email.toLowerCase())) return user;
+  return await hasAdminSession() ? { userId: "news-admin", email: "admin@phpaml.com", displayName: "PHPAML Admin", fullName: "PHPAML Admin" } : null;
 }
