@@ -30,13 +30,18 @@ export async function POST(request: Request) {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) return Response.json({ error: "Invalid slug" }, { status: 422 });
   const required = ["title_en", "summary_en", "content_en", "title_fr", "summary_fr", "content_fr"] as const;
   if (required.some((key) => !String(input[key] ?? "").trim())) return Response.json({ error: "Both languages are required" }, { status: 422 });
-  await saveNewsPost({
-    slug, status: input.status === "published" ? "published" : "draft",
-    published_at: input.status === "published" ? (input.published_at || new Date().toISOString().slice(0, 10)) : null,
-    version: clean(input.version, 60),
-    title_en: clean(input.title_en, 180), summary_en: clean(input.summary_en, 600), content_en: clean(input.content_en, 100_000),
-    title_fr: clean(input.title_fr, 180), summary_fr: clean(input.summary_fr, 600), content_fr: clean(input.content_fr, 100_000),
-  }, user.email);
+  try {
+    await saveNewsPost({
+      slug, status: input.status === "published" ? "published" : "draft",
+      published_at: input.status === "published" ? (input.published_at || new Date().toISOString().slice(0, 10)) : null,
+      version: clean(input.version, 60),
+      title_en: clean(input.title_en, 180), summary_en: clean(input.summary_en, 600), content_en: clean(input.content_en, 100_000),
+      title_fr: clean(input.title_fr, 180), summary_fr: clean(input.summary_fr, 600), content_fr: clean(input.content_fr, 100_000),
+    }, user.email);
+  } catch (error) {
+    console.error("News publication storage failed", error);
+    return Response.json({ error: "Publication storage is temporarily unavailable" }, { status: 503 });
+  }
   return Response.json({ ok: true });
 }
 

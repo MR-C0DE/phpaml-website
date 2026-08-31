@@ -59,6 +59,22 @@ async function mongoReady(): Promise<MongoCollection | null> {
   return mongoCollection;
 }
 
+async function mongoWrite(operation: (collection: MongoCollection) => Promise<void>) {
+  let collection = await mongoReady();
+  if (!collection) return false;
+  try {
+    await operation(collection);
+  } catch {
+    // Persistent Node processes may retain a pool that Atlas has already closed.
+    // Recreate it once so an editor action does not fail until the next deploy.
+    mongoCollection = null;
+    collection = await mongoReady();
+    if (!collection) return false;
+    await operation(collection);
+  }
+  return true;
+}
+
 function fromMongo(document: unknown): StoredNewsPost {
   const { _id: _ignored, ...post } = document as StoredNewsPost & { _id?: unknown };
   void _ignored;
@@ -131,16 +147,14 @@ export async function saveNewsPost(input: NewsPostInput, authorEmail: string): P
       ON CONFLICT(slug) DO UPDATE SET status=excluded.status,published_at=excluded.published_at,version=excluded.version,title_en=excluded.title_en,summary_en=excluded.summary_en,content_en=excluded.content_en,title_fr=excluded.title_fr,summary_fr=excluded.summary_fr,content_fr=excluded.content_fr,author_email=excluded.author_email,updated_at=CURRENT_TIMESTAMP`)
       .bind(input.slug, input.status, input.published_at, input.version, input.title_en, input.summary_en, input.content_en, input.title_fr, input.summary_fr, input.content_fr, authorEmail).run();
   } catch {
-    const mongo = await mongoReady();
-    if (mongo) {
-      const now = new Date().toISOString();
+    const now = new Date().toISOString();
+    if (await mongoWrite(async (mongo) => {
       await mongo.updateOne(
         { slug: input.slug },
         { $set: { ...input, author_email: authorEmail, updated_at: now }, $setOnInsert: { id: Date.now(), created_at: now } },
         { upsert: true },
       );
-      return;
-    }
+    })) return;
     await withFileLock(async () => {
       const posts = await readFilePosts(), index = posts.findIndex((post) => post.slug === input.slug), now = new Date().toISOString();
       const post: StoredNewsPost = { ...input, id: index >= 0 ? posts[index].id : Math.max(0, ...posts.map((item) => item.id)) + 1, author_email: authorEmail, created_at: index >= 0 ? posts[index].created_at : now, updated_at: now };
