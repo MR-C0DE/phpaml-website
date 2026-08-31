@@ -92,6 +92,11 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(home, /href="\/platform"/);
     assert.match(home, /href="\/demos"/);
     assert.match(home, /href="\/news"/);
+    assert.match(home, /href="\/news\/first-aml-view-app-in-five-minutes"/);
+    assert.match(french, /href="\/fr\/news\/first-aml-view-app-in-five-minutes"/);
+    assert.match(docs, /href="\/news\/first-aml-view-app-in-five-minutes"/);
+    assert.match(tutorial, /href="\/news\/first-aml-view-app-in-five-minutes"/);
+    assert.match(frenchTutorial, /href="\/fr\/news\/first-aml-view-app-in-five-minutes"/);
     assert.match(platform, /Five components\. One PHP workflow/);
     assert.match(platform, /PHPAML Framework/);
     assert.match(platform, /PHPAML i18n/);
@@ -111,10 +116,10 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(frenchNews, /Ce qui évolue\. Pourquoi ça compte/);
     assert.match(dataNews, /PHPAML Data enters alpha/);
     assert.match(dataNews, /aml install data --driver sqlite/);
-    assert.doesNotMatch(dataNews, /og-v3\.png/);
+    assert.match(dataNews, /property="og:image" content="https:\/\/phpaml\.com\/og-v3\.png"/);
     assert.match(frenchDataNews, /PHPAML Data entre en alpha/);
     assert.match(frenchDataNews, /Un noyau, plusieurs bases de données/);
-    assert.doesNotMatch(frenchDataNews, /og-v3\.png/);
+    assert.match(frenchDataNews, /property="og:image" content="https:\/\/phpaml\.com\/og-v3\.png"/);
     assert.match(french, /Structurez PHP/);
     assert.match(french, /href="\/"/);
     assert.match(french, /aria-label="Navigation principale"/);

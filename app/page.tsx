@@ -13,7 +13,7 @@ const copy = {
     lifecycle: "An explicit request lifecycle, separated responsibilities, and stable folder conventions. You always know where to look.",
     essential: "Essential and complete", everything: <>Everything you need.<br /><span>Nothing hidden.</span></>,
     first: "First project", route: <>From zero to your<br />first route.</>,
-    install: "AML installs its own environment. No PHP setup, no global Composer, and no system folders to manage.", guide: "Quick-start guide",
+    install: "AML installs its own environment. No PHP setup, no global Composer, and no system folders to manage.", guide: "Quick-start guide", viewGuide: "Build an AML View app in five minutes",
     demoLabel: "Built with classic PHPAML", demoTitle: <>See the framework.<br /><span>Read the result.</span></>,
     demoText: "The Last Lighthouse is a complete public demo built with PHPAML’s classic MVC architecture: routes, controller, model, PHP views, sessions, CSRF protection, redirects, and automated tests.",
     demoLive: "Open the live demo", demoCode: "Explore the source code", demoBook: "The Last Lighthouse", demoChapter: "Chapter 1 · The island at dusk",
@@ -50,7 +50,7 @@ const copy = {
     lifecycle: "Un cycle de requête explicite, des responsabilités séparées et une convention de dossiers stable. Vous savez toujours où chercher.",
     essential: "Essentiel, complet", everything: <>Tout ce qu’il faut.<br /><span>Rien à cacher.</span></>,
     first: "Premier projet", route: <>De zéro à votre<br />première route.</>,
-    install: "AML installe son propre environnement. Pas de configuration PHP, pas de Composer global, pas de dossier système à bricoler.", guide: "Guide de démarrage",
+    install: "AML installe son propre environnement. Pas de configuration PHP, pas de Composer global, pas de dossier système à bricoler.", guide: "Guide de démarrage", viewGuide: "Créer une application AML View en cinq minutes",
     demoLabel: "Construit avec PHPAML classique", demoTitle: <>Voyez le framework.<br /><span>Lisez le résultat.</span></>,
     demoText: "The Last Lighthouse est une démo publique complète construite avec l’architecture MVC classique de PHPAML : routes, contrôleur, modèle, vues PHP, sessions, protection CSRF, redirections et tests automatisés.",
     demoLive: "Ouvrir la démo", demoCode: "Explorer le code source", demoBook: "The Last Lighthouse", demoChapter: "Chapitre 1 · L’île au crépuscule",
@@ -99,7 +99,7 @@ export function HomePage({ locale }: { locale: "en" | "fr" }) {
       <div className="architecture-flow"><div><small>01</small><strong>Request</strong><span>HTTP input</span></div><b>→</b><div><small>02</small><strong>Middleware</strong><span>Global pipeline</span></div><b>→</b><div><small>03</small><strong>Router</strong><span>Route + params</span></div><b>→</b><div><small>04</small><strong>Controller</strong><span>Injected action</span></div><b>→</b><div><small>05</small><strong>Response</strong><span>HTML or JSON</span></div></div>
     </section>
     <section className="section features-section"><div className="shell"><div className="section-intro compact"><div className="section-number">/ 02</div><div><p className="kicker">{c.essential}</p><h2>{c.everything}</h2></div></div><div className="feature-grid">{c.features.map(([n,t,d])=><article key={n}><small>{n}</small><h3>{t}</h3><p>{d}</p></article>)}</div></div></section>
-    <section className="section shell quickstart"><div className="quick-copy"><div className="section-number">/ 03</div><p className="kicker">{c.first}</p><h2>{c.route}</h2><p>{c.install}</p><Link className="text-link" href={`${prefix}/docs#start`}>{c.guide} <span>→</span></Link></div><CodeBlock>{`// routes/WebApp.php\nfinal class WebApp extends Route\n{\n    protected function routes(): void\n    {\n        $this->get('/users/{id}', [UserController::class, 'show'])\n            ->name('users.show');\n    }\n}`}</CodeBlock></section>
+    <section className="section shell quickstart"><div className="quick-copy"><div className="section-number">/ 03</div><p className="kicker">{c.first}</p><h2>{c.route}</h2><p>{c.install}</p><div className="quick-guide-links"><Link className="text-link" href={`${prefix}/docs#start`}>{c.guide} <span>→</span></Link><Link className="text-link" href={`${prefix}/news/first-aml-view-app-in-five-minutes`}>{c.viewGuide} <span>→</span></Link></div></div><CodeBlock>{`// routes/WebApp.php\nfinal class WebApp extends Route\n{\n    protected function routes(): void\n    {\n        $this->get('/users/{id}', [UserController::class, 'show'])\n            ->name('users.show');\n    }\n}`}</CodeBlock></section>
     <section id="platform" className="platform-section home-legacy-showcase"><div className="shell">
       <div className="platform-intro"><div className="section-number">/ 04</div><div><p className="kicker">{c.stackLabel}</p><h2>{c.stackTitle}</h2></div><p>{c.stackText}</p></div>
       <div className="platform-cards">{c.stackItems.map(([n,title,description])=><article key={title}><small>{n}</small><h3>{title}</h3><p>{description}</p></article>)}</div>

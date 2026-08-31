@@ -130,7 +130,7 @@ aml migrate:rollback --steps 1`}</CodeBlock><p>{fr?"Les migrations sont enregist
         <p>{fr?"Le profil privé est conservé dans ~/.phpaml/deploy.json et l’historique dans ~/.phpaml/deploy-history.json, tous deux avec des permissions 600. L’historique conserve au plus 100 résultats sans hôte, chemin, utilisateur ni secret.":"The private profile is stored in ~/.phpaml/deploy.json and history in ~/.phpaml/deploy-history.json, both with 600 permissions. History retains up to 100 results without storing the host, path, user, or secrets."}</p>
         <div className="notice"><strong>{fr?"Déploiement protégé":"Protected deployment"}</strong><p>{fr?"AML vérifie les checksums, refuse les chemins d’archive dangereux, écrit l’historique atomiquement et arrête l’aperçu si le manifeste distant est inaccessible.":"AML verifies checksums, rejects unsafe archive paths, writes history atomically, and stops previews when the remote manifest cannot be reached."}</p></div>
       </section>
-      <div className="docs-next"><span>{fr?"Prêt à construire votre première application ?":"Ready to build your first application?"}</span><Link href={`${prefix}/download`}>{fr?"Installer AML":"Install AML"} →</Link></div>
+      <div className="docs-next"><span>{fr?"Prêt à construire votre première application ?":"Ready to build your first application?"}</span><div className="docs-next-links"><Link href={`${prefix}/news/first-aml-view-app-in-five-minutes`}>{fr?"Suivre le guide AML View":"Follow the AML View guide"} →</Link><Link href={`${prefix}/download`}>{fr?"Installer AML":"Install AML"} →</Link></div></div>
       <PackageInstallSection locale={locale} />
       <AmlViewDocsSections locale={locale} />
     </div></section>
