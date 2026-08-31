@@ -46,8 +46,7 @@ async function mongoReady(): Promise<MongoCollection | null> {
   const uri = process.env.NEWS_MONGODB_URI;
   if (!uri) return null;
   mongoCollection ??= (async () => {
-    const runtimeImport = Function("specifier", "return import(specifier)") as (specifier: string) => Promise<{ MongoClient: new (uri: string) => { connect(): Promise<void>; db(name: string): { collection(name: string): MongoCollection } } }>;
-    const { MongoClient } = await runtimeImport("mongodb");
+    const { MongoClient } = await import("mongodb");
     const client = new MongoClient(uri);
     await client.connect();
     const collection = client.db(process.env.NEWS_MONGODB_DATABASE || "phpaml_news").collection("news_posts");
