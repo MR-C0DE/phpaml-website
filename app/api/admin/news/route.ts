@@ -18,6 +18,13 @@ function clean(value: unknown, max: number) {
   return String(value ?? "").trim().slice(0, max);
 }
 
+function decodeContent(value: unknown, encoding: unknown) {
+  const raw = String(value ?? "");
+  if (encoding !== "base64") return raw;
+  try { return Buffer.from(raw, "base64").toString("utf8"); }
+  catch { return ""; }
+}
+
 export async function GET() {
   if (!await getNewsAdmin()) return Response.json({ error: "Unauthorized" }, { status: 401 });
   return Response.json({ posts: await listNewsPosts(true) });
@@ -28,7 +35,9 @@ export async function POST(request: Request) {
   const user = await getNewsAdmin();
   if (!user) return Response.json({ error: "Unauthorized" }, { status: 401 });
   if (Number(request.headers.get("content-length") ?? 0) > 250_000) return Response.json({ error: "Publication is too large" }, { status: 413 });
-  const input = await request.json() as Partial<NewsPostInput>;
+  const input = await request.json() as Partial<NewsPostInput> & { content_encoding?: string };
+  input.content_en = decodeContent(input.content_en, input.content_encoding);
+  input.content_fr = decodeContent(input.content_fr, input.content_encoding);
   const slug = clean(input.slug, 100).toLowerCase();
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) return Response.json({ error: "Invalid slug" }, { status: 422 });
   const required = ["title_en", "summary_en", "content_en", "title_fr", "summary_fr", "content_fr"] as const;
