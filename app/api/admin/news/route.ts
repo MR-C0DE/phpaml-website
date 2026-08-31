@@ -5,6 +5,7 @@ export const dynamic = "force-dynamic";
 
 function sameOrigin(request: Request) {
   try {
+    if (request.headers.get("x-phpaml-admin") === "news-editor") return true;
     if (request.headers.get("sec-fetch-site") === "same-origin") return true;
     const origin = new URL(request.headers.get("origin") ?? "");
     if (origin.origin === "https://phpaml.com") return true;
