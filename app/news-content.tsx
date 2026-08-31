@@ -6,10 +6,10 @@ import { NewsArticleRenderer } from "./news-article-renderer";
 
 export type NewsLocale = "en" | "fr";
 type Translation = { title: string; summary: string; category: string; content: string };
-export type NewsPost = { slug: string; date: string; version: string; translations: Record<NewsLocale, Translation> };
+export type NewsPost = { slug: string; date: string; updatedAt: string; version: string; translations: Record<NewsLocale, Translation> };
 
 export const newsPosts: NewsPost[] = [{
-  slug: "phpaml-data-enters-alpha", date: "2026-08-17", version: "0.1.0-alpha.2",
+  slug: "phpaml-data-enters-alpha", date: "2026-08-17", updatedAt: "2026-08-17", version: "0.1.0-alpha.2",
   translations: {
     en: { category: "Release", title: "PHPAML Data enters alpha", summary: "A typed persistence layer for SQL and MongoDB joins the PHPAML platform.", content: `PHPAML Data is now available as an alpha release. It gives PHPAML applications a focused data layer without tying the framework to a single database or application style.
 
@@ -51,7 +51,7 @@ Cette alpha est prête pour l’évaluation et les premiers projets. Les retours
 }];
 
 function fromStored(post: StoredNewsPost): NewsPost {
-  return { slug: post.slug, date: post.published_at ?? post.updated_at.slice(0, 10), version: post.version, translations: {
+  return { slug: post.slug, date: post.published_at ?? post.updated_at.slice(0, 10), updatedAt: post.updated_at, version: post.version, translations: {
     en: { category: "News", title: post.title_en, summary: post.summary_en, content: post.content_en },
     fr: { category: "Actualité", title: post.title_fr, summary: post.summary_fr, content: post.content_fr },
   } };
@@ -77,5 +77,5 @@ export async function NewsIndexPage({ locale }: { locale: NewsLocale }) {
 
 export async function NewsArticlePage({ locale, slug }: { locale: NewsLocale; slug: string }) {
   const post = await getNewsPost(slug), item = post.translations[locale];
-  return <><Header locale={locale} path={`/news/${slug}`} /><main className="news-article-page"><NewsArticleRenderer locale={locale} post={{ slug, date: post.date, version: post.version, translation: item }} /></main><Footer locale={locale} /></>;
+  return <><Header locale={locale} path={`/news/${slug}`} /><main className="news-article-page"><NewsArticleRenderer locale={locale} post={{ slug, date: post.date, updatedAt: post.updatedAt, version: post.version, translation: item }} /></main><Footer locale={locale} /></>;
 }

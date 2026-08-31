@@ -11,6 +11,7 @@ export type RenderedNewsTranslation = {
 export type RenderedNewsPost = {
   slug: string;
   date: string;
+  updatedAt?: string;
   version: string;
   translation: RenderedNewsTranslation;
 };
@@ -66,7 +67,22 @@ export function NewsArticleRenderer({ locale, post, preview = false }: { locale:
   const fr = locale === "fr";
   const item = post.translation;
   const prefix = fr ? "/fr" : "";
+  const url = `https://phpaml.com${prefix}/news/${post.slug}`;
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: item.title,
+    description: item.summary,
+    image: ["https://phpaml.com/og-v3.png"],
+    datePublished: post.date,
+    dateModified: post.updatedAt || post.date,
+    inLanguage: fr ? "fr-CA" : "en-CA",
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    author: { "@type": "Organization", name: "PHPAML", url: "https://phpaml.com" },
+    publisher: { "@type": "Organization", name: "PHPAML", logo: { "@type": "ImageObject", url: "https://phpaml.com/phpaml-logo.png" } },
+  };
   return <article className={preview ? "news-preview-article" : undefined}>
+    {!preview && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />}
     <header className="news-article-hero shell">
       {!preview && <Link className="news-back" href={`${prefix}/news`}>← {fr ? "Toutes les actualités" : "All news"}</Link>}
       {preview && <span className="news-back">← {fr ? "Aperçu fidèle de la publication" : "True publication preview"}</span>}
