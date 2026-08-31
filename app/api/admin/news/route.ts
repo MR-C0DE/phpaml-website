@@ -6,8 +6,9 @@ export const dynamic = "force-dynamic";
 function sameOrigin(request: Request) {
   try {
     const origin = new URL(request.headers.get("origin") ?? "");
-    const host = (request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? new URL(request.url).host).split(",")[0].trim();
-    return origin.host === host;
+    if (origin.origin === "https://phpaml.com") return true;
+    const target = new URL(request.url);
+    return ["localhost", "127.0.0.1"].includes(origin.hostname) && origin.host === target.host;
   } catch { return false; }
 }
 
