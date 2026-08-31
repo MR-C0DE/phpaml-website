@@ -16,13 +16,35 @@ export type RenderedNewsPost = {
 };
 
 function richBlocks(content: string) {
-  const chunks = content.trim().split(/\n{2,}/).filter(Boolean);
-  return chunks.map((chunk, index) => {
-    const value = chunk.trim();
-    if (value.startsWith("```")) {
-      const code = value.replace(/^```[^\n]*\n?/, "").replace(/\n?```$/, "");
-      return <CodeBlock key={index}>{code}</CodeBlock>;
+  const chunks: Array<{ type: "content" | "code"; value: string }> = [];
+  let prose: string[] = [], code: string[] = [], inCode = false;
+  const flushProse = () => {
+    const value = prose.join("\n").trim();
+    if (value) chunks.push({ type: "content", value });
+    prose = [];
+  };
+  for (const line of content.trim().split("\n")) {
+    if (line.trimStart().startsWith("```")) {
+      if (inCode) {
+        chunks.push({ type: "code", value: code.join("\n").replace(/\n+$/, "") });
+        code = [];
+        inCode = false;
+      } else {
+        flushProse();
+        inCode = true;
+      }
+      continue;
     }
+    if (inCode) code.push(line);
+    else if (line.trim() === "") flushProse();
+    else prose.push(line);
+  }
+  if (inCode) chunks.push({ type: "code", value: code.join("\n").replace(/\n+$/, "") });
+  flushProse();
+
+  return chunks.map((chunk, index) => {
+    const value = chunk.value.trim();
+    if (chunk.type === "code") return <CodeBlock key={index}>{chunk.value}</CodeBlock>;
     if (value.startsWith("## ")) return <h2 key={index}>{value.slice(3).trim()}</h2>;
     if (value.startsWith("### ")) return <h3 key={index}>{value.slice(4).trim()}</h3>;
     if (value.split("\n").every((line) => line.startsWith("- "))) {
