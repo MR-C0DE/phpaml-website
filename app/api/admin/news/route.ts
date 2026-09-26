@@ -1,17 +1,25 @@
 import { getNewsAdmin } from "../../../admin-auth";
-import { deleteNewsPost, listNewsPosts, saveNewsPost, type NewsPostInput } from "../../../news-store";
+import { isTrustedAdminOrigin } from "../../../admin-origin";
+import { deleteNewsPost, listNewsPosts, NewsStorageError, saveNewsPost, type NewsPostInput } from "../../../news-store";
 
 export const dynamic = "force-dynamic";
 
-function sameOrigin(request: Request) {
-  try {
-    if (request.headers.get("x-phpaml-admin") === "news-editor") return true;
-    if (request.headers.get("sec-fetch-site") === "same-origin") return true;
-    const origin = new URL(request.headers.get("origin") ?? "");
-    if (origin.origin === "https://phpaml.com") return true;
-    const target = new URL(request.url);
-    return ["localhost", "127.0.0.1"].includes(origin.hostname) && origin.host === target.host;
-  } catch { return false; }
+function storageFailure(error: unknown) {
+  if (error instanceof NewsStorageError) {
+    console.error("News storage failure", {
+      driver: error.driver,
+      operation: error.operation,
+      category: error.category,
+      message: error.message,
+      cause: error.cause instanceof Error ? error.cause.message : String(error.cause ?? ""),
+    });
+    return Response.json(
+      { error: "Publication storage is temporarily unavailable", storage: error.driver },
+      { status: error.category === "configuration" ? 500 : 503 },
+    );
+  }
+  console.error("Unexpected news administration failure", error);
+  return Response.json({ error: "Unexpected publication error" }, { status: 500 });
 }
 
 function clean(value: unknown, max: number) {
@@ -27,11 +35,15 @@ function decodeContent(value: unknown, encoding: unknown) {
 
 export async function GET() {
   if (!await getNewsAdmin()) return Response.json({ error: "Unauthorized" }, { status: 401 });
-  return Response.json({ posts: await listNewsPosts(true) });
+  try {
+    return Response.json({ posts: await listNewsPosts(true) });
+  } catch (error) {
+    return storageFailure(error);
+  }
 }
 
 export async function POST(request: Request) {
-  if (!sameOrigin(request)) return Response.json({ error: "Invalid request origin" }, { status: 403 });
+  if (!isTrustedAdminOrigin(request)) return Response.json({ error: "Invalid request origin" }, { status: 403 });
   const user = await getNewsAdmin();
   if (!user) return Response.json({ error: "Unauthorized" }, { status: 401 });
   if (Number(request.headers.get("content-length") ?? 0) > 250_000) return Response.json({ error: "Publication is too large" }, { status: 413 });
@@ -51,17 +63,20 @@ export async function POST(request: Request) {
       title_fr: clean(input.title_fr, 180), summary_fr: clean(input.summary_fr, 600), content_fr: clean(input.content_fr, 100_000),
     }, user.email);
   } catch (error) {
-    console.error("News publication storage failed", error);
-    return Response.json({ error: "Publication storage is temporarily unavailable" }, { status: 503 });
+    return storageFailure(error);
   }
   return Response.json({ ok: true });
 }
 
 export async function DELETE(request: Request) {
-  if (!sameOrigin(request)) return Response.json({ error: "Invalid request origin" }, { status: 403 });
+  if (!isTrustedAdminOrigin(request)) return Response.json({ error: "Invalid request origin" }, { status: 403 });
   if (!await getNewsAdmin()) return Response.json({ error: "Unauthorized" }, { status: 401 });
   const slug = new URL(request.url).searchParams.get("slug");
   if (!slug || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) return Response.json({ error: "Invalid slug" }, { status: 422 });
-  await deleteNewsPost(slug);
-  return Response.json({ ok: true });
+  try {
+    await deleteNewsPost(slug);
+    return Response.json({ ok: true });
+  } catch (error) {
+    return storageFailure(error);
+  }
 }
