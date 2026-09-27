@@ -9,6 +9,56 @@ type Translation = { title: string; summary: string; category: string; content: 
 export type NewsPost = { slug: string; date: string; updatedAt: string; version: string; translations: Record<NewsLocale, Translation> };
 
 export const newsPosts: NewsPost[] = [{
+  slug: "phpaml-cli-1-7-beta-31", date: "2026-09-26", updatedAt: "2026-09-27", version: "1.7.0-beta.31",
+  translations: {
+    en: { category: "Release", title: "PHPAML CLI 1.7 beta.31 is available", summary: "A cleaner project structure, a minimal AML View starter, and verified installers for every supported platform.", content: `PHPAML CLI 1.7.0-beta.31 is now available for macOS Apple Silicon, Windows x64, and Debian/Ubuntu x64. Every installer and portable archive is published with a SHA-256 checksum.
+
+## Start an empty AML View application
+
+The new \`--empty\` option creates the smallest useful AML View project: one clean home page, without the demonstration, secondary pages, navigation, or themes.
+
+\`\`\`bash
+aml create-view-app MyApp --empty
+cd MyApp
+aml serve
+\`\`\`
+
+## One project structure
+
+Classic, AML View, and API projects now share the same \`src/\` foundation. Controllers, models, middleware, views, and routes have predictable locations. Existing classic projects can move to this structure with \`aml migrate:structure\`.
+
+The model generators are clearer too: \`aml make:model\` creates a plain PHP model without requiring PHPAML Data, while \`aml make:entity\` creates a persistent entity when Data is installed.
+
+## Updated platform
+
+This release distributes Template 0.5.0-beta.7 and Framework 0.3.0-beta.5. New AML View applications install View 0.1.0-beta.6 and Engine 0.1.0-beta.4, including native semantic components, \`Alert\`, \`Console::log()\`, and reactive progress controls.
+
+Download the installer for your platform from the PHPAML download page, or inspect all release files and checksums on GitHub.` },
+    fr: { category: "Version", title: "PHPAML CLI 1.7 beta.31 est disponible", summary: "Une structure de projet plus claire, un démarrage AML View minimal et des installateurs vérifiés pour chaque plateforme prise en charge.", content: `PHPAML CLI 1.7.0-beta.31 est maintenant disponible pour macOS Apple Silicon, Windows x64 et Debian/Ubuntu x64. Chaque installateur et chaque archive portable est publié avec une empreinte SHA-256.
+
+## Démarrer une application AML View vide
+
+La nouvelle option \`--empty\` crée le plus petit projet AML View utile : une page d’accueil propre, sans démonstration, pages secondaires, navigation ni thèmes.
+
+\`\`\`bash
+aml create-view-app MonApp --empty
+cd MonApp
+aml serve
+\`\`\`
+
+## Une structure de projet commune
+
+Les projets classiques, AML View et API reposent maintenant sur la même fondation \`src/\`. Les contrôleurs, modèles, middlewares, vues et routes possèdent des emplacements prévisibles. Un ancien projet classique peut adopter cette structure avec \`aml migrate:structure\`.
+
+Les générateurs de modèles sont également plus clairs : \`aml make:model\` crée un modèle PHP simple sans exiger PHPAML Data, tandis que \`aml make:entity\` crée une entité persistante lorsque Data est installé.
+
+## Une plateforme actualisée
+
+Cette version distribue le Template 0.5.0-beta.7 et le Framework 0.3.0-beta.5. Les nouvelles applications AML View installent View 0.1.0-beta.6 et Engine 0.1.0-beta.4, avec les composants sémantiques natifs, \`Alert\`, \`Console::log()\` et les progressions réactives.
+
+Téléchargez l’installateur correspondant à votre plateforme depuis la page de téléchargement PHPAML, ou consultez tous les fichiers et leurs empreintes sur GitHub.` },
+  },
+}, {
   slug: "phpaml-data-enters-alpha", date: "2026-08-17", updatedAt: "2026-08-17", version: "0.1.0-alpha.2",
   translations: {
     en: { category: "Release", title: "PHPAML Data enters alpha", summary: "A typed persistence layer for SQL and MongoDB joins the PHPAML platform.", content: `PHPAML Data is now available as an alpha release. It gives PHPAML applications a focused data layer without tying the framework to a single database or application style.
