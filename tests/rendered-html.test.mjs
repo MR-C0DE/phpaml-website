@@ -61,9 +61,11 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch(`${origin}/fr/news`),
       fetch(`${origin}/news/phpaml-data-enters-alpha`),
       fetch(`${origin}/fr/news/phpaml-data-enters-alpha`),
+      fetch(`${origin}/news/phpaml-cli-1-7-beta-31`),
+      fetch(`${origin}/fr/news/phpaml-cli-1-7-beta-31`),
     ]);
     responses.forEach((response) => assert.equal(response.status, 200));
-    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, chapterFour, frenchChapterFour, chapterFive, frenchChapterFive, chapterSix, frenchChapterSix, chapterSeven, frenchChapterSeven, chapterEight, frenchChapterEight, chapterNine, frenchChapterNine, chapterTen, frenchChapterTen, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo, news, frenchNews, dataNews, frenchDataNews] = await Promise.all(responses.map((response) => response.text()));
+    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, chapterFour, frenchChapterFour, chapterFive, frenchChapterFive, chapterSix, frenchChapterSix, chapterSeven, frenchChapterSeven, chapterEight, frenchChapterEight, chapterNine, frenchChapterNine, chapterTen, frenchChapterTen, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo, news, frenchNews, dataNews, frenchDataNews, cliNews, frenchCliNews] = await Promise.all(responses.map((response) => response.text()));
     const docsText = docs.replace(/<[^>]+>/g, "");
     assert.match(home, /Structure PHP/);
     assert.match(home, /href="\/fr"/);
@@ -112,14 +114,20 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(moviesDemo, /github\.com\/MR-C0DE\/phpaml-movies-api-demo/);
     assert.match(frenchMoviesDemo, /Ce que cette démo valide/);
     assert.match(news, /What changed\. Why it matters/);
+    assert.match(news, /href="\/news\/phpaml-cli-1-7-beta-31"/);
     assert.match(news, /href="\/news\/phpaml-data-enters-alpha"/);
     assert.match(frenchNews, /Ce qui évolue\. Pourquoi ça compte/);
+    assert.match(frenchNews, /href="\/fr\/news\/phpaml-cli-1-7-beta-31"/);
     assert.match(dataNews, /PHPAML Data enters alpha/);
     assert.match(dataNews, /aml install data --driver sqlite/);
     assert.match(dataNews, /property="og:image" content="https:\/\/phpaml\.com\/og-v3\.png"/);
     assert.match(frenchDataNews, /PHPAML Data entre en alpha/);
     assert.match(frenchDataNews, /Un noyau, plusieurs bases de données/);
     assert.match(frenchDataNews, /property="og:image" content="https:\/\/phpaml\.com\/og-v3\.png"/);
+    assert.match(cliNews, /PHPAML CLI 1\.7 beta\.31 is available/);
+    assert.match(cliNews, /aml create-view-app MyApp --empty/);
+    assert.match(frenchCliNews, /PHPAML CLI 1\.7 beta\.31 est disponible/);
+    assert.match(frenchCliNews, /aml create-view-app MonApp --empty/);
     assert.match(french, /Structurez PHP/);
     assert.match(french, /href="\/"/);
     assert.match(french, /aria-label="Navigation principale"/);
@@ -142,9 +150,9 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(docs, /routes\/WebApp\.php/);
     assert.match(docs, /runtime\/config\/app\.php/);
     assert.doesNotMatch(docs, /configs\/app\.php/);
-    assert.match(download, /phpaml-1\.7\.0-beta\.22-windows-x64\.exe/);
-    assert.match(download, /phpaml-1\.7\.0-beta\.22-macos-arm64\.pkg/);
-    assert.match(download, /phpaml-1\.7\.0-beta\.22-linux-x64\.deb/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.31-windows-x64\.exe/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.31-macos-arm64\.pkg/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.31-linux-x64\.deb/);
     assert.match(download, /SHA-256/);
     assert.match(tutorial, /Official PHPAML tutorial/);
     assert.match(tutorial, /Master MVC/);
@@ -162,9 +170,9 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(tutorial, /Coming soon/);
     assert.match(chapterOne, /Install AML and/);
     assert.match(chapterOne, /aml create my-first-app/);
-    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.22-windows-x64\.exe/);
-    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.22-macos-arm64\.pkg/);
-    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.22-linux-x64\.deb/);
+    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.31-windows-x64\.exe/);
+    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.31-macos-arm64\.pkg/);
+    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.31-linux-x64\.deb/);
     assert.match(chapterOne, /Live reload enabled/);
     assert.match(chapterOne, /Final exercise/);
     assert.match(chapterOne, /Learning objectives/);
