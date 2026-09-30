@@ -37,30 +37,67 @@ declare global {
 }
 
 function sendPageView() {
+  const pageLocation = window.location.href;
+  if (pageLocation === lastPageView) return;
+  lastPageView = pageLocation;
   window.gtag?.("event", "page_view", {
-    page_location: window.location.href,
+    page_location: pageLocation,
     page_path: `${window.location.pathname}${window.location.search}`,
     page_title: document.title,
   });
 }
 
-function startAnalytics() {
-  if (document.querySelector(`script[data-phpaml-analytics="${measurementId}"]`)) return;
+let analyticsReady: Promise<void> | null = null;
+let lastPageView = "";
+
+function startAnalytics(): Promise<void> {
+  if (analyticsReady) return analyticsReady;
+
   window.dataLayer = window.dataLayer || [];
   window.gtag = (...args: unknown[]) => window.dataLayer.push(args);
+  window.gtag("consent", "default", {
+    analytics_storage: "granted",
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+  });
   window.gtag("js", new Date());
   window.gtag("config", measurementId, {
     anonymize_ip: true,
     allow_google_signals: false,
     allow_ad_personalization_signals: false,
-    send_page_view: true,
+    send_page_view: false,
   });
 
-  const script = document.createElement("script");
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
-  script.dataset.phpamlAnalytics = measurementId;
-  document.head.appendChild(script);
+  analyticsReady = new Promise((resolve, reject) => {
+    const existing = document.querySelector<HTMLScriptElement>(
+      `script[data-phpaml-analytics="${measurementId}"]`,
+    );
+    const script = existing ?? document.createElement("script");
+
+    if (script.dataset.loaded === "true") {
+      resolve();
+      return;
+    }
+
+    script.addEventListener("load", () => {
+      script.dataset.loaded = "true";
+      resolve();
+    }, { once: true });
+    script.addEventListener("error", () => {
+      analyticsReady = null;
+      reject(new Error("Google Analytics failed to load."));
+    }, { once: true });
+
+    if (!existing) {
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+      script.dataset.phpamlAnalytics = measurementId;
+      document.head.appendChild(script);
+    }
+  });
+
+  return analyticsReady;
 }
 
 function platformFor(file: string) {
@@ -77,15 +114,17 @@ export function Analytics() {
 
   useEffect(() => {
     window[`ga-disable-${measurementId}`] = consent === "declined";
+    window.gtag?.("consent", "update", {
+      analytics_storage: consent === "accepted" ? "granted" : "denied",
+    });
     if (consent !== "accepted") return;
-    startAnalytics();
+    startAnalytics()
+      .then(() => window.setTimeout(sendPageView, 0))
+      .catch(() => undefined);
+  }, [consent, pathname]);
 
-    const trackNavigation = () => window.setTimeout(sendPageView, 0);
-    const originalPushState = history.pushState.bind(history);
-    const originalReplaceState = history.replaceState.bind(history);
-    history.pushState = (...args) => { originalPushState(...args); trackNavigation(); };
-    history.replaceState = (...args) => { originalReplaceState(...args); trackNavigation(); };
-    window.addEventListener("popstate", trackNavigation);
+  useEffect(() => {
+    if (consent !== "accepted") return;
 
     const trackClick = (event: MouseEvent) => {
       const anchor = (event.target as Element | null)?.closest("a[href]") as HTMLAnchorElement | null;
@@ -106,9 +145,6 @@ export function Analytics() {
     document.addEventListener("click", trackClick, true);
 
     return () => {
-      history.pushState = originalPushState;
-      history.replaceState = originalReplaceState;
-      window.removeEventListener("popstate", trackNavigation);
       document.removeEventListener("click", trackClick, true);
     };
   }, [consent]);
