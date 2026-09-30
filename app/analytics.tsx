@@ -54,7 +54,12 @@ function startAnalytics(): Promise<void> {
   if (analyticsReady) return analyticsReady;
 
   window.dataLayer = window.dataLayer || [];
-  window.gtag = (...args: unknown[]) => window.dataLayer.push(args);
+  window.gtag = function gtag(...args: unknown[]) {
+    void args;
+    // Google Tag's official command queue requires this function's Arguments object.
+    // eslint-disable-next-line prefer-rest-params
+    window.dataLayer.push(arguments);
+  };
   window.gtag("consent", "default", {
     analytics_storage: "granted",
     ad_storage: "denied",
