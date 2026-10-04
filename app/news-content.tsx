@@ -9,6 +9,70 @@ type Translation = { title: string; summary: string; category: string; content: 
 export type NewsPost = { slug: string; date: string; updatedAt: string; version: string; translations: Record<NewsLocale, Translation> };
 
 export const newsPosts: NewsPost[] = [{
+  slug: "phpaml-cli-1-7-beta-33", date: "2026-10-03", updatedAt: "2026-10-03", version: "1.7.0-beta.33",
+  translations: {
+    en: { category: "Release", title: "PHPAML CLI 1.7 beta.33 is available", summary: "A calmer development console, safe server-side logging, customizable error pages, and verified installers for all supported platforms.", content: `PHPAML CLI 1.7.0-beta.33 is available for macOS Apple Silicon, Windows x64, and Debian/Ubuntu x64. Every installer and portable archive is published with a SHA-256 checksum.
+
+## A development console that stays readable
+
+\`aml serve\` now hides the repetitive connection messages emitted by PHP's development server. Application output remains visible, so the terminal can be used as a useful development console instead of becoming a stream of \`Accepted\` and \`Closing\` lines.
+
+Use verbose mode whenever you need the complete connection trace:
+
+\`\`\`bash
+aml serve --verbose
+\`\`\`
+
+## Log from PHP without contaminating the response
+
+The Framework introduces \`Console::log()\`, \`Console::info()\`, \`Console::warning()\`, and \`Console::error()\`. During \`aml serve\`, a plain \`echo\` is also redirected to the terminal. These messages never become part of an HTML or JSON response.
+
+Console output is sanitized, bounded, and prefixed line by line. Common secret fields such as passwords, tokens, and authorization values are redacted before display.
+
+\`\`\`php
+use PHPAML\\Console;
+
+Console::log('User loaded', ['id' => 42]);
+echo "Development checkpoint";
+\`\`\`
+
+## Error pages owned by the application
+
+Template 0.5.0-beta.8 includes responsive pages for 404, 500, and other HTTP errors under \`src/views/errors\`. They can be adapted to a project's visual identity. Production responses hide private exception details and include a request reference, while debug mode retains useful development information.
+
+This release distributes Framework 0.3.0-beta.6 and Template 0.5.0-beta.8. The published artifacts were verified by creating a new project from the public macOS archive, running all 11 application tests, and checking the home page, custom 404 page, security headers, and clean server console.` },
+    fr: { category: "Version", title: "PHPAML CLI 1.7 beta.33 est disponible", summary: "Une console de développement plus calme, des journaux serveur sûrs, des pages d’erreur personnalisables et des installateurs vérifiés.", content: `PHPAML CLI 1.7.0-beta.33 est disponible pour macOS Apple Silicon, Windows x64 et Debian/Ubuntu x64. Chaque installateur et chaque archive portable est publié avec une empreinte SHA-256.
+
+## Une console de développement qui reste lisible
+
+\`aml serve\` masque maintenant les messages de connexion répétitifs du serveur de développement PHP. Les sorties de l’application restent visibles : le terminal devient une véritable console de développement au lieu d’accumuler les lignes \`Accepted\` et \`Closing\`.
+
+Le mode détaillé permet de retrouver la trace complète des connexions :
+
+\`\`\`bash
+aml serve --verbose
+\`\`\`
+
+## Écrire dans la console sans contaminer la réponse
+
+Le Framework introduit \`Console::log()\`, \`Console::info()\`, \`Console::warning()\` et \`Console::error()\`. Pendant \`aml serve\`, un simple \`echo\` est également redirigé vers le terminal. Ces messages ne sont jamais ajoutés à une réponse HTML ou JSON.
+
+La sortie est nettoyée, limitée et préfixée ligne par ligne. Les champs sensibles courants — mots de passe, jetons et valeurs d’autorisation — sont masqués avant l’affichage.
+
+\`\`\`php
+use PHPAML\\Console;
+
+Console::log('Utilisateur chargé', ['id' => 42]);
+echo "Point de contrôle du développement";
+\`\`\`
+
+## Des pages d’erreur appartenant à l’application
+
+Le Template 0.5.0-beta.8 fournit des pages responsives pour les erreurs 404, 500 et les autres statuts HTTP dans \`src/views/errors\`. Elles peuvent adopter l’identité visuelle du projet. En production, les détails privés des exceptions sont masqués et une référence de requête est affichée ; le mode debug conserve les informations utiles au développement.
+
+Cette version distribue le Framework 0.3.0-beta.6 et le Template 0.5.0-beta.8. Les fichiers publiés ont été validés en créant un projet neuf depuis l’archive macOS publique, en exécutant les 11 tests de l’application et en contrôlant l’accueil, la page 404 personnalisée, les en-têtes de sécurité et la console serveur épurée.` },
+  },
+}, {
   slug: "phpaml-cli-1-7-beta-31", date: "2026-09-26", updatedAt: "2026-09-27", version: "1.7.0-beta.31",
   translations: {
     en: { category: "Release", title: "PHPAML CLI 1.7 beta.31 is available", summary: "A cleaner project structure, a minimal AML View starter, and verified installers for every supported platform.", content: `PHPAML CLI 1.7.0-beta.31 is now available for macOS Apple Silicon, Windows x64, and Debian/Ubuntu x64. Every installer and portable archive is published with a SHA-256 checksum.
