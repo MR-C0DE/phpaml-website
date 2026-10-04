@@ -81,6 +81,7 @@ export function PlatformPage({ locale }: { locale: Locale }) {
 }
 
 const demos = [
+  { slug: "oracle-arena", title: "Oracle Arena", stack: "AML View + API + Data", description: { en: "A reactive five-round rock-paper-scissors game with server-validated outcomes, SQLite persistence, and a live leaderboard.", fr: "Un jeu réactif de pierre-papier-ciseaux en cinq manches, avec résultats validés côté serveur, persistance SQLite et classement en direct." }, tags: ["AML View", "Engine", "REST API", "SQLite"] },
   { slug: "book-reader", title: "The Last Lighthouse", stack: "Classic PHPAML MVC", description: { en: "A protected book reader with authentication, sessions, reading progress, CSRF protection, and automated tests.", fr: "Un lecteur protégé avec authentification, sessions, progression, protection CSRF et tests automatisés." }, tags: ["MVC", "Sessions", "CSRF", "PHP Views"] },
   { slug: "tutor-chess", title: "Tutor Chess", stack: "AML View + Data + Engine", description: { en: "A reactive chess mentor powered by Stockfish, DeepSeek coaching, MongoDB accounts, themes, and lesson memory.", fr: "Un mentor d’échecs réactif avec Stockfish, DeepSeek, comptes MongoDB, thèmes et mémoire des leçons." }, tags: ["AML View", "Stockfish 18", "DeepSeek", "MongoDB"] },
   { slug: "movies-api", title: "PHPAML Movies API", stack: "PHPAML REST API", description: { en: "A focused JSON API with resource routes, controllers, models, repositories, SQLite, CORS, pagination, and OpenAPI.", fr: "Une API JSON avec routes par ressource, contrôleurs, modèles, dépôts, SQLite, CORS, pagination et OpenAPI." }, tags: ["REST API", "SQLite", "OpenAPI", "PHPAML 1.7"] },
@@ -91,9 +92,38 @@ export function DemosPage({ locale }: { locale: Locale }) {
   return <><Header locale={locale} path="/demos" /><main><section className="route-hero shell"><small>PHPAML DEMOS</small><h1>{fr ? "Du code réel. Des applications publiques." : "Real code. Public applications."}</h1><p>{fr ? "Chaque démonstration présente une architecture différente, une application en ligne et un dépôt GitHub complet à étudier." : "Each demonstration presents a different architecture, a live application, and a complete GitHub repository to study."}</p></section><section className="demo-catalog"><div className="shell demo-catalog-grid">{demos.map(demo => <Link className="demo-catalog-card" href={`${prefix}/demos/${demo.slug}`} key={demo.slug}><small>{demo.stack}</small><h2>{demo.title}</h2><p>{demo.description[locale]}</p><ul>{demo.tags.map(tag => <li key={tag}>{tag}</li>)}</ul><strong>{fr ? "Découvrir le projet" : "Explore the project"} →</strong></Link>)}</div></section></main><Footer locale={locale} /></>;
 }
 
-type DemoSlug = "book-reader" | "tutor-chess" | "movies-api";
+type DemoSlug = "oracle-arena" | "book-reader" | "tutor-chess" | "movies-api";
 
 const demoDetails = {
+  "oracle-arena": {
+    title: "Oracle Arena",
+    stack: "AML VIEW + API + DATA",
+    live: "https://arena.phpaml.com",
+    github: "https://github.com/MR-C0DE/oracle-arena-phpaml",
+    file: "GamePage.php",
+    label: "REACTIVE VIEW",
+    description: {
+      en: "A compact game demonstrating a complete PHPAML workflow, from reactive interaction to persistent leaderboard.",
+      fr: "Un jeu compact qui démontre un parcours PHPAML complet, de l’interaction réactive au classement persistant.",
+    },
+    validates: {
+      en: "Reactive state and effects without handwritten JavaScript, same-origin API calls with CSRF protection, server-side game rules, SQLite migrations, and client navigation without full reloads.",
+      fr: "État réactif et effets sans JavaScript manuel, appels API same-origin protégés par CSRF, règles recalculées côté serveur, migrations SQLite et navigation client sans rechargement complet.",
+    },
+    features: ["AML View", "AML Engine", "PHPAML API", "PHPAML Data", "SQLite", "Automated tests"],
+    code: `final class GamePage extends Page
+{
+    #[State] public int $playerScore = 0;
+    #[State] public string $gameId = '';
+
+    private function startGame(): ClientInstruction
+    {
+        return Api::post('/api/games', [
+            'player_name' => StateRef::to('playerName'),
+        ])->storeIn('gameId', 'id');
+    }
+}`,
+  },
   "book-reader": {
     title: "The Last Lighthouse",
     stack: "CLASSIC PHPAML MVC",
