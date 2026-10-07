@@ -9,6 +9,48 @@ type Translation = { title: string; summary: string; category: string; content: 
 export type NewsPost = { slug: string; date: string; updatedAt: string; version: string; translations: Record<NewsLocale, Translation> };
 
 export const newsPosts: NewsPost[] = [{
+  slug: "phpaml-cli-1-7-beta-35", date: "2026-10-07", updatedAt: "2026-10-07", version: "1.7.0-beta.35",
+  translations: {
+    en: { category: "Release", title: "PHPAML CLI 1.7 beta.35 simplifies reactive View code", summary: "A shorter AML View API, direct state binding, and verified installers for macOS, Windows, and Linux.", content: `PHPAML CLI 1.7.0-beta.35 is available for macOS Apple Silicon, Windows x64, and Debian/Ubuntu x64. It creates new applications with PHPAML View 0.1.0-beta.7 and Engine 0.1.0-beta.4.
+
+## Less code for everyday interactions
+
+View state can now be referenced directly from a page with \`$this->state()\`. Buttons expose concise actions such as \`increments()\`, \`decrements()\`, \`sets()\`, and \`toggles()\`. Form controls can bind to state through \`model()\`.
+
+\`\`\`php
+return VStack(
+    Text($this->state('count')),
+    Button('Increment')->increments('count'),
+    TextField('Your name')->model($this->state('name')),
+);
+\`\`\`
+
+The advanced \`ClientAction\`, \`Actions\`, and API primitives remain available for complex workflows, so existing applications continue to work.
+
+## Verified from the public package
+
+The published macOS archive was downloaded again, validated against its SHA-256 checksum, and used to create both an empty and a complete View application. The generated projects installed View 0.1.0-beta.7 from Packagist and passed their tests. Linux, macOS, and Windows builds also completed successfully. Every installer and portable archive is accompanied by a checksum.` },
+    fr: { category: "Version", title: "PHPAML CLI 1.7 beta.35 simplifie le code View réactif", summary: "Une API AML View plus courte, la liaison directe des états et des installateurs vérifiés pour macOS, Windows et Linux.", content: `PHPAML CLI 1.7.0-beta.35 est disponible pour macOS Apple Silicon, Windows x64 et Debian/Ubuntu x64. Il crée les nouvelles applications avec PHPAML View 0.1.0-beta.7 et Engine 0.1.0-beta.4.
+
+## Moins de code pour les interactions courantes
+
+Une page peut maintenant référencer directement son état avec \`$this->state()\`. Les boutons proposent les actions concises \`increments()\`, \`decrements()\`, \`sets()\` et \`toggles()\`. Les champs de formulaire se lient à un état avec \`model()\`.
+
+\`\`\`php
+return VStack(
+    Text($this->state('count')),
+    Button('Incrémenter')->increments('count'),
+    TextField('Votre nom')->model($this->state('name')),
+);
+\`\`\`
+
+Les primitives avancées \`ClientAction\`, \`Actions\` et API restent disponibles pour les flux complexes. Les applications existantes continuent donc de fonctionner.
+
+## Vérifié depuis le paquet public
+
+L’archive macOS publiée a été retéléchargée, contrôlée avec son empreinte SHA-256, puis utilisée pour créer une application View vide et une application complète. Les projets générés ont installé View 0.1.0-beta.7 depuis Packagist et réussi leurs tests. Les builds Linux, macOS et Windows ont également réussi. Chaque installateur et chaque archive portable est accompagné de son empreinte.` },
+  },
+}, {
   slug: "phpaml-cli-1-7-beta-33", date: "2026-10-03", updatedAt: "2026-10-03", version: "1.7.0-beta.33",
   translations: {
     en: { category: "Release", title: "PHPAML CLI 1.7 beta.33 is available", summary: "A calmer development console, safe server-side logging, customizable error pages, and verified installers for all supported platforms.", content: `PHPAML CLI 1.7.0-beta.33 is available for macOS Apple Silicon, Windows x64, and Debian/Ubuntu x64. Every installer and portable archive is published with a SHA-256 checksum.
