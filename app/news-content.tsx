@@ -9,6 +9,54 @@ type Translation = { title: string; summary: string; category: string; content: 
 export type NewsPost = { slug: string; date: string; updatedAt: string; version: string; translations: Record<NewsLocale, Translation> };
 
 export const newsPosts: NewsPost[] = [{
+  slug: "phpaml-cli-1-7-beta-39", date: "2026-10-12", updatedAt: "2026-10-12", version: "1.7.0-beta.39",
+  translations: {
+    en: { category: "Release", title: "PHPAML CLI 1.7 beta.39 makes reactive PHP feel natural", summary: "Direct PHP state, local stylesheet imports, and verified installers for macOS, Windows, and Linux.", content: `PHPAML CLI 1.7.0-beta.39 is available for macOS Apple Silicon, Windows x64, and Debian/Ubuntu x64. New View applications install PHPAML View 0.1.0-beta.11 and Engine 0.1.0-beta.6.
+
+## State written as ordinary PHP
+
+Properties marked with \`#[State]\` can now be displayed, bound to a field, and modified directly. The advanced state and action APIs remain available, but common interactions no longer require learning a separate action vocabulary.
+
+\`\`\`php
+#[State] private int $counter = 0;
+#[State] private string $name = '';
+
+return VStack(
+    Text($this->counter),
+    Input()->value($this->name),
+    Button('Increment')->onClick(fn () => $this->counter++),
+);
+\`\`\`
+
+## Styles attached to their View source
+
+A page or component can declare its local stylesheet before the class with \`import('pages/home.css')\`. Imports are validated, deduplicated, and restricted to the application's stylesheet directory.
+
+The published artifacts were produced successfully for all three supported platforms. Every installer and portable archive includes a SHA-256 checksum.` },
+    fr: { category: "Version", title: "PHPAML CLI 1.7 beta.39 rend le PHP réactif plus naturel", summary: "Des états en PHP direct, des imports CSS locaux et des installateurs vérifiés pour macOS, Windows et Linux.", content: `PHPAML CLI 1.7.0-beta.39 est disponible pour macOS Apple Silicon, Windows x64 et Debian/Ubuntu x64. Les nouvelles applications View installent PHPAML View 0.1.0-beta.11 et Engine 0.1.0-beta.6.
+
+## Un état écrit comme du PHP ordinaire
+
+Les propriétés marquées avec \`#[State]\` peuvent maintenant être affichées, liées à un champ et modifiées directement. Les API avancées d’état et d’action restent disponibles, mais les interactions courantes n’exigent plus d’apprendre un vocabulaire d’actions séparé.
+
+\`\`\`php
+#[State] private int $counter = 0;
+#[State] private string $name = '';
+
+return VStack(
+    Text($this->counter),
+    Input()->value($this->name),
+    Button('Incrémenter')->onClick(fn () => $this->counter++),
+);
+\`\`\`
+
+## Des styles rattachés à leur source View
+
+Une page ou un composant peut déclarer sa feuille de style locale avant la classe avec \`import('pages/home.css')\`. Les imports sont validés, dédupliqués et limités au dossier de styles de l’application.
+
+Les artefacts publics ont été produits avec succès pour les trois plateformes prises en charge. Chaque installateur et chaque archive portable possède une empreinte SHA-256.` },
+  },
+}, {
   slug: "phpaml-cli-1-7-beta-35", date: "2026-10-07", updatedAt: "2026-10-07", version: "1.7.0-beta.35",
   translations: {
     en: { category: "Release", title: "PHPAML CLI 1.7 beta.35 simplifies reactive View code", summary: "A shorter AML View API, direct state binding, and verified installers for macOS, Windows, and Linux.", content: `PHPAML CLI 1.7.0-beta.35 is available for macOS Apple Silicon, Windows x64, and Debian/Ubuntu x64. It creates new applications with PHPAML View 0.1.0-beta.7 and Engine 0.1.0-beta.4.
