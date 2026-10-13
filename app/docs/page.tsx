@@ -3,9 +3,21 @@ import { CodeBlock, Footer, Header } from "../components";
 import "./onboarding.css";
 
 type Locale = "en" | "fr";
-const topics = {
-  en: [["Get started", "#start"], ["Architecture", "#architecture"], ["Console", "#console"], ["AML View", "#aml-view"], ["AML Engine", "#aml-engine"], ["PHPAML API", "#api"], ["PHPAML Data", "#data"], ["Internationalization", "#i18n"], ["Legacy migration", "#migration"], ["CLI reference", "#cli"], ["SEO toolkit", "#seo"], ["HTTP & MVC", "#http"], ["Views & assets", "#views"], ["Environment", "#environment"], ["Database", "#database"], ["Security", "#security"], ["Tests & production", "#production"], ["Build & deploy", "#deployment"], ["Troubleshooting", "#troubleshooting"]],
-  fr: [["Bien démarrer", "#start"], ["Architecture", "#architecture"], ["Console", "#console"], ["AML View", "#aml-view"], ["AML Engine", "#aml-engine"], ["PHPAML API", "#api"], ["PHPAML Data", "#data"], ["Internationalisation", "#i18n"], ["Migration des anciens projets", "#migration"], ["Référence CLI", "#cli"], ["Outils SEO", "#seo"], ["HTTP et MVC", "#http"], ["Vues et fichiers", "#views"], ["Environnement", "#environment"], ["Base de données", "#database"], ["Sécurité", "#security"], ["Tests et production", "#production"], ["Build et déploiement", "#deployment"], ["Dépannage", "#troubleshooting"]],
+const bookParts = {
+  en: [
+    { number: "PART 1", title: "Discover PHPAML", description: "Understand the platform, choose the right project type, and create a first runnable application.", chapters: [["01", "Get started", "#start"], ["02", "Architecture", "#architecture"], ["03", "Migrate an older project", "#migration"]] },
+    { number: "PART 2", title: "Build a Web application", description: "Learn the request lifecycle, MVC organization, configuration, persistence, and security.", chapters: [["04", "HTTP and MVC", "#http"], ["05", "Views and assets", "#views"], ["06", "Environment", "#environment"], ["07", "Database", "#database"], ["08", "Security", "#security"]] },
+    { number: "PART 3", title: "Create reactive interfaces", description: "Build declarative pages in PHP and understand what View and Engine each do.", chapters: [["09", "AML View", "#aml-view"], ["10", "AML Engine", "#aml-engine"], ["11", "Internationalization", "#i18n"]] },
+    { number: "PART 4", title: "Use the platform modules", description: "Create APIs, persist typed data, or run pure PHP programs in the terminal.", chapters: [["12", "PHPAML API", "#api"], ["13", "PHPAML Data", "#data"], ["14", "Console", "#console"]] },
+    { number: "PART 5", title: "Test and publish", description: "Use the CLI, diagnose problems, test, optimize, and deploy with confidence.", chapters: [["15", "CLI reference", "#cli"], ["16", "Tests and production", "#production"], ["17", "SEO toolkit", "#seo"], ["18", "Build and deploy", "#deployment"], ["19", "Troubleshooting", "#troubleshooting"]] },
+  ],
+  fr: [
+    { number: "PARTIE 1", title: "Découvrir PHPAML", description: "Comprendre la plateforme, choisir le bon type de projet et créer une première application exécutable.", chapters: [["01", "Bien démarrer", "#start"], ["02", "Architecture", "#architecture"], ["03", "Migrer un ancien projet", "#migration"]] },
+    { number: "PARTIE 2", title: "Construire une application Web", description: "Apprendre le cycle d’une requête, le MVC, la configuration, la persistance et la sécurité.", chapters: [["04", "HTTP et MVC", "#http"], ["05", "Vues et fichiers", "#views"], ["06", "Environnement", "#environment"], ["07", "Base de données", "#database"], ["08", "Sécurité", "#security"]] },
+    { number: "PARTIE 3", title: "Créer des interfaces réactives", description: "Construire des pages déclaratives en PHP et comprendre le rôle de View et celui d’Engine.", chapters: [["09", "AML View", "#aml-view"], ["10", "AML Engine", "#aml-engine"], ["11", "Internationalisation", "#i18n"]] },
+    { number: "PARTIE 4", title: "Utiliser les modules de la plateforme", description: "Créer des API, persister des données typées ou exécuter des programmes PHP purs dans le terminal.", chapters: [["12", "PHPAML API", "#api"], ["13", "PHPAML Data", "#data"], ["14", "Console", "#console"]] },
+    { number: "PARTIE 5", title: "Tester et publier", description: "Utiliser le CLI, diagnostiquer, tester, optimiser et déployer avec confiance.", chapters: [["15", "Référence CLI", "#cli"], ["16", "Tests et production", "#production"], ["17", "Outils SEO", "#seo"], ["18", "Build et déploiement", "#deployment"], ["19", "Dépannage", "#troubleshooting"]] },
+  ],
 };
 const commands = {
   en: [["aml create .", "Create in the current folder"], ["aml create my-project", "Create a classic MVC application"], ["aml create-view my-ui", "Create an AML View application"], ["aml create-api my-api", "Create a JSON API"], ["aml create-console hello", "Create a pure PHP console program"], ["aml run", "Run the console program"], ["aml install", "Install runtime and dependencies"], ["aml serve", "Start from port 8910 with live reload"], ["aml routes", "List registered routes"], ["aml test", "Run project tests"], ["aml build", "Create a verified production archive"], ["aml deploy production --dry-run", "Preview the exact remote changes"], ["aml deploy:status production", "Compare local and production manifests"], ["aml deploy production", "Deploy only added and modified files"], ["aml deploy:history production", "Show the private local deployment history"], ["aml deploy:rollback production", "Restore the previous release"], ["aml make:controller User", "Generate a controller"], ["aml make:class Service", "Generate a plain PHP class"], ["aml make:model User", "Generate a plain model"], ["aml make:entity User", "Generate a persistent Data entity"], ["aml make:middleware Auth", "Generate middleware"], ["aml make:migration create_users_table", "Generate a migration"], ["aml env:init", "Create .env from .env.example"], ["aml env:list", "List variables and mask secrets"], ["aml env:get APP_DEBUG", "Read one variable"], ["aml env:set APP_DEBUG false", "Create or update one variable"], ["aml db:show", "Show database configuration"], ["aml doctor", "Check AML and the project"], ["aml cache:clear", "Clear application cache"], ["aml update --check", "Check for a new release"], ["aml update", "Install the latest release"], ["aml language fr", "Change the CLI language"]],
@@ -128,12 +140,17 @@ function PackageInstallSection({ locale }: { locale: Locale }) {
   </section>;
 }
 
-export function DocsPage({ locale }: { locale: Locale }) {
+export function DocsReferencePage({ locale }: { locale: Locale }) {
   const fr = locale === "fr", prefix = fr ? "/fr" : "";
-  const tx = fr ? { label:"Documentation officielle", title:"Construire avec PHPAML.", accent:"Du premier projet à la production.", lead:"Guide complet de l’environnement autonome AML et du mini-framework MVC PHPAML.", nav:"Dans ce guide" } : { label:"Official documentation", title:"Build with PHPAML.", accent:"From first project to production.", lead:"Complete guide to the autonomous AML environment and the PHPAML MVC mini-framework.", nav:"In this guide" };
+  const chapterHref = (number: string, anchor: string) => number === "01" ? `${prefix}/docs/01` : anchor;
+  const tx = fr ? { label:"Documentation officielle", title:"Comprendre PHPAML.", accent:"Construire efficacement.", lead:"Guides pratiques et référence technique pour créer, tester et déployer des applications avec PHPAML.", nav:"Dans la documentation" } : { label:"Official documentation", title:"Understand PHPAML.", accent:"Build effectively.", lead:"Practical guides and technical reference for creating, testing, and deploying applications with PHPAML.", nav:"In the documentation" };
   return <><Header locale={locale} path="/docs" /><main>
-    <section className="page-hero shell"><p className="eyebrow"><span /> {tx.label}</p><h1>{tx.title}<br /><em>{tx.accent}</em></h1><p>{tx.lead}</p><div className="doc-stats"><span><strong>18</strong>{fr?" chapitres":" chapters"}</span><span><strong>30+</strong>{fr?" commandes":" commands"}</span><span><strong>EN / FR</strong>{fr?" référence bilingue":" bilingual reference"}</span></div></section>
-    <section className="docs-layout shell"><aside><strong>{tx.nav}</strong>{topics[locale].map(([n,h])=><a key={h} href={h}>{n}</a>)}</aside><div className="docs-content">
+    <section className="page-hero docs-book-hero shell"><p className="eyebrow"><span /> {tx.label}</p><h1>{tx.title}<br /><em>{tx.accent}</em></h1><p>{tx.lead}</p><div className="doc-stats"><span><strong>5</strong>{fr?" parties":" parts"}</span><span><strong>19</strong>{fr?" chapitres":" chapters"}</span><span><strong>EN / FR</strong>{fr?" documentation bilingue":" bilingual documentation"}</span></div></section>
+    <section className="book-introduction shell" aria-labelledby="book-contents-title">
+      <div className="book-introduction-copy"><p className="eyebrow"><span /> {fr ? "Documentation structurée" : "Structured documentation"}</p><h2 id="book-contents-title">{fr ? "Sommaire" : "Contents"}</h2><p>{fr ? "Lisez les chapitres dans l’ordre pour apprendre PHPAML progressivement, ou accédez directement à une partie lorsque vous recherchez une commande, un concept ou une solution précise." : "Read the chapters in order to learn PHPAML progressively, or open a part directly when you need a specific command, concept, or solution."}</p></div>
+      <div className="book-parts">{bookParts[locale].map((part) => <article key={part.number} className="book-part"><div className="book-part-heading"><span>{part.number}</span><h3>{part.title}</h3><p>{part.description}</p></div><ol>{part.chapters.map(([number, title, href]) => <li key={href}><Link href={chapterHref(number, href)}><span>{number}</span>{title}<b aria-hidden="true">→</b></Link></li>)}</ol></article>)}</div>
+    </section>
+    <section className="docs-layout shell"><aside><strong>{tx.nav}</strong>{bookParts[locale].map((part) => <div className="docs-nav-part" key={part.number}><span>{part.number}</span>{part.chapters.map(([number, title, href]) => <Link key={href} href={chapterHref(number, href)}>{title}</Link>)}</div>)}</aside><div className="docs-content">
       <section id="start"><span className="doc-label">01 — {fr?"Démarrage":"Getting started"}</span><h2>{fr?"Quatre parcours, un premier résultat en moins de cinq minutes":"Four paths, a first result in under five minutes"}</h2><p>{fr?"AML inclut PHP et Composer, crée la structure choisie et installe automatiquement ses dépendances. Choisissez Classique pour MVC, View pour une interface réactive, API pour JSON ou Console pour apprendre et exécuter du PHP pur.":"AML bundles PHP and Composer, creates the selected structure, and installs its dependencies automatically. Choose Classic for MVC, View for a reactive interface, API for JSON, or Console to learn and run pure PHP."}</p><div className="onboarding-grid"><div><small>01 · {fr?"APPLICATION CLASSIQUE":"CLASSIC APPLICATION"}</small><CodeBlock>{`aml create ${fr?"mon-projet":"my-project"}\ncd ${fr?"mon-projet":"my-project"}\naml serve`}</CodeBlock></div><div><small>02 · AML VIEW</small><CodeBlock>{`aml create-view ${fr?"mon-interface":"my-interface"}\ncd ${fr?"mon-interface":"my-interface"}\naml serve`}</CodeBlock></div><div><small>03 · API</small><CodeBlock>{`aml create-api ${fr?"mon-api":"my-api"}\ncd ${fr?"mon-api":"my-api"}\naml serve`}</CodeBlock></div><div><small>04 · CONSOLE</small><CodeBlock>{`aml create-console ${fr?"mon-programme":"my-program"}\ncd ${fr?"mon-programme":"my-program"}\naml run`}</CodeBlock></div></div><p>{fr?"Pour les trois parcours Web, ouvrez ensuite":"For the three Web paths, then open"} <code>http://127.0.0.1:8910</code>. {fr?"Utilisez aml doctor pour vérifier l’environnement.":"Use aml doctor to verify the environment."}</p><div className="notice"><strong>{fr?"Installation automatique et actualisation":"Automatic installation and live reload"}</strong><p>{fr?"Les commandes de création préparent directement un projet exécutable. Le navigateur se recharge ensuite après chaque modification prise en charge.":"Creation commands produce a runnable project directly. The browser then reloads after each supported change."}</p></div></section>
       <ArchitectureSection locale={locale} />
       <PlatformModulesSections locale={locale} />
@@ -167,4 +184,37 @@ aml migrate:rollback --steps 1`}</CodeBlock><p>{fr?"Les migrations sont enregist
     </div></section>
   </main><Footer locale={locale} /></>;
 }
+
+export function DocsPage({ locale }: { locale: Locale }) {
+  const fr = locale === "fr";
+  const prefix = fr ? "/fr" : "";
+  const destination = (number: string, anchor: string) => number === "01"
+    ? `${prefix}/docs/01`
+    : `${prefix}/docs/reference${anchor}`;
+
+  return <><Header locale={locale} path="/docs" /><main className="docs-home">
+    <section className="docs-home-hero shell">
+      <p className="eyebrow"><span /> {fr ? "Documentation officielle" : "Official documentation"}</p>
+      <div className="docs-home-hero-grid"><div><h1>{fr ? <>Tout ce qu’il faut pour<br/><em>construire avec PHPAML.</em></> : <>Everything you need to<br/><em>build with PHPAML.</em></>}</h1></div><div className="docs-home-intro"><p>{fr ? "Des explications progressives comme dans un bon manuel, avec la navigation et la rapidité d’une documentation Web." : "Progressive explanations like a good handbook, with the navigation and speed of Web documentation."}</p><div><Link className="button primary" href={`${prefix}/docs/01`}>{fr ? "Commencer" : "Get started"} <span>→</span></Link><Link className="docs-reference-link" href={`${prefix}/docs/reference`}>{fr ? "Référence complète" : "Complete reference"} ↗</Link></div></div></div>
+    </section>
+
+    <section className="docs-home-paths shell" aria-labelledby="docs-paths-title">
+      <div className="docs-home-section-title"><p className="kicker">{fr ? "Choisir un parcours" : "Choose a path"}</p><h2 id="docs-paths-title">{fr ? "Quel projet voulez-vous créer ?" : "What do you want to build?"}</h2></div>
+      <div className="docs-path-grid">
+        <Link href={`${prefix}/docs/reference#start`}><span>01</span><strong>{fr ? "Application classique" : "Classic application"}</strong><p>{fr ? "Routes, contrôleurs, modèles et vues PHP." : "Routes, controllers, models, and PHP views."}</p><b>aml create</b></Link>
+        <Link href={`${prefix}/docs/reference#aml-view`}><span>02</span><strong>AML View</strong><p>{fr ? "Interfaces réactives écrites directement en PHP." : "Reactive interfaces written directly in PHP."}</p><b>aml create-view</b></Link>
+        <Link href={`${prefix}/docs/reference#api`}><span>03</span><strong>API</strong><p>{fr ? "Services JSON sans couche de vues." : "JSON services without a view layer."}</p><b>aml create-api</b></Link>
+        <Link href={`${prefix}/docs/reference#console`}><span>04</span><strong>Console</strong><p>{fr ? "Programmes PHP purs exécutés dans le terminal." : "Pure PHP programs running in the terminal."}</p><b>aml create-console</b></Link>
+      </div>
+    </section>
+
+    <section className="docs-home-contents shell" aria-labelledby="docs-contents-title">
+      <div className="docs-home-section-title"><p className="kicker">{fr ? "Documentation structurée" : "Structured documentation"}</p><h2 id="docs-contents-title">{fr ? "Parcourir toutes les parties" : "Browse every part"}</h2><p>{fr ? "Suivez l’ordre proposé pour apprendre progressivement, ou ouvrez directement le sujet dont vous avez besoin." : "Follow the suggested order to learn progressively, or open the exact topic you need."}</p></div>
+      <div className="docs-home-parts">{bookParts[locale].map((part) => <article key={part.number}><header><span>{part.number}</span><h3>{part.title}</h3><p>{part.description}</p></header><ol>{part.chapters.map(([number, title, anchor]) => <li key={anchor}><Link href={destination(number, anchor)}><span>{number}</span><strong>{title}</strong><b>→</b></Link></li>)}</ol></article>)}</div>
+    </section>
+
+    <section className="docs-home-footer shell"><div><p className="kicker">{fr ? "Vous cherchez une commande ?" : "Looking for a command?"}</p><h2>{fr ? "Accédez directement à la référence technique." : "Jump directly to the technical reference."}</h2></div><Link className="button primary" href={`${prefix}/docs/reference`}>{fr ? "Ouvrir la référence" : "Open reference"} <span>→</span></Link></section>
+  </main><Footer locale={locale} /></>;
+}
+
 export default function Docs(){return <DocsPage locale="en"/>}

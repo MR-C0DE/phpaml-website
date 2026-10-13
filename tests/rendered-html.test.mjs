@@ -26,6 +26,9 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch(`${origin}/`),
       fetch(`${origin}/fr`),
       fetch(`${origin}/docs`),
+      fetch(`${origin}/docs/reference`),
+      fetch(`${origin}/docs/01`),
+      fetch(`${origin}/fr/docs/01`),
       fetch(`${origin}/download`),
       fetch(`${origin}/tutorial`),
       fetch(`${origin}/fr/tutorial`),
@@ -67,9 +70,29 @@ test("serves the complete bilingual PHPAML website", async () => {
       fetch(`${origin}/fr/news/phpaml-cli-1-7-beta-33`),
     ]);
     responses.forEach((response) => assert.equal(response.status, 200));
-    const [home, french, docs, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, chapterFour, frenchChapterFour, chapterFive, frenchChapterFive, chapterSix, frenchChapterSix, chapterSeven, frenchChapterSeven, chapterEight, frenchChapterEight, chapterNine, frenchChapterNine, chapterTen, frenchChapterTen, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo, news, frenchNews, dataNews, frenchDataNews, cliNews, frenchCliNews, cli33News, frenchCli33News] = await Promise.all(responses.map((response) => response.text()));
-    const docsText = docs.replace(/<[^>]+>/g, "");
+    const [home, french, docs, docsReference, docsChapterOne, frenchDocsChapterOne, download, tutorial, frenchTutorial, chapterOne, frenchChapterOne, chapterTwo, frenchChapterTwo, chapterThree, frenchChapterThree, chapterFour, frenchChapterFour, chapterFive, frenchChapterFive, chapterSix, frenchChapterSix, chapterSeven, frenchChapterSeven, chapterEight, frenchChapterEight, chapterNine, frenchChapterNine, chapterTen, frenchChapterTen, platform, frenchPlatform, demos, frenchDemos, bookDemo, chessDemo, moviesDemo, frenchMoviesDemo, news, frenchNews, dataNews, frenchDataNews, cliNews, frenchCliNews, cli33News, frenchCli33News] = await Promise.all(responses.map((response) => response.text()));
+    const docsText = docsReference.replace(/<[^>]+>/g, "");
     assert.match(home, /Structure PHP/);
+    assert.match(docsChapterOne, /Documentation · Chapter 01/);
+    assert.match(docsChapterOne, /Install AML and/);
+    assert.match(frenchDocsChapterOne, /Documentation · Chapitre 01/);
+    assert.match(frenchDocsChapterOne, /Installer AML et/);
+    const chapterPages = await Promise.all([
+      fetch(origin + "/docs/01/installation"),
+      fetch(origin + "/docs/01/verification"),
+      fetch(origin + "/docs/01/creation"),
+      fetch(origin + "/docs/01/execution"),
+      fetch(origin + "/docs/01/depannage"),
+      fetch(origin + "/fr/docs/01/installation"),
+      fetch(origin + "/fr/docs/01/creation"),
+      fetch(origin + "/fr/docs/01/depannage"),
+    ]);
+    chapterPages.forEach((response) => assert.equal(response.status, 200));
+    const chapterHtml = (await Promise.all(chapterPages.map((response) => response.text()))).join("\n");
+    assert.match(chapterHtml, /create command installs the project automatically/);
+    assert.match(chapterHtml, /La création installe déjà le runtime/);
+    assert.match(chapterHtml, /aml create-console/);
+    assert.match(chapterHtml, /aml serve detects when it is missing/);
     assert.match(home, /href="\/fr"/);
     assert.match(home, /<title>PHPAML/);
     assert.match(home, /rel="icon"[^>]+favicon\.png/);
@@ -98,7 +121,7 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(home, /href="\/news"/);
     assert.match(home, /href="\/news\/first-aml-view-app-in-five-minutes"/);
     assert.match(french, /href="\/fr\/news\/first-aml-view-app-in-five-minutes"/);
-    assert.match(docs, /href="\/news\/first-aml-view-app-in-five-minutes"/);
+    assert.match(docsReference, /href="\/news\/first-aml-view-app-in-five-minutes"/);
     assert.match(tutorial, /href="\/news\/first-aml-view-app-in-five-minutes"/);
     assert.match(frenchTutorial, /href="\/fr\/news\/first-aml-view-app-in-five-minutes"/);
     assert.match(platform, /Five components\. One PHP workflow/);
@@ -142,24 +165,26 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(french, /Explorer le code source/);
     assert.match(french, /phpaml-chess-tutor\.onrender\.com/);
     assert.match(french, /Cinq composants ciblés/);
-    assert.match(docs, /Official documentation/);
-    assert.match(docs, /aml doctor --production --json/);
+    assert.match(docs, /Everything you need to/);
+    assert.match(docs, /Complete reference/);
+    assert.match(docsReference, /Official documentation/);
+    assert.match(docsReference, /aml doctor --production --json/);
     assert.match(docsText, /aml deploy:configure production/);
-    assert.match(docs, /public-html/);
-    assert.match(docs, /sftp-only/);
-    assert.match(docs, /deliverables/);
-    assert.match(docs, /src\/views\/stylesheets/);
-    assert.match(docs, /aml create-view my-interface/);
-    assert.match(docs, /aml create-api my-api/);
-    assert.match(docs, /aml create-console my-program/);
-    assert.match(docs, /Four paths, a first result in under five minutes/);
-    assert.match(docs, /Local reactivity for AML View/);
-    assert.match(docs, /Typed persistence for MVC, View, API, or standalone PHP/);
-    assert.match(docs, /src\/views/);
-    assert.match(docs, /Four readable paths, one platform/);
-    assert.match(docs, /routes\/WebApp\.php/);
-    assert.match(docs, /runtime\/config\/app\.php/);
-    assert.doesNotMatch(docs, /configs\/app\.php/);
+    assert.match(docsReference, /public-html/);
+    assert.match(docsReference, /sftp-only/);
+    assert.match(docsReference, /deliverables/);
+    assert.match(docsReference, /src\/views\/stylesheets/);
+    assert.match(docsReference, /aml create-view my-interface/);
+    assert.match(docsReference, /aml create-api my-api/);
+    assert.match(docsReference, /aml create-console my-program/);
+    assert.match(docsReference, /Four paths, a first result in under five minutes/);
+    assert.match(docsReference, /Local reactivity for AML View/);
+    assert.match(docsReference, /Typed persistence for MVC, View, API, or standalone PHP/);
+    assert.match(docsReference, /src\/views/);
+    assert.match(docsReference, /Four readable paths, one platform/);
+    assert.match(docsReference, /routes\/WebApp\.php/);
+    assert.match(docsReference, /runtime\/config\/app\.php/);
+    assert.doesNotMatch(docsReference, /configs\/app\.php/);
     assert.match(download, /phpaml-1\.7\.0-beta\.43-windows-x64\.exe/);
     assert.match(download, /phpaml-1\.7\.0-beta\.43-macos-arm64\.pkg/);
     assert.match(download, /phpaml-1\.7\.0-beta\.43-linux-x64\.deb/);
@@ -179,19 +204,13 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(tutorial, /href="\/tutorial\/01"/);
     assert.match(tutorial, /Coming soon/);
     assert.match(chapterOne, /Install AML and/);
-    assert.match(chapterOne, /aml create my-first-app/);
-    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.43-windows-x64\.exe/);
-    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.43-macos-arm64\.pkg/);
-    assert.match(chapterOne, /phpaml-1\.7\.0-beta\.43-linux-x64\.deb/);
-    assert.match(chapterOne, /Live reload enabled/);
-    assert.match(chapterOne, /Final exercise/);
-    assert.match(chapterOne, /Learning objectives/);
-    assert.match(chapterOne, /Three roles, one workflow/);
-    assert.match(chapterOne, /Guided solution/);
+    assert.match(chapterOne, /This chapter builds the right foundations/);
+    assert.match(chapterOne, /Three different roles/);
+    assert.match(chapterOne, /href="\/docs\/01\/installation"/);
     assert.match(frenchChapterOne, /Installer AML et/);
-    assert.match(frenchChapterOne, /aml create mon-projet/);
-    assert.match(frenchChapterOne, /Exercice final/);
-    assert.match(frenchChapterOne, /Objectifs pédagogiques/);
+    assert.match(frenchChapterOne, /Ce chapitre construit de bonnes bases/);
+    assert.match(frenchChapterOne, /Trois rôles différents/);
+    assert.match(frenchChapterOne, /href="\/fr\/docs\/01\/installation"/);
     assert.match(tutorial, /href="\/tutorial\/02"/);
     assert.match(chapterTwo, /Understand the/);
     assert.match(chapterTwo, /runtime\/storage\/database\.sqlite/);

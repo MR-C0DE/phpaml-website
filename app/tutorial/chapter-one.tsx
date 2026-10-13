@@ -5,7 +5,7 @@ import "./chapter-one.css";
 
 const command = {
   doctor: "aml doctor",
-  current: "mkdir my-first-app\ncd my-first-app\naml create .\naml install\naml serve",
+  current: "mkdir my-first-app\ncd my-first-app\naml create .\naml serve",
   doctorResult: `[OK]        AML                     version ${release.cliVersion}
 [OK]        PHP                     compatible
 [OK]        Private Composer        available
@@ -14,16 +14,17 @@ const command = {
 [OK]        Development port        127.0.0.1:8910 available`,
 } as const;
 
-export function ChapterOne({ locale }: { locale: "en" | "fr" }) {
+export function ChapterOne({ locale, area = "tutorial" }: { locale: "en" | "fr"; area?: "tutorial" | "docs" }) {
   const fr = locale === "fr";
   const prefix = fr ? "/fr" : "";
+  const docs = area === "docs";
   const sections = fr ? [
     ["01.1", "AML et PHPAML", "PHPAML est le mini-framework MVC. AML est sa commande : elle installe l’environnement, crée les projets, lance le serveur et diagnostique la machine. Une fois AML installé, vous n’avez pas besoin d’installer PHP ou Composer séparément."],
     ["01.2", "Installer AML", "Téléchargez l’installateur adapté à votre système depuis la page officielle. Windows utilise le fichier .exe, macOS le paquet .pkg et Linux le paquet .deb. L’installateur ajoute AML, PHP et Composer à la machine."],
     ["01.3", "Choisir la langue", "Pendant l’installation, choisissez Français ou English. Ce choix contrôle l’aide, les confirmations et les messages d’erreur. Vous pourrez le modifier plus tard dans la configuration AML."],
     ["01.4", "Vérifier la machine", "La commande doctor contrôle AML, PHP, les extensions, Composer, les dossiers temporaires, le cache et le port de développement. Corrigez les lignes ERROR avant de créer votre premier projet."],
     ["01.5", "Créer le premier projet", "Créez un nouveau dossier avec aml create mon-projet, ou utilisez aml create . dans un dossier vide existant. AML télécharge le modèle officiel et prépare la structure MVC."],
-    ["01.6", "Installer et démarrer", "aml install installe le moteur privé dans runtime. aml serve lance ensuite le site local avec l’actualisation automatique. Gardez ce terminal ouvert pendant le développement."],
+    ["01.6", "Démarrer le projet", "La création installe déjà le moteur privé dans runtime. aml serve lance le site local avec l’actualisation automatique. aml install sert à reconstruire un projet existant, pas à terminer une création normale."],
     ["01.7", "Résoudre les problèmes", "Si AML ne reconnaît pas le projet, vérifiez que vous êtes dans le dossier contenant phpaml.json, src et runtime. Si un port est occupé, AML essaie automatiquement le suivant. Relancez toujours aml doctor après une correction."],
   ] : [
     ["01.1", "AML and PHPAML", "PHPAML is the MVC mini-framework. AML is its command-line tool: it installs the environment, creates projects, starts the server, and diagnoses the machine. Once AML is installed, PHP and Composer do not need to be installed separately."],
@@ -31,7 +32,7 @@ export function ChapterOne({ locale }: { locale: "en" | "fr" }) {
     ["01.3", "Choose the language", "During installation, choose English or Français. This choice controls help, confirmations, and error messages. You can change it later in the AML configuration."],
     ["01.4", "Check the machine", "The doctor command checks AML, PHP, extensions, Composer, temporary folders, cache, and the development port. Resolve every ERROR line before creating your first project."],
     ["01.5", "Create the first project", "Create a new folder with aml create my-project, or use aml create . inside an existing empty folder. AML downloads the official template and prepares the MVC structure."],
-    ["01.6", "Install and start", "aml install installs the private engine in runtime. aml serve then starts the local website with automatic refresh. Keep this terminal open while developing."],
+    ["01.6", "Start the project", "Creation already installs the private engine in runtime. aml serve starts the local website with automatic refresh. aml install rebuilds an existing project; it is not required after normal creation."],
     ["01.7", "Troubleshoot", "If AML does not recognize the project, make sure you are inside the folder containing phpaml.json, src, and runtime. If a port is busy, AML automatically tries the next one. Always run aml doctor again after a fix."],
   ];
   const objectives = fr
@@ -47,8 +48,8 @@ export function ChapterOne({ locale }: { locale: "en" | "fr" }) {
     ["3", "PHPAML responds", "The router finds the controller, builds the response, and sends it to the browser."],
   ];
 
-  return <><Header locale={locale} path="/tutorial/01" /><main className="lesson-page">
-    <section className="lesson-hero shell"><div><p className="eyebrow"><span /> {fr ? "Tutoriel MVC · Chapitre 01" : "MVC tutorial · Chapter 01"}</p><h1>{fr ? <>Installer AML et<br/><em>créer un projet.</em></> : <>Install AML and<br/><em>create a project.</em></>}</h1><p>{fr ? "À la fin de ce chapitre, votre environnement sera vérifié et votre première application PHPAML fonctionnera localement." : "By the end of this chapter, your environment will be verified and your first PHPAML application will run locally."}</p></div><aside><small>{fr ? "OBJECTIF" : "OUTCOME"}</small><strong>{fr ? "Un projet prêt à coder" : "A project ready to code"}</strong><span>≈ 25 min</span></aside></section>
+  return <><Header locale={locale} path={docs ? "/docs/01" : "/tutorial/01"} /><main className="lesson-page">
+    <section className="lesson-hero shell"><div><p className="eyebrow"><span /> {docs ? (fr ? "Documentation · Chapitre 01" : "Documentation · Chapter 01") : (fr ? "Tutoriel MVC · Chapitre 01" : "MVC tutorial · Chapter 01")}</p><h1>{fr ? <>Installer AML et<br/><em>créer un projet.</em></> : <>Install AML and<br/><em>create a project.</em></>}</h1><p>{fr ? "À la fin de ce chapitre, votre environnement sera vérifié et votre première application PHPAML fonctionnera localement." : "By the end of this chapter, your environment will be verified and your first PHPAML application will run locally."}</p></div><aside><small>{fr ? "OBJECTIF" : "OUTCOME"}</small><strong>{fr ? "Un projet prêt à coder" : "A project ready to code"}</strong><span>≈ 25 min</span></aside></section>
     <div className="lesson-layout shell"><nav className="lesson-toc" aria-label={fr ? "Sommaire du chapitre" : "Chapter contents"}><strong>{fr ? "Dans ce chapitre" : "In this chapter"}</strong>{sections.map(([id,title])=><a href={`#section-${id}`} key={id}><span>{id}</span>{title}</a>)}<a href="#exercise"><span>✓</span>{fr ? "Exercice final" : "Final exercise"}</a></nav>
       <article className="lesson-content">
         <div className="lesson-callout"><strong>{fr ? "Prérequis" : "Prerequisites"}</strong><p>{fr ? "Un ordinateur Windows 10/11, macOS 12+ ou une distribution Linux Debian/Ubuntu, une connexion Internet et un terminal. Aucun PHP préalable n’est requis." : "A Windows 10/11, macOS 12+, or Debian/Ubuntu Linux computer, an internet connection, and a terminal. No existing PHP installation is required."}</p></div>
@@ -59,6 +60,6 @@ export function ChapterOne({ locale }: { locale: "en" | "fr" }) {
         <section className="lesson-rich-block lesson-correction"><p className="kicker">{fr?"Correction guidée":"Guided solution"}</p><h2>{fr?"Vérifiez le résultat, pas seulement les commandes.":"Verify the outcome, not only the commands."}</h2><p>{fr?"doctor doit se terminer sans erreur bloquante. À la racine de task-app, phpaml.json doit être présent : c’est le manifeste du projet. Après aml install, runtime doit exister. Enfin, aml serve annonce une adresse locale, normalement le port 8910; s’il est occupé, AML essaie 8911 puis les suivants.":"doctor must finish without a blocking error. At the root of task-app, phpaml.json must exist: it is the project manifest. After aml install, runtime must exist. Finally, aml serve announces a local address, normally port 8910; when busy, AML tries 8911 and subsequent ports."}</p><h3>{fr?"Questions de contrôle":"Knowledge check"}</h3><ol><li>{fr?"Quel outil crée le projet : AML ou PHPAML ?":"Which tool creates the project: AML or PHPAML?"}</li><li>{fr?"Pourquoi runtime ne contient-il pas votre logique métier ?":"Why does runtime not contain your business logic?"}</li><li>{fr?"Que faire après avoir corrigé un problème de machine ?":"What should you do after fixing a machine problem?"}</li></ol><details><summary>{fr?"Afficher les réponses":"Show answers"}</summary><p>{fr?"AML crée et entretient le projet. PHPAML exécute l’application. Le runtime est remplaçable et réservé au moteur. Après une correction, relancez aml doctor afin de confirmer que l’environnement complet est sain.":"AML creates and maintains the project. PHPAML runs the application. The runtime is replaceable and reserved for the engine. After a fix, run aml doctor again to confirm that the complete environment is healthy."}</p></details></section>
       </article>
     </div>
-    <section className="lesson-navigation shell"><Link href={`${prefix}/tutorial`}>← {fr ? "Tous les chapitres" : "All chapters"}</Link><Link href={`${prefix}/tutorial/02`}>{fr ? "Chapitre 02 · Architecture PHPAML" : "Chapter 02 · PHPAML architecture"} →</Link></section>
+    <section className="lesson-navigation shell"><Link href={docs ? `${prefix}/docs` : `${prefix}/tutorial`}>← {docs ? (fr ? "Sommaire de la documentation" : "Documentation contents") : (fr ? "Tous les chapitres" : "All chapters")}</Link><Link href={docs ? `${prefix}/docs#architecture` : `${prefix}/tutorial/02`}>{fr ? "Chapitre 02 · Architecture PHPAML" : "Chapter 02 · PHPAML architecture"} →</Link></section>
   </main><Footer locale={locale} /></>;
 }
