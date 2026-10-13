@@ -93,6 +93,27 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(chapterHtml, /La création installe déjà le runtime/);
     assert.match(chapterHtml, /aml create-console/);
     assert.match(chapterHtml, /aml serve detects when it is missing/);
+    const architecturePages = await Promise.all([
+      fetch(origin + "/docs/02"),
+      fetch(origin + "/docs/02/requete"),
+      fetch(origin + "/docs/02/structure"),
+      fetch(origin + "/docs/02/mvc"),
+      fetch(origin + "/docs/02/variantes"),
+      fetch(origin + "/docs/02/atelier"),
+      fetch(origin + "/fr/docs/02"),
+      fetch(origin + "/fr/docs/02/requete"),
+      fetch(origin + "/fr/docs/02/structure"),
+      fetch(origin + "/fr/docs/02/mvc"),
+      fetch(origin + "/fr/docs/02/variantes"),
+      fetch(origin + "/fr/docs/02/atelier"),
+    ]);
+    architecturePages.forEach((response) => assert.equal(response.status, 200));
+    const architectureHtml = (await Promise.all(architecturePages.map((response) => response.text()))).join("\n");
+    assert.match(architectureHtml, /Understand a PHPAML/);
+    assert.match(architectureHtml, /Comprendre l.architecture/);
+    assert.match(architectureHtml, /public\/index\.php/);
+    assert.match(architectureHtml, /AboutController/);
+    assert.match(architectureHtml, /CHECK YOUR UNDERSTANDING/);
     assert.match(home, /href="\/fr"/);
     assert.match(home, /<title>PHPAML/);
     assert.match(home, /rel="icon"[^>]+favicon\.png/);

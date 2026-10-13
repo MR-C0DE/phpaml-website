@@ -190,7 +190,9 @@ export function DocsPage({ locale }: { locale: Locale }) {
   const prefix = fr ? "/fr" : "";
   const destination = (number: string, anchor: string) => number === "01"
     ? `${prefix}/docs/01`
-    : `${prefix}/docs/reference${anchor}`;
+    : number === "02"
+      ? `${prefix}/docs/02`
+      : `${prefix}/docs/reference${anchor}`;
 
   return <><Header locale={locale} path="/docs" /><main className="docs-home">
     <section className="docs-home-hero shell">
