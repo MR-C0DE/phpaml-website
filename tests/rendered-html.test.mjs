@@ -132,6 +132,33 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(architectureHtml, /Pourquoi ne pas tout mettre dans un seul fichier/);
     assert.match(architectureHtml, /Read the controller line by line/);
     assert.match(architectureHtml, /YOUR TURN/);
+    const firstApplicationPages = await Promise.all([
+      fetch(origin + "/docs/03"),
+      fetch(origin + "/docs/03/creation"),
+      fetch(origin + "/docs/03/explorer"),
+      fetch(origin + "/docs/03/page"),
+      fetch(origin + "/docs/03/data"),
+      fetch(origin + "/docs/03/errors"),
+      fetch(origin + "/docs/03/workshop"),
+      fetch(origin + "/fr/docs/03"),
+      fetch(origin + "/fr/docs/03/creation"),
+      fetch(origin + "/fr/docs/03/explorer"),
+      fetch(origin + "/fr/docs/03/page"),
+      fetch(origin + "/fr/docs/03/data"),
+      fetch(origin + "/fr/docs/03/errors"),
+      fetch(origin + "/fr/docs/03/workshop"),
+    ]);
+    firstApplicationPages.forEach((response) => assert.equal(response.status, 200));
+    const firstApplicationHtml = (await Promise.all(firstApplicationPages.map((response) => response.text()))).join("\n");
+    assert.match(firstApplicationHtml, /Build your first/);
+    assert.match(firstApplicationHtml, /Construire sa première/);
+    assert.match(firstApplicationHtml, /src\/routes\/WebApp\.php/);
+    assert.match(firstApplicationHtml, /AboutController/);
+    assert.match(firstApplicationHtml, /BookController/);
+    assert.match(firstApplicationHtml, /htmlspecialchars/);
+    assert.match(firstApplicationHtml, /404 and 500/);
+    assert.match(firstApplicationHtml, /404 et 500/);
+    assert.match(firstApplicationHtml, /foreach/);
     assert.match(home, /href="\/fr"/);
     assert.match(home, /<title>PHPAML/);
     assert.match(home, /rel="icon"[^>]+favicon\.png/);
