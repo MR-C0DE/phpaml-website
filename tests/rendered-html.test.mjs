@@ -114,6 +114,12 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(architectureHtml, /public\/index\.php/);
     assert.match(architectureHtml, /AboutController/);
     assert.match(architectureHtml, /CHECK YOUR UNDERSTANDING/);
+    assert.match(architectureHtml, /The Running Thread Library/);
+    assert.match(architectureHtml, /La bibliothèque Fil Rouge/);
+    assert.match(architectureHtml, /Imagine a restaurant/);
+    assert.match(architectureHtml, /Pourquoi ne pas tout mettre dans un seul fichier/);
+    assert.match(architectureHtml, /Read the controller line by line/);
+    assert.match(architectureHtml, /YOUR TURN/);
     assert.match(home, /href="\/fr"/);
     assert.match(home, /<title>PHPAML/);
     assert.match(home, /rel="icon"[^>]+favicon\.png/);
