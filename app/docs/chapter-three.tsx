@@ -28,7 +28,7 @@ function Nav({ locale, current }: { locale: Locale; current: ChapterThreeLesson 
 
 function Pager({ locale, current }: { locale: Locale; current: ChapterThreeLesson }) {
   const index = order.indexOf(current); const previous = order[index - 1]; const next = order[index + 1];
-  return <nav className="chapter-one-pager"><Link href={previous ? url(locale, previous) : (locale === "fr" ? "/fr/docs/02" : "/docs/02")}>← {previous ? labels[locale][previous] : (locale === "fr" ? "Chapitre 02" : "Chapter 02")}</Link><Link href={next ? url(locale, next) : (locale === "fr" ? "/fr/docs/reference#http" : "/docs/reference#http")}>{next ? labels[locale][next] : (locale === "fr" ? "Référence HTTP" : "HTTP reference")} →</Link></nav>;
+  return <nav className="chapter-one-pager"><Link href={previous ? url(locale, previous) : (locale === "fr" ? "/fr/docs/02" : "/docs/02")}>← {previous ? labels[locale][previous] : (locale === "fr" ? "Chapitre 02" : "Chapter 02")}</Link><Link href={next ? url(locale, next) : (locale === "fr" ? "/fr/docs/04" : "/docs/04")}>{next ? labels[locale][next] : (locale === "fr" ? "Chapitre 04" : "Chapter 04")} →</Link></nav>;
 }
 
 function Frame({ locale, lesson, title, intro, children }: { locale: Locale; lesson: ChapterThreeLesson; title: React.ReactNode; intro: string; children: React.ReactNode }) {

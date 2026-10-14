@@ -6,14 +6,14 @@ type Locale = "en" | "fr";
 const bookParts = {
   en: [
     { number: "PART 1", title: "Discover PHPAML", description: "Understand the platform, choose the right project type, and create a first runnable application.", chapters: [["01", "Get started", "#start"], ["02", "Architecture", "#architecture"], ["03", "Build a first application", "#first-application"]] },
-    { number: "PART 2", title: "Build a Web application", description: "Learn the request lifecycle, MVC organization, configuration, persistence, and security.", chapters: [["04", "HTTP and MVC", "#http"], ["05", "Views and assets", "#views"], ["06", "Environment", "#environment"], ["07", "Database", "#database"], ["08", "Security", "#security"]] },
+    { number: "PART 2", title: "Build a Web application", description: "Learn the request lifecycle, MVC organization, configuration, persistence, and security.", chapters: [["04", "Forms, HTTP, and CRUD", "#forms"], ["05", "Views and assets", "#views"], ["06", "Environment", "#environment"], ["07", "Database", "#database"], ["08", "Security", "#security"]] },
     { number: "PART 3", title: "Create reactive interfaces", description: "Build declarative pages in PHP and understand what View and Engine each do.", chapters: [["09", "AML View", "#aml-view"], ["10", "AML Engine", "#aml-engine"], ["11", "Internationalization", "#i18n"]] },
     { number: "PART 4", title: "Use the platform modules", description: "Create APIs, persist typed data, or run pure PHP programs in the terminal.", chapters: [["12", "PHPAML API", "#api"], ["13", "PHPAML Data", "#data"], ["14", "Console", "#console"]] },
     { number: "PART 5", title: "Test and publish", description: "Use the CLI, diagnose problems, test, optimize, and deploy with confidence.", chapters: [["15", "CLI reference", "#cli"], ["16", "Tests and production", "#production"], ["17", "SEO toolkit", "#seo"], ["18", "Build and deploy", "#deployment"], ["19", "Troubleshooting", "#troubleshooting"]] },
   ],
   fr: [
     { number: "PARTIE 1", title: "Découvrir PHPAML", description: "Comprendre la plateforme, choisir le bon type de projet et créer une première application exécutable.", chapters: [["01", "Bien démarrer", "#start"], ["02", "Architecture", "#architecture"], ["03", "Construire une première application", "#first-application"]] },
-    { number: "PARTIE 2", title: "Construire une application Web", description: "Apprendre le cycle d’une requête, le MVC, la configuration, la persistance et la sécurité.", chapters: [["04", "HTTP et MVC", "#http"], ["05", "Vues et fichiers", "#views"], ["06", "Environnement", "#environment"], ["07", "Base de données", "#database"], ["08", "Sécurité", "#security"]] },
+    { number: "PARTIE 2", title: "Construire une application Web", description: "Apprendre le cycle d’une requête, le MVC, la configuration, la persistance et la sécurité.", chapters: [["04", "Formulaires, HTTP et CRUD", "#forms"], ["05", "Vues et fichiers", "#views"], ["06", "Environnement", "#environment"], ["07", "Base de données", "#database"], ["08", "Sécurité", "#security"]] },
     { number: "PARTIE 3", title: "Créer des interfaces réactives", description: "Construire des pages déclaratives en PHP et comprendre le rôle de View et celui d’Engine.", chapters: [["09", "AML View", "#aml-view"], ["10", "AML Engine", "#aml-engine"], ["11", "Internationalisation", "#i18n"]] },
     { number: "PARTIE 4", title: "Utiliser les modules de la plateforme", description: "Créer des API, persister des données typées ou exécuter des programmes PHP purs dans le terminal.", chapters: [["12", "PHPAML API", "#api"], ["13", "PHPAML Data", "#data"], ["14", "Console", "#console"]] },
     { number: "PARTIE 5", title: "Tester et publier", description: "Utiliser le CLI, diagnostiquer, tester, optimiser et déployer avec confiance.", chapters: [["15", "Référence CLI", "#cli"], ["16", "Tests et production", "#production"], ["17", "Outils SEO", "#seo"], ["18", "Build et déploiement", "#deployment"], ["19", "Dépannage", "#troubleshooting"]] },
@@ -194,6 +194,8 @@ export function DocsPage({ locale }: { locale: Locale }) {
       ? `${prefix}/docs/02`
       : number === "03"
         ? `${prefix}/docs/03`
+      : number === "04"
+        ? `${prefix}/docs/04`
       : `${prefix}/docs/reference${anchor}`;
 
   return <><Header locale={locale} path="/docs" /><main className="docs-home">

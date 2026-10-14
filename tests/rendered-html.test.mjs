@@ -159,6 +159,35 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(firstApplicationHtml, /404 and 500/);
     assert.match(firstApplicationHtml, /404 et 500/);
     assert.match(firstApplicationHtml, /foreach/);
+    const formPages = await Promise.all([
+      fetch(origin + "/docs/04"),
+      fetch(origin + "/docs/04/form"),
+      fetch(origin + "/docs/04/request"),
+      fetch(origin + "/docs/04/validation"),
+      fetch(origin + "/docs/04/security"),
+      fetch(origin + "/docs/04/crud"),
+      fetch(origin + "/docs/04/workshop"),
+      fetch(origin + "/fr/docs/04"),
+      fetch(origin + "/fr/docs/04/form"),
+      fetch(origin + "/fr/docs/04/request"),
+      fetch(origin + "/fr/docs/04/validation"),
+      fetch(origin + "/fr/docs/04/security"),
+      fetch(origin + "/fr/docs/04/crud"),
+      fetch(origin + "/fr/docs/04/workshop"),
+    ]);
+    formPages.forEach((response) => assert.equal(response.status, 200));
+    const formHtml = (await Promise.all(formPages.map((response) => response.text()))).join("\n");
+    assert.match(formHtml, /Make a form/);
+    assert.match(formHtml, /Faire parler/);
+    assert.match(formHtml, /POST.Redirect.GET/);
+    assert.match(formHtml, /csrfField/);
+    assert.match(formHtml, /Request::input|input\(&#x27;title&#x27;/);
+    assert.match(formHtml, /Validator/);
+    assert.match(formHtml, /Response::redirect/);
+    assert.match(formHtml, /419/);
+    assert.match(formHtml, /422/);
+    assert.match(formHtml, /Create, read/);
+    assert.match(formHtml, /Créer, consulter/);
     assert.match(home, /href="\/fr"/);
     assert.match(home, /<title>PHPAML/);
     assert.match(home, /rel="icon"[^>]+favicon\.png/);
