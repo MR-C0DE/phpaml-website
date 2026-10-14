@@ -264,6 +264,24 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(databaseText, /DbContext/);
     assert.match(databaseText, /saveChanges/);
     assert.match(databaseText, /La session appartient à une visite/);
+    const securityPages = await Promise.all([
+      fetch(origin + "/docs/08"), fetch(origin + "/docs/08/input"),
+      fetch(origin + "/docs/08/csrf"), fetch(origin + "/docs/08/sessions"),
+      fetch(origin + "/docs/08/headers"), fetch(origin + "/docs/08/rate-limit"),
+      fetch(origin + "/docs/08/workshop"), fetch(origin + "/fr/docs/08"),
+      fetch(origin + "/fr/docs/08/input"), fetch(origin + "/fr/docs/08/csrf"),
+      fetch(origin + "/fr/docs/08/sessions"), fetch(origin + "/fr/docs/08/headers"),
+      fetch(origin + "/fr/docs/08/rate-limit"), fetch(origin + "/fr/docs/08/workshop"),
+    ]);
+    securityPages.forEach((response) => assert.equal(response.status, 200));
+    const securityText = (await Promise.all(securityPages.map((response) => response.text()))).join("\n").replace(/<[^>]+>/g, "");
+    assert.match(securityText, /Secure an application/);
+    assert.match(securityText, /Sécuriser une application/);
+    assert.match(securityText, /csrfField/);
+    assert.match(securityText, /HttpOnly/);
+    assert.match(securityText, /Content-Security-Policy/);
+    assert.match(securityText, /Retry-After/);
+    assert.match(securityText, /Une serrure ne protège pas toute une maison/);
     assert.match(home, /href="\/fr"/);
     assert.match(home, /<title>PHPAML/);
     assert.match(home, /rel="icon"[^>]+favicon\.png/);
