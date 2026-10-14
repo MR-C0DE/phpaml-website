@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { PlatformChapterPage, type PlatformChapter, type PlatformLesson } from "../../platform-chapters";
-const chapters = ["09", "10", "11", "12"] as const;
+const chapters = ["09", "10", "11", "12", "13"] as const;
 const lessons = ["foundations", "workflow", "advanced", "workshop"] as const;
 export const dynamicParams = false;
 export function generateStaticParams() { return chapters.flatMap((chapter) => lessons.map((lesson) => ({ chapter, lesson }))); }
