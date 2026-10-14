@@ -217,6 +217,34 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(viewHtml, /requestId/);
     assert.match(viewHtml, /No src file is public/);
     assert.match(viewHtml, /Aucun fichier src n.est public/);
+    const configurationPages = await Promise.all([
+      fetch(origin + "/docs/06"),
+      fetch(origin + "/docs/06/manifest"),
+      fetch(origin + "/docs/06/environment"),
+      fetch(origin + "/docs/06/debug"),
+      fetch(origin + "/docs/06/runtime"),
+      fetch(origin + "/docs/06/production"),
+      fetch(origin + "/docs/06/workshop"),
+      fetch(origin + "/fr/docs/06"),
+      fetch(origin + "/fr/docs/06/manifest"),
+      fetch(origin + "/fr/docs/06/environment"),
+      fetch(origin + "/fr/docs/06/debug"),
+      fetch(origin + "/fr/docs/06/runtime"),
+      fetch(origin + "/fr/docs/06/production"),
+      fetch(origin + "/fr/docs/06/workshop"),
+    ]);
+    configurationPages.forEach((response) => assert.equal(response.status, 200));
+    const configurationHtml = (await Promise.all(configurationPages.map((response) => response.text()))).join("\n");
+    const configurationText = configurationHtml.replace(/<[^>]+>/g, "");
+    assert.match(configurationText, /Configure without/);
+    assert.match(configurationText, /Configurer sans/);
+    assert.match(configurationText, /phpaml\.json/);
+    assert.match(configurationText, /aml env:init/);
+    assert.match(configurationText, /runtime\/config\/app\.php/);
+    assert.match(configurationText, /X-Request-ID/);
+    assert.match(configurationText, /aml doctor --production/);
+    assert.match(configurationText, /Le programme reste le même/);
+    assert.match(configurationText, /Keep secrets/);
     assert.match(home, /href="\/fr"/);
     assert.match(home, /<title>PHPAML/);
     assert.match(home, /rel="icon"[^>]+favicon\.png/);
