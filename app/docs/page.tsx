@@ -204,6 +204,8 @@ export function DocsPage({ locale }: { locale: Locale }) {
         ? `${prefix}/docs/07`
       : number === "08"
         ? `${prefix}/docs/08`
+      : ["09", "10", "11", "12"].includes(number)
+        ? `${prefix}/docs/${number}`
       : `${prefix}/docs/reference${anchor}`;
 
   return <><Header locale={locale} path="/docs" /><main className="docs-home">
