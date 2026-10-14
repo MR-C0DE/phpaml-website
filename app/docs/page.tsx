@@ -200,6 +200,8 @@ export function DocsPage({ locale }: { locale: Locale }) {
         ? `${prefix}/docs/05`
       : number === "06"
         ? `${prefix}/docs/06`
+      : number === "07"
+        ? `${prefix}/docs/07`
       : `${prefix}/docs/reference${anchor}`;
 
   return <><Header locale={locale} path="/docs" /><main className="docs-home">

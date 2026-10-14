@@ -245,6 +245,25 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(configurationText, /aml doctor --production/);
     assert.match(configurationText, /Le programme reste le même/);
     assert.match(configurationText, /Keep secrets/);
+    const databasePages = await Promise.all([
+      fetch(origin + "/docs/07"), fetch(origin + "/docs/07/sqlite"),
+      fetch(origin + "/docs/07/installation"), fetch(origin + "/docs/07/entity"),
+      fetch(origin + "/docs/07/migration"), fetch(origin + "/docs/07/crud"),
+      fetch(origin + "/docs/07/workshop"), fetch(origin + "/fr/docs/07"),
+      fetch(origin + "/fr/docs/07/sqlite"), fetch(origin + "/fr/docs/07/installation"),
+      fetch(origin + "/fr/docs/07/entity"), fetch(origin + "/fr/docs/07/migration"),
+      fetch(origin + "/fr/docs/07/crud"), fetch(origin + "/fr/docs/07/workshop"),
+    ]);
+    databasePages.forEach((response) => assert.equal(response.status, 200));
+    const databaseText = (await Promise.all(databasePages.map((response) => response.text()))).join("\n").replace(/<[^>]+>/g, "");
+    assert.match(databaseText, /Keep data/);
+    assert.match(databaseText, /Conserver les données/);
+    assert.match(databaseText, /aml install data --driver sqlite/);
+    assert.match(databaseText, /aml make:entity Book/);
+    assert.match(databaseText, /create_books_table/);
+    assert.match(databaseText, /DbContext/);
+    assert.match(databaseText, /saveChanges/);
+    assert.match(databaseText, /La session appartient à une visite/);
     assert.match(home, /href="\/fr"/);
     assert.match(home, /<title>PHPAML/);
     assert.match(home, /rel="icon"[^>]+favicon\.png/);
