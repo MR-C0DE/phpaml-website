@@ -188,6 +188,35 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(formHtml, /422/);
     assert.match(formHtml, /Create, read/);
     assert.match(formHtml, /Créer, consulter/);
+    const viewPages = await Promise.all([
+      fetch(origin + "/docs/05"),
+      fetch(origin + "/docs/05/partials"),
+      fetch(origin + "/docs/05/organization"),
+      fetch(origin + "/docs/05/assets"),
+      fetch(origin + "/docs/05/accessibility"),
+      fetch(origin + "/docs/05/errors"),
+      fetch(origin + "/docs/05/workshop"),
+      fetch(origin + "/fr/docs/05"),
+      fetch(origin + "/fr/docs/05/partials"),
+      fetch(origin + "/fr/docs/05/organization"),
+      fetch(origin + "/fr/docs/05/assets"),
+      fetch(origin + "/fr/docs/05/accessibility"),
+      fetch(origin + "/fr/docs/05/errors"),
+      fetch(origin + "/fr/docs/05/workshop"),
+    ]);
+    viewPages.forEach((response) => assert.equal(response.status, 200));
+    const viewHtml = (await Promise.all(viewPages.map((response) => response.text()))).join("\n");
+    assert.match(viewHtml, /Build views/);
+    assert.match(viewHtml, /Construire des vues/);
+    assert.match(viewHtml, /header\.php/);
+    assert.match(viewHtml, /partial/);
+    assert.match(viewHtml, /src\/views\/partials/);
+    assert.match(viewHtml, /public\/css\/app\.css/);
+    assert.match(viewHtml, /focus-visible/);
+    assert.match(viewHtml, /src\/views\/errors\/404\.php/);
+    assert.match(viewHtml, /requestId/);
+    assert.match(viewHtml, /No src file is public/);
+    assert.match(viewHtml, /Aucun fichier src n.est public/);
     assert.match(home, /href="\/fr"/);
     assert.match(home, /<title>PHPAML/);
     assert.match(home, /rel="icon"[^>]+favicon\.png/);
