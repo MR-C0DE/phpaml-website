@@ -1,15 +1,16 @@
 import Link from "next/link";
 import { CodeBlock, Footer, Header } from "../components";
+import { remainingChapterCopies } from "./remaining-chapters";
 import "./chapter-one.css";
 import "./chapter-two.css";
 
-export type PlatformChapter = "09" | "10" | "11" | "12" | "13";
+export type PlatformChapter = "09" | "10" | "11" | "12" | "13" | "14" | "15" | "16" | "17" | "18" | "19";
 export type PlatformLesson = "overview" | "foundations" | "workflow" | "advanced" | "workshop";
 type Locale = "en" | "fr";
-type Copy = { chapter: string; nav: string[]; descriptions: string[]; titles: string[]; intros: string[]; headings: string[][]; paragraphs: string[][]; code: string[]; summary: string[] };
+export type PlatformCopy = { chapter: string; nav: string[]; descriptions: string[]; titles: string[]; intros: string[]; headings: string[][]; paragraphs: string[][]; code: string[]; summary: string[] };
 const order: PlatformLesson[] = ["overview", "foundations", "workflow", "advanced", "workshop"];
 
-const copies: Record<PlatformChapter, Record<Locale, Copy>> = {
+const copies: Record<PlatformChapter, Record<Locale, PlatformCopy>> = {
   "09": {
     en: {
       chapter: "AML View", nav: ["Why View?", "Pages and components", "State and forms", "Layout and navigation", "Build an interactive page"],
@@ -186,13 +187,14 @@ const copies: Record<PlatformChapter, Record<Locale, Copy>> = {
       summary: ["Data donne à la persistance une frontière explicite et réutilisable.", "Les connexions nommées et DbSet rendent les lectures intentionnelles.", "Le suivi et les transactions valident une unité cohérente.", "Relations, migrations, seeders et diagnostics préparent les vrais déploiements."],
     },
   },
+  ...remainingChapterCopies,
 };
 
 function path(locale: Locale, chapter: PlatformChapter, lesson: PlatformLesson) { const p = locale === "fr" ? "/fr" : ""; return lesson === "overview" ? `${p}/docs/${chapter}` : `${p}/docs/${chapter}/${lesson}`; }
 export function PlatformChapterPage({ locale, chapter, lesson }: { locale: Locale; chapter: PlatformChapter; lesson: PlatformLesson }) {
   const fr = locale === "fr"; const copy = copies[chapter][locale]; const index = order.indexOf(lesson); const previous = order[index - 1]; const next = order[index + 1]; const previousChapter = String(Number(chapter) - 1).padStart(2, "0"); const nextChapter = String(Number(chapter) + 1).padStart(2, "0");
-  const finalHref = chapter === "13" ? `${fr ? "/fr" : ""}/docs/reference#data` : `${fr ? "/fr" : ""}/docs/${nextChapter}`;
-  const finalLabel = chapter === "13" ? (fr ? "Référence Data" : "Data reference") : (fr ? `Chapitre ${nextChapter}` : `Chapter ${nextChapter}`);
+  const finalHref = chapter === "19" ? `${fr ? "/fr" : ""}/docs/reference` : `${fr ? "/fr" : ""}/docs/${nextChapter}`;
+  const finalLabel = chapter === "19" ? (fr ? "Référence complète" : "Complete reference") : (fr ? `Chapitre ${nextChapter}` : `Chapter ${nextChapter}`);
   return <><Header locale={locale} path={`/docs/${chapter}`}/><main className="chapter-one-page"><header className="chapter-one-hero shell"><p className="eyebrow"><span/> {fr ? `Documentation · Chapitre ${chapter}` : `Documentation · Chapter ${chapter}`}</p><h1>{copy.titles[index]}</h1><p>{copy.intros[index]}</p><p className="chapter-two-audience">{fr ? "Chaque leçon part du problème, explique le mécanisme puis propose une vérification concrète." : "Every lesson starts from the problem, explains the mechanism, then gives a concrete verification."}</p></header><div className="chapter-one-layout shell"><nav className="chapter-one-nav" aria-label={fr ? `Pages du chapitre ${chapter}` : `Chapter ${chapter} pages`}><div><small>{fr ? "CHAPITRE" : "CHAPTER"} {chapter}</small><strong>{copy.chapter}</strong></div><ol>{order.map((item, i) => <li key={item} className={item === lesson ? "active" : ""}><Link href={path(locale, chapter, item)}><span>{String(i + 1).padStart(2, "0")}</span><div><strong>{copy.nav[i]}</strong><small>{copy.descriptions[i]}</small></div></Link></li>)}</ol></nav><article className="chapter-one-article">
     {index === 0 && <section className="chapter-one-lead"><span>≈ 75 min</span><h2>{copy.headings[index][0]}</h2><p>{copy.paragraphs[index][0]}</p></section>}
     {copy.headings[index].map((heading, i) => index === 0 && i === 0 ? null : <section key={heading}><h2>{heading}</h2><p>{copy.paragraphs[index][i]}</p>{i === 0 && <CodeBlock>{copy.code[index]}</CodeBlock>}</section>)}

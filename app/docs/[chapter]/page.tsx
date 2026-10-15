@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PlatformChapterPage, type PlatformChapter } from "../platform-chapters";
-const chapters = ["09", "10", "11", "12", "13"] as const;
-const titles = { "09": "AML View", "10": "AML Engine", "11": "Internationalization", "12": "PHPAML API", "13": "PHPAML Data" };
+const chapters = ["09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"] as const;
+const titles = { "09": "AML View", "10": "AML Engine", "11": "Internationalization", "12": "PHPAML API", "13": "PHPAML Data", "14": "Console", "15": "CLI reference", "16": "Tests and production", "17": "SEO toolkit", "18": "Build and deploy", "19": "Troubleshooting" };
 export const dynamicParams = false;
 export function generateStaticParams() { return chapters.map((chapter) => ({ chapter })); }
 export async function generateMetadata({ params }: { params: Promise<{ chapter: string }> }): Promise<Metadata> { const { chapter } = await params; if (!chapters.includes(chapter as typeof chapters[number])) return {}; return { title: `${titles[chapter as keyof typeof titles]} — PHPAML Documentation`, description: `A progressive guide to ${titles[chapter as keyof typeof titles]}.` }; }

@@ -282,7 +282,7 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(securityText, /Content-Security-Policy/);
     assert.match(securityText, /Retry-After/);
     assert.match(securityText, /Une serrure ne protège pas toute une maison/);
-    const platformChapterUrls = ["09", "10", "11", "12", "13"].flatMap((chapter) => ["", "/foundations", "/workflow", "/advanced", "/workshop"].flatMap((lesson) => [`/docs/${chapter}${lesson}`, `/fr/docs/${chapter}${lesson}`]));
+    const platformChapterUrls = ["09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"].flatMap((chapter) => ["", "/foundations", "/workflow", "/advanced", "/workshop"].flatMap((lesson) => [`/docs/${chapter}${lesson}`, `/fr/docs/${chapter}${lesson}`]));
     const platformChapterPages = await Promise.all(platformChapterUrls.map((url) => fetch(origin + url)));
     platformChapterPages.forEach((response) => assert.equal(response.status, 200));
     const platformChapterText = (await Promise.all(platformChapterPages.map((response) => response.text()))).join("\n").replace(/<[^>]+>/g, "");
@@ -297,6 +297,12 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(platformChapterText, /Donner une place claire à la persistance/);
     assert.match(platformChapterText, /aml data:doctor --connection main --json/);
     assert.match(platformChapterText, /saveChanges/);
+    assert.match(platformChapterText, /aml create-console/);
+    assert.match(platformChapterText, /Use AML as the project operator/);
+    assert.match(platformChapterText, /Transformer la confiance en preuves reproductibles/);
+    assert.match(platformChapterText, /aml seo:audit/);
+    assert.match(platformChapterText, /aml deploy:rollback/);
+    assert.match(platformChapterText, /Diagnostiquer depuis les preuves/);
     assert.match(platformChapterText, /Engine exécute un sous-ensemble compilé/);
     assert.match(home, /href="\/fr"/);
     assert.match(home, /<title>PHPAML/);
