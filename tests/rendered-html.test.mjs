@@ -303,6 +303,10 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(platformChapterText, /aml seo:audit/);
     assert.match(platformChapterText, /aml deploy:rollback/);
     assert.match(platformChapterText, /Diagnostiquer depuis les preuves/);
+    assert.match(platformChapterText, /OBJECTIF DE LA LEÇON/);
+    assert.match(platformChapterText, /POINT DE CONTRÔLE/);
+    assert.match(platformChapterText, /What you will be able to do/);
+    assert.match(platformChapterText, /Before you continue/);
     assert.match(platformChapterText, /Engine exécute un sous-ensemble compilé/);
     assert.match(home, /href="\/fr"/);
     assert.match(home, /<title>PHPAML/);

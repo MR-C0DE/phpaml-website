@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CodeBlock, Footer, Header } from "../components";
-import { remainingChapterCopies } from "./remaining-chapters";
+import { remainingChapterCopies, remainingChapterGuides } from "./remaining-chapters";
 import "./chapter-one.css";
 import "./chapter-two.css";
 
@@ -193,11 +193,14 @@ const copies: Record<PlatformChapter, Record<Locale, PlatformCopy>> = {
 function path(locale: Locale, chapter: PlatformChapter, lesson: PlatformLesson) { const p = locale === "fr" ? "/fr" : ""; return lesson === "overview" ? `${p}/docs/${chapter}` : `${p}/docs/${chapter}/${lesson}`; }
 export function PlatformChapterPage({ locale, chapter, lesson }: { locale: Locale; chapter: PlatformChapter; lesson: PlatformLesson }) {
   const fr = locale === "fr"; const copy = copies[chapter][locale]; const index = order.indexOf(lesson); const previous = order[index - 1]; const next = order[index + 1]; const previousChapter = String(Number(chapter) - 1).padStart(2, "0"); const nextChapter = String(Number(chapter) + 1).padStart(2, "0");
+  const guide = Number(chapter) >= 14 ? remainingChapterGuides[chapter as keyof typeof remainingChapterGuides][locale] : null;
   const finalHref = chapter === "19" ? `${fr ? "/fr" : ""}/docs/reference` : `${fr ? "/fr" : ""}/docs/${nextChapter}`;
   const finalLabel = chapter === "19" ? (fr ? "Référence complète" : "Complete reference") : (fr ? `Chapitre ${nextChapter}` : `Chapter ${nextChapter}`);
   return <><Header locale={locale} path={`/docs/${chapter}`}/><main className="chapter-one-page"><header className="chapter-one-hero shell"><p className="eyebrow"><span/> {fr ? `Documentation · Chapitre ${chapter}` : `Documentation · Chapter ${chapter}`}</p><h1>{copy.titles[index]}</h1><p>{copy.intros[index]}</p><p className="chapter-two-audience">{fr ? "Chaque leçon part du problème, explique le mécanisme puis propose une vérification concrète." : "Every lesson starts from the problem, explains the mechanism, then gives a concrete verification."}</p></header><div className="chapter-one-layout shell"><nav className="chapter-one-nav" aria-label={fr ? `Pages du chapitre ${chapter}` : `Chapter ${chapter} pages`}><div><small>{fr ? "CHAPITRE" : "CHAPTER"} {chapter}</small><strong>{copy.chapter}</strong></div><ol>{order.map((item, i) => <li key={item} className={item === lesson ? "active" : ""}><Link href={path(locale, chapter, item)}><span>{String(i + 1).padStart(2, "0")}</span><div><strong>{copy.nav[i]}</strong><small>{copy.descriptions[i]}</small></div></Link></li>)}</ol></nav><article className="chapter-one-article">
     {index === 0 && <section className="chapter-one-lead"><span>≈ 75 min</span><h2>{copy.headings[index][0]}</h2><p>{copy.paragraphs[index][0]}</p></section>}
+    {guide && <section><p className="chapter-one-kicker">{fr ? "OBJECTIF DE LA LEÇON" : "LESSON OBJECTIVE"}</p><h2>{fr ? "Ce que vous saurez faire" : "What you will be able to do"}</h2><p>{guide.goals[index]}</p></section>}
     {copy.headings[index].map((heading, i) => index === 0 && i === 0 ? null : <section key={heading}><h2>{heading}</h2><p>{copy.paragraphs[index][i]}</p>{i === 0 && <CodeBlock>{copy.code[index]}</CodeBlock>}</section>)}
+    {guide && <section className="chapter-one-summary"><p className="chapter-one-kicker">{fr ? "POINT DE CONTRÔLE" : "CHECKPOINT"}</p><h2>{fr ? "Avant de continuer" : "Before you continue"}</h2><p>{guide.checks[index]}</p></section>}
     {lesson === "workshop" && <section className="chapter-one-summary"><p className="chapter-one-kicker">{fr ? "EN RÉSUMÉ" : "SUMMARY"}</p><h2>{fr ? "Ce qu’il faut retenir" : "What to remember"}</h2><ul>{copy.summary.map((item) => <li key={item}>{item}</li>)}</ul></section>}
     <nav className="chapter-one-pager"><Link href={previous ? path(locale, chapter, previous) : `${fr ? "/fr" : ""}/docs/${previousChapter}`}>← {previous ? copy.nav[index - 1] : (fr ? `Chapitre ${previousChapter}` : `Chapter ${previousChapter}`)}</Link><Link href={next ? path(locale, chapter, next) : finalHref}>{next ? copy.nav[index + 1] : finalLabel} →</Link></nav>
   </article></div></main><Footer locale={locale}/></>;
