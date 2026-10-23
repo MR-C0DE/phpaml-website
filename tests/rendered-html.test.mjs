@@ -400,9 +400,9 @@ test("serves the complete bilingual PHPAML website", async () => {
     assert.match(docsReference, /routes\/WebApp\.php/);
     assert.match(docsReference, /runtime\/config\/app\.php/);
     assert.doesNotMatch(docsReference, /configs\/app\.php/);
-    assert.match(download, /phpaml-1\.7\.0-beta\.45-windows-x64\.exe/);
-    assert.match(download, /phpaml-1\.7\.0-beta\.45-macos-arm64\.pkg/);
-    assert.match(download, /phpaml-1\.7\.0-beta\.45-linux-x64\.deb/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.46-windows-x64\.exe/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.46-macos-arm64\.pkg/);
+    assert.match(download, /phpaml-1\.7\.0-beta\.46-linux-x64\.deb/);
     assert.match(download, /SHA-256/);
     assert.match(tutorial, /Official PHPAML tutorial/);
     assert.match(tutorial, /Master MVC/);
